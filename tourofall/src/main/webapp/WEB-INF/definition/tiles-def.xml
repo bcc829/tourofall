@@ -18,4 +18,8 @@
 	<definition name="evalmore" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/evalmore.jsp"/>
 	</definition>
+	
+	<definition name="search" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/search.jsp"/>
+	</definition>
 </tiles-definitions>
