@@ -3,12 +3,12 @@
 <tiles-definitions>
 	<definition name="base" template="/WEB-INF/views/templates/layout.jsp">
 		<put-attribute name="title" value="Tour Of All" />
-		<put-attribute name="header" value=""/>
+		<put-attribute name="header" value="/WEB-INF/views/templates/header.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/templates/footer.jsp"/>
 	</definition>
 		
-	<definition name="intro" extends="base">
-		<put-attribute name="header" value="/WEB-INF/views/templates/intro-header.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/intro.jsp"/>
+	<definition name="home" extends="base">
+		
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>
 	</definition>
 </tiles-definitions>
