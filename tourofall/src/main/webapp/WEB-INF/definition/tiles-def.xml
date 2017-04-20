@@ -8,7 +8,14 @@
 	</definition>
 		
 	<definition name="home" extends="base">
-		
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>
+	</definition>
+	
+	<definition name="recommendation" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/recommendation.jsp"/>
+	</definition>
+	
+	<definition name="evalmore" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/evalmore.jsp"/>
 	</definition>
 </tiles-definitions>

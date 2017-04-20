@@ -10,4 +10,14 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
+	
+	@RequestMapping(value="/recommendation",method=RequestMethod.GET)
+	public String recommendation(){
+		return "recommendation";
+	}
+	
+	@RequestMapping(value="/evalmore",method=RequestMethod.GET)
+	public String evalmore(){
+		return "evalmore";
+	}
 }
