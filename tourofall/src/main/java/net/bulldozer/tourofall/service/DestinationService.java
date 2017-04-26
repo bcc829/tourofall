@@ -1,23 +1,28 @@
 package net.bulldozer.tourofall.service;
 
 import java.net.URI;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import net.bulldozer.tourofall.dao.DestinationDao;
+import net.bulldozer.tourofall.model.Comment;
 import net.bulldozer.tourofall.model.TourJSONUtilities;
 import net.bulldozer.tourofall.model.TourUriUtilities;
 
 @Service
 public class DestinationService {
-	final String baseUrl = "api.visitkorea.or.kr";
+	
 	@Autowired
-	RestTemplate restTemplate;
+	private RestTemplate restTemplate;
 	
+	@Autowired
+	private DestinationDao dao;
 	
-	public JSONObject getDestInfo(String contentId) throws Exception{
+	public JSONObject getDestInfo(int contentId) throws Exception{
 		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("detailCommon")
 				.queryParam("contentId"     , contentId)
                 .queryParam("defaultYN"     , (String) "Y")
@@ -32,6 +37,9 @@ public class DestinationService {
 		
 		String jsonResult = restTemplate.getForObject(uri, String.class);
 		return TourJSONUtilities.getTourItems(jsonResult);
-		
 	}
+	public List<Comment> getCommentsByItemId(int itemId){
+		return dao.getCommentsByItemId(itemId);
+	}
+	
 }

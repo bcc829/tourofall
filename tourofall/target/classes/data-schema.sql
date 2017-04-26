@@ -16,3 +16,17 @@ create table user_roles (
   unique key uni_id_role (role,user_id),
   constraint fk_user_roles foreign key (user_id) references users (user_id)
 );
+
+
+create table comments(
+	comment_id int(11) auto_increment,
+	title varchar(45) not null,
+	content varchar(255) not null,
+	created_date timestamp default current_timestamp not null,
+	visitor int(11) default 0 not null,
+	score double default 0 not null,
+	user_id int(11) not null,
+	item_id int(11) not null,
+	constraint pk_comments primary key(comment_id),
+	constraint fk_comments foreign key(user_id) references users(user_id)
+);

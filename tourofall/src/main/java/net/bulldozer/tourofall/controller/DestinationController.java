@@ -16,12 +16,13 @@ public class DestinationController {
 	private DestinationService service;
 	
 	@RequestMapping("/{contentId}")
-	public String showDestInfo(@PathVariable String contentId,Model model) throws Exception{
+	public String showDestInfo(@PathVariable int contentId,Model model) throws Exception{
 		JSONObject body = service.getDestInfo(contentId);
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
 			JSONObject item = (JSONObject) items.get("item");
 			model.addAttribute("destInfo", item);
+			model.addAttribute("comments", service.getCommentsByItemId(contentId));
 		}
 		
 		return "destinfo";
