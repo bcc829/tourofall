@@ -22,4 +22,7 @@
 	<definition name="search" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/search.jsp"/>
 	</definition>
+	<definition name="destinfo" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/destinfo.jsp"/>
+	</definition>
 </tiles-definitions>

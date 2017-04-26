@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,17 +22,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		auth
 			.jdbcAuthentication()
 				.dataSource(dataSource)
-				.usersByUsernameQuery("select id,password,enabled from users where id=?")
-				.authoritiesByUsernameQuery("select id, role from userroles where id=?");
+				.usersByUsernameQuery("select user_id,password,enabled from users where username=?")
+				.authoritiesByUsernameQuery("select user_id, role from user_roles where user_id=?");
 		
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
+		CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+		http.addFilterBefore(filter,CsrfFilter.class)
 			.authorizeRequests()
 				.antMatchers("/recommendation").authenticated()
 				.antMatchers("/evalmore").authenticated()
+				.antMatchers("/community/write").authenticated()
 				.anyRequest().permitAll()
 			.and()
 			.formLogin();

@@ -16,16 +16,21 @@ import net.bulldozer.tourofall.service.SearchService;
 public class SearchController {
 	@Autowired
 	private SearchService service;
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public String search(@RequestParam(value="s", required = false) String query,Model model) throws Exception{
-		if(query != null){
+
+	@RequestMapping(method = RequestMethod.GET)
+	public String search(@RequestParam(value = "s", required = false) String query, Model model) throws Exception {
+		if (query != null) {
 			JSONObject body = service.getSearchResult(query);
-			JSONObject items = (JSONObject)body.get("items");
-			JSONArray item = (JSONArray)items.get("item");
-			model.addAttribute("totalCount",body.get("totalCount"));
-			model.addAttribute("items", item);
-			model.addAttribute("pageNo", body.get("pageNo"));
+			if (body != null) {
+				JSONObject items = (JSONObject) body.get("items");
+				if (((Long)body.get("totalCount")) != 1) {
+					JSONArray item = (JSONArray) items.get("item");
+					model.addAttribute("items", item);
+				} else {
+					JSONObject item = (JSONObject) items.get("item");
+					model.addAttribute("item", item);
+				}
+			}
 		}
 		return "search";
 	}
