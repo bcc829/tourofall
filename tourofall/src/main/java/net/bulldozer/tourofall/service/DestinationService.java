@@ -41,5 +41,8 @@ public class DestinationService {
 	public List<Comment> getCommentsByItemId(int itemId){
 		return dao.getCommentsByItemId(itemId);
 	}
+	public boolean addComment(Comment comment){
+		return dao.addComment(comment);
+	}
 	
 }

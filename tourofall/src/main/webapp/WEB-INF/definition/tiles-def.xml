@@ -25,4 +25,8 @@
 	<definition name="destinfo" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/destinfo.jsp"/>
 	</definition>
+	
+	<definition name="review" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/review.jsp"/>
+	</definition>
 </tiles-definitions>

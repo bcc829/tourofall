@@ -18,7 +18,7 @@
 					<c:forEach var="item" items="${items}">
 						<tr>
 							<td>${item.title}</td>
-							<td><a href="<c:url value="/dest/${item.contentid}"/>"><img
+							<td><a href="<c:url value="/dest/info/${item.contentid}"/>"><img
 									style="width: 100px; height: 100px" alt="이미지 없음"
 									src="${item.firstimage}"></a></td>
 						</tr>
@@ -34,7 +34,7 @@
 					<tr>
 						<td>${item.title}</td>
 						<td>
-							<a href="<c:url value="/dest/${item.contentid}"/>">
+							<a href="<c:url value="/dest/info/${item.contentid}"/>">
 								<img style="width: 100px; height: 100px" alt="이미지 없음"src="${item.firstimage}">
 							</a>
 						</td>

@@ -39,4 +39,14 @@ public class DestinationDao {
 			
 		});
 	}
+
+	public boolean addComment(Comment comment) {
+		String title = comment.getTitle();
+		String content = comment.getContent();
+		double score = comment.getScore();
+		int user_id = comment.getUserId();
+		int item_id = comment.getItemId();
+		
+		return (jo.update("insert into comments(title, content, score, user_id, item_id) values(?,?,?,?,?)", new Object[]{title, content, score, user_id, item_id}) == 1);
+	}
 }
