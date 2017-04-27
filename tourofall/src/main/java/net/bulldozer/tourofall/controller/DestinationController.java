@@ -29,7 +29,7 @@ public class DestinationController {
 		
 		return "destinfo";
 	}
-	@RequestMapping(value="/info/{itemId}/review",method=RequestMethod.GET)
+	@RequestMapping(value="/info/review/{itemId}",method=RequestMethod.GET)
 	public String showReviewForm(@PathVariable int itemId,Model model){
 		Comment comment = new Comment();
 		comment.setItemId(itemId);
