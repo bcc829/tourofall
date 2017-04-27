@@ -6,8 +6,8 @@
 		<table>
 			<tr>
 				<td>작성자</td>
-				<td>kmgeu123</td>
-				<sf:hidden path="userId" value="1"/>
+				<td>${username}</td>
+				
 				<sf:hidden path="itemId"/>
 			</tr>
 			<tr>

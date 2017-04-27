@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.bulldozer.tourofall.model.FakeUser;
 import net.bulldozer.tourofall.model.Review;
 import net.bulldozer.tourofall.service.DestinationService;
 
@@ -36,14 +37,18 @@ public class DestinationController {
 		Review review = new Review();
 		review.setItemId(itemId);
 		model.addAttribute("review", review);
+		model.addAttribute("username", service.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName())).getUsername());
 		return "review";
 	}
 	@RequestMapping(value="/info/review",method=RequestMethod.POST)
-	public String processReview(Review review){
-		if(!service.addReview(review)){
-			System.out.println("review post error");
-			return "redirect:/dest/info/"+review.getItemId() + "/review";
-		}
+	public String processReview(Review review , HttpServletRequest request){
+		FakeUser user = service.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+		review.setUser(user);
+		service.addReview(review);
+//		if(!service.addReview(review)){
+//			System.out.println("review post error");
+//			return "redirect:/dest/info/review/"+review.getItemId();
+//		}
 		return "redirect:/dest/info/"+review.getItemId();
 	}
 }

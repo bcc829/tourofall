@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import net.bulldozer.tourofall.dao.DestinationDao;
+import net.bulldozer.tourofall.model.FakeUser;
 import net.bulldozer.tourofall.model.Review;
 import net.bulldozer.tourofall.model.TourJSONUtilities;
 import net.bulldozer.tourofall.model.TourUriUtilities;
@@ -38,11 +39,14 @@ public class DestinationService {
 		String jsonResult = restTemplate.getForObject(uri, String.class);
 		return TourJSONUtilities.getTourItems(jsonResult);
 	}
+	public FakeUser getUserByUserId(int userId){
+		return dao.getUserByUserId(userId);
+	}
 	public List<Review> getReviewsByItemId(int itemId){
 		return dao.getReviewsByItemId(itemId);
 	}
-	public boolean addReview(Review review){
-		return dao.addReview(review);
+	public void addReview(Review review){
+		dao.addReview(review);
 	}
 	
 }

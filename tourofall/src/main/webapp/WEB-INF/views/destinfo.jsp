@@ -22,7 +22,7 @@
 			<tr>
 				<td>
 					<h3>${review.title}</h3>
-					<p>${review.userId}</p>
+					<p>${review.user.username}</p>
 					<p>평점 : ${review.score}</p>
 					<p>${review.content}</p>
 				</td>

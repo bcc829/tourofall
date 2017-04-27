@@ -2,16 +2,42 @@ package net.bulldozer.tourofall.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="reviews")
 public class Review {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="review_id")
 	private int id;
+	
 	private String title;
 	private String content;
-	private Date createdDate;
+	
+	@Column(name="created_date")
+	private Date createdDate = new Date();
+	
 	private int visitor;
 	private double score;
-	private int userId;
+	
+	@JoinColumn(name="user_id")
+	@ManyToOne(cascade=CascadeType.ALL)
+	private FakeUser user;
+	
+	@Column(name="item_id")
 	private int itemId;
+	
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -48,11 +74,11 @@ public class Review {
 	public void setScore(double score) {
 		this.score = score;
 	}
-	public int getUserId() {
-		return userId;
+	public FakeUser getUser() {
+		return user;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser(FakeUser user) {
+		this.user = user;
 	}
 	public int getItemId() {
 		return itemId;
