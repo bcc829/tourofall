@@ -2,7 +2,8 @@ package net.bulldozer.tourofall.model;
 
 import java.util.Date;
 
-public class Comment {
+
+public class Review {
 	private int id;
 	private String title;
 	private String content;
@@ -11,9 +12,6 @@ public class Comment {
 	private double score;
 	private int userId;
 	private int itemId;
-	
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -62,6 +60,4 @@ public class Comment {
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
-	
-	
 }

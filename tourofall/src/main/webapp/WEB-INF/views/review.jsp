@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <div>
-	<sf:form commandName="comment" action="${pageContext.request.contextPath}/dest/info/review">
+	<sf:form commandName="review" action="${pageContext.request.contextPath}/dest/info/review">
 		<table>
 			<tr>
 				<td>작성자</td>

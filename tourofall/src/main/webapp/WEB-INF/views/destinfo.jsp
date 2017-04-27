@@ -18,13 +18,13 @@
 		<tr>
 			<th colspan="2">리뷰</th>
 		</tr>
-		<c:forEach var="comment" items="${comments}">
+		<c:forEach var="review" items="${reviews}">
 			<tr>
 				<td>
-					<h3>${comment.title}</h3>
-					<p>${comment.userId}</p>
-					<p>평점 : ${comment.score}</p>
-					<p>${comment.content}</p>
+					<h3>${review.title}</h3>
+					<p>${review.userId}</p>
+					<p>평점 : ${review.score}</p>
+					<p>${review.content}</p>
 				</td>
 			</tr>
 		</c:forEach>

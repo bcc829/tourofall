@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import net.bulldozer.tourofall.dao.DestinationDao;
-import net.bulldozer.tourofall.model.Comment;
+import net.bulldozer.tourofall.model.Review;
 import net.bulldozer.tourofall.model.TourJSONUtilities;
 import net.bulldozer.tourofall.model.TourUriUtilities;
 
@@ -38,11 +38,11 @@ public class DestinationService {
 		String jsonResult = restTemplate.getForObject(uri, String.class);
 		return TourJSONUtilities.getTourItems(jsonResult);
 	}
-	public List<Comment> getCommentsByItemId(int itemId){
-		return dao.getCommentsByItemId(itemId);
+	public List<Review> getReviewsByItemId(int itemId){
+		return dao.getReviewsByItemId(itemId);
 	}
-	public boolean addComment(Comment comment){
-		return dao.addComment(comment);
+	public boolean addReview(Review review){
+		return dao.addReview(review);
 	}
 	
 }

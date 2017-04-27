@@ -18,8 +18,8 @@ create table user_roles (
 );
 
 
-create table comments(
-	comment_id int(11) auto_increment,
+create table reviews(
+	review_id int(11) auto_increment,
 	title varchar(45) not null,
 	content varchar(255) not null,
 	created_date timestamp default current_timestamp not null,
@@ -27,6 +27,6 @@ create table comments(
 	score double default 0 not null,
 	user_id int(11) not null,
 	item_id int(11) not null,
-	constraint pk_comments primary key(comment_id),
-	constraint fk_comments foreign key(user_id) references users(user_id)
+	constraint pk_reviews primary key(review_id),
+	constraint fk_reviews foreign key(user_id) references users(user_id)
 );
