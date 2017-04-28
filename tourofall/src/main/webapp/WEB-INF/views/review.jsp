@@ -7,12 +7,11 @@
 			<tr>
 				<td>작성자</td>
 				<td>${username}</td>
-				
 				<sf:hidden path="itemId"/>
 			</tr>
 			<tr>
 				<td>제목</td>
-				<td><sf:input path="title"/></td>
+				<td><sf:input path="title"/><sf:errors path="title"/></td>
 			</tr>
 			<tr>
 				<td>평점</td>
@@ -20,7 +19,7 @@
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td><sf:textarea cols="15" rows="15" path="content"/></td>
+				<td><sf:textarea cols="15" rows="15" path="content"/> <sf:errors path="content" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="저장" /></td>

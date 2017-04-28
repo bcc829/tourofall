@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="reviews")
@@ -20,8 +24,16 @@ public class Review {
 	@Column(name="review_id")
 	private int id;
 	
+	
+	@NotEmpty(message="제목을 입력해주세요")
+	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
 	private String title;
+	
+	
+	@NotEmpty(message="내용을 입력해주세요")
+	@Size(max=255, message = "최대 255까지 입력 가능합니다.")
 	private String content;
+	
 	
 	@Column(name="created_date")
 	private Date createdDate = new Date();
