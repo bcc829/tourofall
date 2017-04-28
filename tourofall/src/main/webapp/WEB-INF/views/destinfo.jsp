@@ -16,15 +16,16 @@
 			<td colspan="2">${destInfo.overview}</td>
 		</tr>
 		<tr>
-			<th colspan="2">리뷰</th>
+			<th colspan="2"><h2>리뷰</h2></th>
 		</tr>
 		<c:forEach var="review" items="${reviews}">
 			<tr>
 				<td>
-					<h3>${review.title}</h3>
-					<p>${review.user.username}</p>
+					<h3>제목 : ${review.title}</h3>
+					<p>작성자 : ${review.user.username}</p>
+					<p>작성일자 : ${review.createdDate.year+1900}년${review.createdDate.month+1}월${review.createdDate.date}일</p>
 					<p>평점 : ${review.score}</p>
-					<p>${review.content}</p>
+					<p>내용 : ${review.content}</p>
 				</td>
 			</tr>
 		</c:forEach>

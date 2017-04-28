@@ -3,7 +3,9 @@ create table users (
   username varchar(45) not null,
   password varchar(255) not null,
   name varchar(45) not null,
-  enabled tinyint not null default 1 ,
+  gender tinyint not null,
+  birth timestamp not null,
+  enabled tinyint not null default 1,
   constraint uc_users unique key(username),
   constraint pk_users primary key(user_id)
 );

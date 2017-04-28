@@ -29,4 +29,8 @@
 	<definition name="review" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/review.jsp"/>
 	</definition>
+	
+	<definition name="join" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/join.jsp"/>
+	</definition>
 </tiles-definitions>

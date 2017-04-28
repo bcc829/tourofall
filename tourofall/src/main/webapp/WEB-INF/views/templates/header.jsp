@@ -6,4 +6,5 @@
 	<a href="<c:url value="/recommendation"/>">추천여행지</a>
 	<a href="<c:url value="/evalmore"/>">추천더하기</a>
 	<a href="<c:url value="/login"/>">로그인</a>
+	<a href="<c:url value="/join"/>">회원가입</a>
 </div>

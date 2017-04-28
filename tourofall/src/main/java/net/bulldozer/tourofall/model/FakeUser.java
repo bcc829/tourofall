@@ -1,5 +1,7 @@
 package net.bulldozer.tourofall.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +15,8 @@ public class FakeUser {
 	private int id;
 	private String username;
 	private String name;
-	
+	private boolean gender;
+	private Date birth;
 	
 	public int getId() {
 		return id;
@@ -33,4 +36,17 @@ public class FakeUser {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public boolean isGender() {
+		return gender;
+	}
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
+	public Date getBirth() {
+		return birth;
+	}
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
+	
 }
