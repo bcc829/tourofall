@@ -58,10 +58,7 @@ public class DestinationController {
 		FakeUser user = service.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
 		review.setUser(user);
 		service.addReview(review);
-//		if(!service.addReview(review)){
-//			System.out.println("review post error");
-//			return "redirect:/dest/info/review/"+review.getItemId();
-//		}
+
 		return "redirect:/dest/info/"+review.getItemId();
 	}
 }

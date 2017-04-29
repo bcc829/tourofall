@@ -3,20 +3,31 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div>
-	<sf:form commandName="newUser">
+	<sf:form commandName="user">
 		<table>
 			<tr>
 				<td>아이디</td>
-				<td><sf:input path="username" /></td>
+				<td><sf:input path="username" maxlength="45"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><sf:errors path="username" /></td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
-				<td><sf:password path="password" /></td>
+				<td><sf:password path="password" maxlength="15"/></td>
 			</tr>
-
+			<tr>
+				<td></td>
+				<td><sf:errors path="password"/></td>
+			</tr>
 			<tr>
 				<td>이름</td>
-				<td><sf:input path="name" /></td>
+				<td><sf:input path="name" maxlength="45"/> </td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><sf:errors path="name"/></td>
 			</tr>
 			<tr>
 				<td>성별</td>

@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "users")
@@ -20,10 +23,23 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private int id;
+	
+	@NotEmpty(message="ID를 입력해주세요")
+	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
 	private String username;
+	
+	@NotEmpty(message="Password를 입력해주세요")
+	@Size(max=15, message = "최대 15까지 입력 가능합니다.")
 	private String password;
+	
+	@NotEmpty(message="이름을 입력해주세요")
+	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
 	private String name;
+	
+	
 	private boolean gender;
+	
+	
 	private Date birth;
 	private boolean enabled = true;
 	

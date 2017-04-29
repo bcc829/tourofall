@@ -1,7 +1,7 @@
 create table users (
   user_id int(11) not null auto_increment,
   username varchar(45) not null,
-  password varchar(256) not null,
+  password varchar(255) not null,
   name varchar(45) not null,
   gender tinyint not null,
   birth timestamp not null,
