@@ -19,9 +19,10 @@ public class SearchService {
 	@Autowired
 	RestTemplate restTemplate;
 
-	public JSONObject getSearchResult(String query) throws Exception {
+	public JSONObject getSearchResult(String query, String pageNum) throws Exception {
 		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("searchKeyword")
 				.queryParam("keyword", URLDecoder.decode(URLEncoder.encode(query, "UTF-8"), "UTF-8"))
+				.queryParam("pageNo", pageNum)
 				.queryParam("arrange", (String) "A")
 				.queryParam("listYN", (String) "Y")
 				.build().encode().toUri();		

@@ -16,7 +16,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter{
 	@Bean
 	public TilesConfigurer tilesConfigurer(){
 		TilesConfigurer configurer = new TilesConfigurer();
-		configurer.setDefinitions(new String[]{"/WEB-INF/definition/tiles-def.xml"});
+		configurer.setDefinitions(new String[]{"/WEB-INF/tiles-definitions/tiles-def.xml","/WEB-INF/tiles-definitions/base-tiles.xml","/WEB-INF/tiles-definitions/destinfo-tiles.xml"});
 		return configurer;
 	}
 	

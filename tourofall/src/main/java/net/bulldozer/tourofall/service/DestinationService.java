@@ -23,9 +23,10 @@ public class DestinationService {
 	@Autowired
 	private DestinationDao dao;
 	
-	public JSONObject getDestInfo(int contentId) throws Exception{
+	public JSONObject getBasicInfo(int contentId, int contentTypeId) throws Exception{
 		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("detailCommon")
 				.queryParam("contentId"     , contentId)
+				.queryParam("contentTypeId"     , contentTypeId)
                 .queryParam("defaultYN"     , (String) "Y")
                 .queryParam("firstImageYN"     , (String) "Y")
                 .queryParam("areaCodeYN"     , (String) "Y")
@@ -39,6 +40,44 @@ public class DestinationService {
 		String jsonResult = restTemplate.getForObject(uri, String.class);
 		return TourJSONUtilities.getTourItems(jsonResult);
 	}
+	public JSONObject getIntroInfo(int contentId,int contentTypeId) throws Exception{
+		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("detailIntro")
+				.queryParam("contentId"     , contentId)
+				.queryParam("contentTypeId"     , contentTypeId)
+                .queryParam("introYN"     , (String) "Y")
+                .build()
+                .encode()
+                .toUri();
+		
+		String jsonResult = restTemplate.getForObject(uri, String.class);
+		return TourJSONUtilities.getTourItems(jsonResult);
+	}
+	public JSONObject getDetailInfo(int contentId,int contentTypeId) throws Exception{
+		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("detailInfo")
+				.queryParam("contentId"     , contentId)
+				.queryParam("contentTypeId"     , contentTypeId)
+                .queryParam("listYN"     , (String) "Y")
+                .build()
+                .encode()
+                .toUri();
+		
+		String jsonResult = restTemplate.getForObject(uri, String.class);
+		return TourJSONUtilities.getTourItems(jsonResult);
+	}
+	
+	public JSONObject getImageInfo(int contentId,int contentTypeId) throws Exception{
+		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("detailImage")
+				.queryParam("contentId"     , contentId)
+				.queryParam("contentTypeId"     , contentTypeId)
+                .queryParam("imageYN"     , (String) "Y")
+                .build()
+                .encode()
+                .toUri();
+		
+		String jsonResult = restTemplate.getForObject(uri, String.class);
+		return TourJSONUtilities.getTourItems(jsonResult);
+	}
+	
 	public FakeUser getUserByUserId(int userId){
 		return dao.getUserByUserId(userId);
 	}
