@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div>
 	<h2>${basicInfo.title}</h2>
-	<a href="<c:url value="/dest/info/review/${basicInfo.contentid}"/>">리뷰 쓰기</a>
+	<a href="<c:url value="/dest/info/review/${basicInfo.contenttypeid}/${basicInfo.contentid}"/>">리뷰 쓰기</a>
 	<table >
 		<tr>
 			<td ><img alt="이미지 없음" src="${basicInfo.firstimage2}"></td>

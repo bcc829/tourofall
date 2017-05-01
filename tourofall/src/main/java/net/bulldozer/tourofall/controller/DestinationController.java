@@ -22,12 +22,12 @@ import net.bulldozer.tourofall.service.DestinationService;
 @Controller
 @RequestMapping("/dest")
 public class DestinationController {
+	private static final String resPath="/{itemTypeId}/{itemId}";
 	@Autowired
 	private DestinationService service;
 
-	@RequestMapping("/info/basic")
-	public String showBasicInfo(@RequestParam(value = "contentId") int itemId,
-			@RequestParam(value = "contentTypeId") int itemTypeId, Model model) throws Exception {
+	@RequestMapping("/info/basic"+resPath)
+	public String showBasicInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
 		JSONObject body = service.getBasicInfo(itemId, itemTypeId);
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
@@ -40,9 +40,8 @@ public class DestinationController {
 		return "dest-basicinfo";
 	}
 
-	@RequestMapping("/info/intro")
-	public String showIntroInfo(@RequestParam(value = "contentId") int itemId,
-			@RequestParam(value = "contentTypeId") int itemTypeId, Model model) throws Exception {
+	@RequestMapping("/info/intro"+resPath)
+	public String showIntroInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
 		JSONObject body = service.getIntroInfo(itemId, itemTypeId);
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
@@ -83,9 +82,8 @@ public class DestinationController {
 		return "dest-introinfo-" + type;
 	}
 
-	@RequestMapping("/info/detail")
-	public String showDetailInfo(@RequestParam(value = "contentId") int itemId,
-			@RequestParam(value = "contentTypeId") int itemTypeId, Model model) throws Exception {
+	@RequestMapping("/info/detail"+resPath)
+	public String showDetailInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
 		JSONObject body = service.getDetailInfo(itemId, itemTypeId);
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
@@ -121,9 +119,8 @@ public class DestinationController {
 		return "dest-detailinfo-"+type;
 	}
 
-	@RequestMapping("/info/image")
-	public String showImageInfo(@RequestParam(value = "contentId") int itemId,
-			@RequestParam(value = "contentTypeId") int itemTypeId, Model model) throws Exception {
+	@RequestMapping("/info/image"+resPath)
+	public String showImageInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
 		JSONObject body = service.getImageInfo(itemId, itemTypeId);
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
@@ -144,10 +141,11 @@ public class DestinationController {
 		return "dest-imageinfo";
 	}
 
-	@RequestMapping(value = "/info/review/{itemId}", method = RequestMethod.GET)
-	public String showReviewForm(@PathVariable int itemId, Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/info/review/{itemTypeId}/{itemId}", method = RequestMethod.GET)
+	public String showReviewForm(@PathVariable int itemId,@PathVariable int itemTypeId, Model model, HttpServletRequest request) {
 		Review review = new Review();
 		review.setItemId(itemId);
+		review.setItemTypeId(itemTypeId);
 		if (!model.containsAttribute("review"))
 			model.addAttribute("review", review);
 
@@ -165,12 +163,12 @@ public class DestinationController {
 		if (result.hasErrors()) {
 			model.addFlashAttribute("review", review);
 			model.addFlashAttribute("org.springframework.validation.BindingResult.review", result);
-			return "redirect:/dest/info/review/" + review.getItemId();
+			return "redirect:/dest/info/review/" + review.getItemTypeId() +"/"+review.getItemId();
 		}
 		FakeUser user = service.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
 		review.setUser(user);
 		service.addReview(review);
 
-		return "redirect:/dest/info/" + review.getItemId();
+		return "redirect:/dest/info/basic/" + review.getItemTypeId() +"/"+review.getItemId();
 	}
 }

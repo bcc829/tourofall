@@ -12,7 +12,7 @@
 				<table>
 					<c:forEach var="item" items="${items}">
 						<tr>
-							<td><a href="<c:url value="/dest/info/basic?contentId=${item.contentid}&contentTypeId=${item.contenttypeid}"/>"><img
+							<td><a href="<c:url value="/dest/info/basic/${item.contenttypeid}/${item.contentid}"/>"><img
 									style="width: 100px; height: 100px" alt="이미지 없음"
 									src="${item.firstimage}"><br/>${item.title}</a></td>
 						</tr>

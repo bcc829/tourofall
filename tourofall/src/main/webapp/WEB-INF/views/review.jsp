@@ -8,6 +8,7 @@
 				<td>작성자</td>
 				<td>${username}</td>
 				<sf:hidden path="itemId"/>
+				<sf:hidden path="itemTypeId"/>
 			</tr>
 			<tr>
 				<td>제목</td>

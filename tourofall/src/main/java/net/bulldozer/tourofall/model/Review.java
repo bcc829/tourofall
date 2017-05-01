@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -47,7 +46,8 @@ public class Review {
 	
 	@Column(name="item_id")
 	private int itemId;
-	
+	@Column(name="item_type_id")
+	private int itemTypeId;
 	
 	
 	public int getId() {
@@ -98,4 +98,11 @@ public class Review {
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
+	public int getItemTypeId() {
+		return itemTypeId;
+	}
+	public void setItemTypeId(int itemTypeId) {
+		this.itemTypeId = itemTypeId;
+	}
+	
 }
