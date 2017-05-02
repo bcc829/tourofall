@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import net.bulldozer.tourofall.model.DateList;
 import net.bulldozer.tourofall.model.User;
 import net.bulldozer.tourofall.model.UserRole;
-import net.bulldozer.tourofall.service.JoinService;
+import net.bulldozer.tourofall.service.UserService;
 
 @Controller
 @RequestMapping("/join")
 public class JoinController {
 	@Autowired
-	private JoinService service;
+	private UserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String showJoinPage(Model model){
@@ -42,7 +42,7 @@ public class JoinController {
 		System.out.println("user insert in db > birth:" + user.getYear() +"/"+ user.getMonth() +"/"+ user.getDate());
 		user.setBirth();
 		
-		service.addUser(user);
+		userService.addUser(user);
 		return "redirect:/";
 	}
 }

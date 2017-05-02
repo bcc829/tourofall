@@ -6,5 +6,4 @@
 	<a href="<c:url value="/dest/info/intro/${itemTypeId}/${itemId}"/>">소개</a>
 	<a href="<c:url value="/dest/info/detail/${itemTypeId}/${itemId}"/>">상세 정보</a>
 	<a href="<c:url value="/dest/info/image/${itemTypeId}/${itemId}"/>">이미지</a>
-	
 </div>

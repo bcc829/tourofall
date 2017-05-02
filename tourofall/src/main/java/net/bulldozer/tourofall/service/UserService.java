@@ -3,15 +3,18 @@ package net.bulldozer.tourofall.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.bulldozer.tourofall.dao.JoinDao;
+import net.bulldozer.tourofall.dao.UserDao;
+import net.bulldozer.tourofall.model.FakeUser;
 import net.bulldozer.tourofall.model.User;
 
 @Service
-public class JoinService {
-
+public class UserService {
 	@Autowired
-	private JoinDao dao;
+	private UserDao dao;
 	
+	public FakeUser getUserByUserId(int userId){
+		return dao.getUserByUserId(userId);
+	}
 	public void addUser(User user){
 		dao.addUser(user);
 	}
