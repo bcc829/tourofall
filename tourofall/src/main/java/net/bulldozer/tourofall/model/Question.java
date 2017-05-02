@@ -1,13 +1,12 @@
 package net.bulldozer.tourofall.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,10 +35,10 @@ public class Question {
 	
 	@JoinColumn(name="user_id")
 	@ManyToOne(cascade=CascadeType.ALL)
-	private FakeUser user;
+	private User user;
 	
-	@OneToMany(mappedBy="question", cascade=CascadeType.ALL)
-	private List<Answer> answers = new ArrayList<Answer>();
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="question", cascade=CascadeType.ALL)
+	private List<Answer> answers;
 	
 	@Column(name="item_id")
 	private int itemId;
@@ -88,10 +87,10 @@ public class Question {
 	public void setItemTypeId(int itemTypeId) {
 		this.itemTypeId = itemTypeId;
 	}
-	public FakeUser getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(FakeUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	public List<Answer> getAnswers() {

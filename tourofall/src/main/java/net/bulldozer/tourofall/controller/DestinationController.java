@@ -40,7 +40,7 @@ public class DestinationController {
 		model.addAttribute("itemId", itemId);
 		model.addAttribute("itemTypeId", itemTypeId);
 		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
-		model.addAttribute("questionInfoes", qnAService.getQuestionInfoesByItemId(itemId));
+		model.addAttribute("questionInfoes", qnAService.getQuestionsByItemId(itemId));
 		return "dest-basicinfo";
 	}
 
@@ -55,7 +55,7 @@ public class DestinationController {
 		model.addAttribute("itemId", itemId);
 		model.addAttribute("itemTypeId", itemTypeId);
 		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
-		model.addAttribute("questionInfoes", qnAService.getQuestionInfoesByItemId(itemId));
+		model.addAttribute("questionInfoes", qnAService.getQuestionsByItemId(itemId));
 		String type = "";
 
 		switch (itemTypeId) {
@@ -106,7 +106,7 @@ public class DestinationController {
 		model.addAttribute("itemId", itemId);
 		model.addAttribute("itemTypeId", itemTypeId);
 		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
-		model.addAttribute("questionInfoes", qnAService.getQuestionInfoesByItemId(itemId));
+		model.addAttribute("questionInfoes", qnAService.getQuestionsByItemId(itemId));
 		String type = "";
 
 		switch (itemTypeId) {
@@ -143,8 +143,9 @@ public class DestinationController {
 		model.addAttribute("itemId", itemId);
 		model.addAttribute("itemTypeId", itemTypeId);
 		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
-		model.addAttribute("questionInfoes", qnAService.getQuestionInfoesByItemId(itemId));
+		model.addAttribute("questionInfoes", qnAService.getQuestionsByItemId(itemId));
 		return "dest-imageinfo";
 	}
+	
 	
 }

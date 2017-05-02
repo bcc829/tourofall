@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.bulldozer.tourofall.model.Answer;
-import net.bulldozer.tourofall.model.FakeUser;
 import net.bulldozer.tourofall.model.Question;
+import net.bulldozer.tourofall.model.User;
 import net.bulldozer.tourofall.service.QnAService;
 import net.bulldozer.tourofall.service.UserService;
 
@@ -52,7 +52,7 @@ public class QnAController {
 
 	@RequestMapping(value = "/question/write", method = RequestMethod.POST)
 	public String processRegisterQuestion(Question question, Model model, HttpServletRequest request) {
-		FakeUser user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
 		question.setUser(user);
 		qnAService.addQuestion(question);
 		return "redirect:/dest/info/basic/" + question.getItemTypeId() + "/" + question.getItemId();
@@ -61,9 +61,9 @@ public class QnAController {
 	@RequestMapping(value = "/answer/write/{questionId}", method = RequestMethod.POST)
 	public String processRegisterAnswer(@PathVariable int questionId, Answer answer, Model model,
 			HttpServletRequest request) {
-		FakeUser user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
-		answer.setUser(user);
-		answer.setQuestion(qnAService.getQuestionInfoById(questionId));
+		Question question = qnAService.getQuestionById(questionId);
+		answer.setUser(question.getUser());
+		answer.setQuestion(question);
 		qnAService.addAnswer(answer);
 		return "redirect:/qna/question/" + questionId;
 	}

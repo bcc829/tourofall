@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import net.bulldozer.tourofall.model.FakeUser;
 import net.bulldozer.tourofall.model.Review;
+import net.bulldozer.tourofall.model.User;
 import net.bulldozer.tourofall.service.ReviewService;
 import net.bulldozer.tourofall.service.UserService;
 
@@ -50,7 +50,7 @@ public class ReviewController {
 			model.addFlashAttribute("org.springframework.validation.BindingResult.review", result);
 			return "redirect:/dest/info/review/write/" + review.getItemTypeId() +"/"+review.getItemId();
 		}
-		FakeUser user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
 		review.setUser(user);
 		reviewService.addReview(review);
 

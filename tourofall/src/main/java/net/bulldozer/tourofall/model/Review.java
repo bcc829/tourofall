@@ -42,7 +42,7 @@ public class Review {
 	
 	@JoinColumn(name="user_id")
 	@ManyToOne(cascade=CascadeType.ALL)
-	private FakeUser user;
+	private User user;
 	
 	@Column(name="item_id")
 	private int itemId;
@@ -86,10 +86,10 @@ public class Review {
 	public void setScore(double score) {
 		this.score = score;
 	}
-	public FakeUser getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(FakeUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	public int getItemId() {

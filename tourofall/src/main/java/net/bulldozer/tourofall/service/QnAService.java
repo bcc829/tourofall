@@ -8,21 +8,17 @@ import org.springframework.stereotype.Controller;
 import net.bulldozer.tourofall.dao.QnADao;
 import net.bulldozer.tourofall.model.Answer;
 import net.bulldozer.tourofall.model.Question;
-import net.bulldozer.tourofall.model.QuestionInfo;
 
 @Controller
 public class QnAService {
 	@Autowired
 	private QnADao dao;
 	
-	public List<QuestionInfo> getQuestionInfoesByItemId(int itemId) {
-		return dao.getQuestionInfoesByItemId(itemId);
+	public List<Question> getQuestionsByItemId(int itemId) {
+		return dao.getQuestionsByItemId(itemId);
 	}
-	public Question getQuestionById(int questionId) {
+	public Question getQuestionById(int questionId){
 		return dao.getQuestionById(questionId);
-	}
-	public QuestionInfo getQuestionInfoById(int questionId){
-		return dao.getQuestionInfoById(questionId);
 	}
 	public void addQuestion(Question question) {
 		dao.addQuestion(question);

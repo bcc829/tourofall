@@ -27,13 +27,13 @@ public class Answer {
 	
 	
 	@JoinColumn(name="user_id")
-	@ManyToOne(cascade=CascadeType.MERGE)
-	private FakeUser user;
+	@ManyToOne(cascade=CascadeType.ALL)
+	private User user;
 	
 	
 	@JoinColumn(name="question_id")
-	@ManyToOne(cascade=CascadeType.MERGE)
-	private QuestionInfo question;
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Question question;
 
 	
 	public int getId() {
@@ -60,19 +60,19 @@ public class Answer {
 		this.createdDate = createdDate;
 	}
 
-	public FakeUser getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(FakeUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	public QuestionInfo getQuestion() {
+	public Question getQuestion() {
 		return question;
 	}
 
-	public void setQuestion(QuestionInfo question) {
+	public void setQuestion(Question question) {
 		this.question = question;
 	}
 }

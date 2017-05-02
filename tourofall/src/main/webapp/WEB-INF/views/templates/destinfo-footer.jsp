@@ -5,7 +5,7 @@
 	<table>
 		<tr>
 			<th><h3>리뷰</h3></th>
-			<td><a href="<c:url value="/review/write/${basicInfo.contenttypeid}/${basicInfo.contentid}"/>">리뷰 작성하기</a></td>
+			<td><a href="<c:url value="/review/write/${itemTypeId}/${itemId}"/>">리뷰 작성하기</a></td>
 		</tr>
 		<c:forEach var="review" items="${reviews}">
 			<tr>
@@ -21,7 +21,7 @@
 		</c:forEach>
 		<tr>
 			<th><h3>QnA</h3></th>
-			<td><a href="<c:url value="/qna/question/write/${basicInfo.contenttypeid}/${basicInfo.contentid}"/>">질문 작성하기</a></td>
+			<td><a href="<c:url value="/qna/question/write/${itemTypeId}/${itemId}"/>">질문 작성하기</a></td>
 		</tr>
 		<tr>
 			<c:forEach var="questionInfo" items="${questionInfoes}">

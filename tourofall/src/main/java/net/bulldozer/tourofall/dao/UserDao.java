@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.bulldozer.tourofall.model.FakeUser;
 import net.bulldozer.tourofall.model.User;
 
 @Repository
@@ -15,9 +14,9 @@ public class UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public FakeUser getUserByUserId(int id){
+	public User getUserByUserId(int id){
 		Session session = sessionFactory.getCurrentSession();
-		return session.get(FakeUser.class, id);
+		return session.get(User.class, id);
 	}
 	public void addUser(User user){
 		Session session = sessionFactory.getCurrentSession();
