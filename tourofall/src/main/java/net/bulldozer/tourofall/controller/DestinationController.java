@@ -12,10 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.bulldozer.tourofall.model.Answer;
 import net.bulldozer.tourofall.model.FakeUser;
+import net.bulldozer.tourofall.model.Question;
 import net.bulldozer.tourofall.model.Review;
 import net.bulldozer.tourofall.service.DestinationService;
 
@@ -37,6 +38,7 @@ public class DestinationController {
 		model.addAttribute("itemId", itemId);
 		model.addAttribute("itemTypeId", itemTypeId);
 		model.addAttribute("reviews", service.getReviewsByItemId(itemId));
+		model.addAttribute("questionInfoes", service.getQuestionInfoesByItemId(itemId));
 		return "dest-basicinfo";
 	}
 
@@ -141,7 +143,7 @@ public class DestinationController {
 		return "dest-imageinfo";
 	}
 
-	@RequestMapping(value = "/info/review/{itemTypeId}/{itemId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/info/review/write/{itemTypeId}/{itemId}", method = RequestMethod.GET)
 	public String showReviewForm(@PathVariable int itemId,@PathVariable int itemTypeId, Model model, HttpServletRequest request) {
 		Review review = new Review();
 		review.setItemId(itemId);
@@ -154,21 +156,59 @@ public class DestinationController {
 		}
 		model.addAttribute("username",
 				service.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName())).getUsername());
-		return "review";
+		return "review_write";
 	}
 
-	@RequestMapping(value = "/info/review", method = RequestMethod.POST)
-	public String processReview(@Valid Review review, BindingResult result, RedirectAttributes model,
+	@RequestMapping(value = "/info/review/write", method = RequestMethod.POST)
+	public String processRegisterReview(@Valid Review review, BindingResult result, RedirectAttributes model,
 			HttpServletRequest request) {
 		if (result.hasErrors()) {
 			model.addFlashAttribute("review", review);
 			model.addFlashAttribute("org.springframework.validation.BindingResult.review", result);
-			return "redirect:/dest/info/review/" + review.getItemTypeId() +"/"+review.getItemId();
+			return "redirect:/dest/info/review/write/" + review.getItemTypeId() +"/"+review.getItemId();
 		}
 		FakeUser user = service.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
 		review.setUser(user);
 		service.addReview(review);
 
 		return "redirect:/dest/info/basic/" + review.getItemTypeId() +"/"+review.getItemId();
+	}
+	@RequestMapping(value="/info/qna/question/{questionId}",method=RequestMethod.GET)
+	public String showQuestionPage(@PathVariable int questionId,Model model){
+		model.addAttribute("question", service.getQuestionById(questionId));
+		model.addAttribute("answer", new Answer());
+		return "question";
+	}
+	@RequestMapping(value="/info/qna/question/write/{itemTypeId}/{itemId}",method=RequestMethod.GET)
+	public String showQuestionForm(@PathVariable int itemId,@PathVariable int itemTypeId, Model model, HttpServletRequest request){
+		Question question = new Question();
+		question.setItemId(itemId);
+		question.setItemTypeId(itemTypeId);
+		
+		if (!model.containsAttribute("question"))
+			model.addAttribute("question", question);
+
+		if (!model.containsAttribute("result")) {
+			System.out.println("Binding result not rendered");
+		}
+		model.addAttribute("username",
+				service.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName())).getUsername());
+		
+		return "question_write";
+	}
+	@RequestMapping(value="/info/qna/question/write",method=RequestMethod.POST)
+	public String processRegisterQuestion(Question question, Model model,HttpServletRequest request){
+		FakeUser user = service.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+		question.setUser(user);
+		service.addQuestion(question);
+		return "redirect:/dest/info/basic/" + question.getItemTypeId() +"/"+question.getItemId();
+	}
+	@RequestMapping(value="/info/qna/answer/write/{questionId}",method=RequestMethod.POST)
+	public String processRegisterAnswer(@PathVariable int questionId, Answer answer, Model model,HttpServletRequest request){
+		FakeUser user = service.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+		answer.setUser(user);
+		answer.setQuestion(service.getQuestionInfoById(questionId));
+		service.addAnswer(answer);
+		return "redirect:/dest/info/qna/question/"+ questionId;
 	}
 }

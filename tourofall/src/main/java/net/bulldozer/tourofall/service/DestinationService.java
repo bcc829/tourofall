@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import net.bulldozer.tourofall.dao.DestinationDao;
+import net.bulldozer.tourofall.model.Answer;
 import net.bulldozer.tourofall.model.FakeUser;
+import net.bulldozer.tourofall.model.Question;
+import net.bulldozer.tourofall.model.QuestionInfo;
 import net.bulldozer.tourofall.model.Review;
 import net.bulldozer.tourofall.model.TourJSONUtilities;
 import net.bulldozer.tourofall.model.TourUriUtilities;
@@ -86,6 +89,21 @@ public class DestinationService {
 	}
 	public void addReview(Review review){
 		dao.addReview(review);
+	}
+	public List<QuestionInfo> getQuestionInfoesByItemId(int itemId) {
+		return dao.getQuestionInfoesByItemId(itemId);
+	}
+	public Question getQuestionById(int questionId) {
+		return dao.getQuestionById(questionId);
+	}
+	public QuestionInfo getQuestionInfoById(int questionId){
+		return dao.getQuestionInfoById(questionId);
+	}
+	public void addQuestion(Question question) {
+		dao.addQuestion(question);
+	}
+	public void addAnswer(Answer answer) {
+		dao.addAnswer(answer);
 	}
 	
 }

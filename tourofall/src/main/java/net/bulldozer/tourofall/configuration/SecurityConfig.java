@@ -36,7 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 				.antMatchers("/recommendation").authenticated()
 				.antMatchers("/evalmore").authenticated()
-				.antMatchers("/dest/info/review/**").authenticated()
+				.antMatchers("/dest/info/review/write/**").authenticated()
+				.antMatchers("/dest/info/qna/question/write/**").authenticated()
+				.antMatchers("/dest/info/qna/question/answer/**").authenticated()
 				.anyRequest().permitAll()
 			.and()
 			.formLogin();

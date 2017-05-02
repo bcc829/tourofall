@@ -17,13 +17,19 @@
 	<definition name="search" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/search.jsp"/>
 	</definition>
-	<definition name="review" extends="base">
-		<put-attribute name="body" value="/WEB-INF/views/review.jsp"/>
+	<definition name="review_write" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/review_write.jsp"/>
+	</definition>
+	<definition name="question_write" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/question_write.jsp"/>
 	</definition>
 	<definition name="join" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/join.jsp"/>
 	</definition>
 	
+	<definition name="question" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/question.jsp"/>
+	</definition>
 	
 	<!-- destinfo template extends page -->
 	<definition name="dest-basicinfo" extends="base">
@@ -73,4 +79,6 @@
 	<definition name="dest-detailinfo-lodge" extends="base">
 		<put-attribute name="body" value="detailinfo-lodge"/>
 	</definition>
+	
+	
 </tiles-definitions>
