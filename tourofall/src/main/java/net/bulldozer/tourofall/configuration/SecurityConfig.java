@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
@@ -23,8 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.jdbcAuthentication()
 				.dataSource(dataSource)
 				.usersByUsernameQuery("select user_id,password,enabled from users where username=?")
-				.authoritiesByUsernameQuery("select user_id, role from user_roles where user_id=?");
-		
+				.authoritiesByUsernameQuery("select user_id, role from user_roles where user_id=?")
+				.passwordEncoder(new StandardPasswordEncoder("53cr3t"));
 	}
 
 	@Override

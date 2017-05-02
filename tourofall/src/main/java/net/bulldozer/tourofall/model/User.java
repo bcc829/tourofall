@@ -29,7 +29,7 @@ public class User {
 	private String username;
 	
 	@NotEmpty(message="Password를 입력해주세요")
-	@Size(max=15, message = "최대 15까지 입력 가능합니다.")
+	@Size(min=8, message = "최소8자 이상 입력해주세요.")
 	private String password;
 	
 	@NotEmpty(message="이름을 입력해주세요")

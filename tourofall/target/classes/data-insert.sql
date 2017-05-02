@@ -1,6 +1,6 @@
-INSERT INTO users(username,password,name,gender,birth,enabled) VALUES ('kmgeu123','1234','°­¹Î±Ô',false,'1992-11-25', true);
-INSERT INTO users(username,password,name,gender,birth,enabled) VALUES ('mkyong','123456','±è¹Ì°æ',true,'1980-4-28', true);
-INSERT INTO users(username,password,name,gender,birth,enabled) VALUES ('alex','123456','¾Ë·º½º',false,'1990-9-6', true);
+INSERT INTO users(username,password,name,gender,birth,enabled) VALUES ('kmgeu123','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','°­¹Î±Ô',false,'1992-11-25', true);
+INSERT INTO users(username,password,name,gender,birth,enabled) VALUES ('mkyong','292fbb4a203bff6b33654a9162a717bfc0f080e8af00e717ac4b817d3af10d2adeae0c82c3db60dd','±è¹Ì°æ',true,'1980-4-28', true);
+INSERT INTO users(username,password,name,gender,birth,enabled) VALUES ('alex','292fbb4a203bff6b33654a9162a717bfc0f080e8af00e717ac4b817d3af10d2adeae0c82c3db60dd','¾Ë·º½º',false,'1990-9-6', true);
 INSERT INTO user_roles (user_id, role) VALUES (1, 'ROLE_USER');
 INSERT INTO user_roles (user_id, role) VALUES (2, 'ROLE_ADMIN');
 INSERT INTO user_roles (user_id, role) VALUES (3, 'ROLE_USER');

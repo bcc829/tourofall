@@ -14,6 +14,8 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
@@ -61,6 +63,9 @@ public class RootConfig {
 		return lsfb;
 	}
 	
-	
+	@Bean
+	public PasswordEncoder passwordEncoder(){
+		return new StandardPasswordEncoder("53cr3t");
+	}
 }
  
