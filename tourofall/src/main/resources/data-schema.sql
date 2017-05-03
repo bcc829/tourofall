@@ -29,6 +29,7 @@ create table reviews(
 	user_id int(11) not null,
 	item_id int(11) not null,
 	item_type_id int(11) not null,
+	item_title varchar(45) not null,
 	constraint pk_reviews primary key(review_id),
 	constraint fk_reviews foreign key(user_id) references users(user_id)
 );

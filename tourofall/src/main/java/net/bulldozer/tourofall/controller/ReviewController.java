@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import net.bulldozer.tourofall.model.Review;
 import net.bulldozer.tourofall.model.User;
 import net.bulldozer.tourofall.service.ReviewService;
+import net.bulldozer.tourofall.service.TourApiService;
 import net.bulldozer.tourofall.service.UserService;
 
 @Controller
@@ -25,6 +26,9 @@ public class ReviewController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TourApiService tourApiService;
 	
 	@RequestMapping(value = "/write/{itemTypeId}/{itemId}", method = RequestMethod.GET)
 	public String showReviewForm(@PathVariable int itemId,@PathVariable int itemTypeId, Model model, HttpServletRequest request) {
@@ -44,7 +48,7 @@ public class ReviewController {
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String processRegisterReview(@Valid Review review, BindingResult result, RedirectAttributes model,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws Exception {
 		if (result.hasErrors()) {
 			model.addFlashAttribute("review", review);
 			model.addFlashAttribute("org.springframework.validation.BindingResult.review", result);
@@ -52,8 +56,8 @@ public class ReviewController {
 		}
 		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
 		review.setUser(user);
+		review.setItemTitle(tourApiService.getItemTitle(review.getItemId()));
 		reviewService.addReview(review);
-
 		return "redirect:/dest/info/basic/" + review.getItemTypeId() +"/"+review.getItemId();
 	}
 }

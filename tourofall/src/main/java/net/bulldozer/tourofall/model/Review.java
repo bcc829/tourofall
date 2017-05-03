@@ -48,6 +48,8 @@ public class Review {
 	@Column(name="item_type_id")
 	private int itemTypeId;
 	
+	@Column(name="item_title")
+	private String itemTitle;
 	
 	public int getId() {
 		return id;
@@ -98,4 +100,10 @@ public class Review {
 		this.itemTypeId = itemTypeId;
 	}
 	
+	public String getItemTitle() {
+		return itemTitle;
+	}
+	public void setItemTitle(String itemTitle) {
+		this.itemTitle = itemTitle;
+	}
 }

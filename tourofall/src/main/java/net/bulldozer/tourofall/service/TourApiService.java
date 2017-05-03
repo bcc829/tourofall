@@ -14,7 +14,7 @@ import net.bulldozer.tourofall.model.TourUriUtilities;
 public class TourApiService {
 	@Autowired
 	private RestTemplate restTemplate;
-	public String getTitle(int contentId) throws Exception{
+	public String getItemTitle(int contentId) throws Exception{
 		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("detailCommon")
 				.queryParam("contentId"     , contentId)
                 .queryParam("defaultYN"     , (String) "Y")
@@ -23,7 +23,9 @@ public class TourApiService {
                 .toUri();
 		
 		String jsonResult = restTemplate.getForObject(uri, String.class);
-		JSONObject item = (JSONObject)TourJSONUtilities.getTourItems(jsonResult).get("item");
+		JSONObject items = (JSONObject)(TourJSONUtilities.getTourItems(jsonResult).get("items"));
+		JSONObject item = (JSONObject)items.get("item");
+		
 		return (String)item.get("title");
 	}
 	public JSONObject getBasicInfo(int contentId, int contentTypeId) throws Exception{
