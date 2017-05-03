@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.antMatchers("/review/write/**").authenticated()
 				.antMatchers("/qna/question/write/**").authenticated()
 				.antMatchers("/qna/answer/write/**").authenticated()
+				.antMatchers("/myinfo/**").authenticated()
 				.anyRequest().permitAll()
 			.and()
 			.formLogin();

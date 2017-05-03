@@ -11,10 +11,21 @@ import net.bulldozer.tourofall.model.TourJSONUtilities;
 import net.bulldozer.tourofall.model.TourUriUtilities;
 
 @Service
-public class DestinationService {
+public class TourApiService {
 	@Autowired
 	private RestTemplate restTemplate;
-	
+	public String getTitle(int contentId) throws Exception{
+		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("detailCommon")
+				.queryParam("contentId"     , contentId)
+                .queryParam("defaultYN"     , (String) "Y")
+                .build()
+                .encode()
+                .toUri();
+		
+		String jsonResult = restTemplate.getForObject(uri, String.class);
+		JSONObject item = (JSONObject)TourJSONUtilities.getTourItems(jsonResult).get("item");
+		return (String)item.get("title");
+	}
 	public JSONObject getBasicInfo(int contentId, int contentTypeId) throws Exception{
 		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("detailCommon")
 				.queryParam("contentId"     , contentId)

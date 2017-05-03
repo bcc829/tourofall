@@ -37,7 +37,7 @@ public class Question {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private User user;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="question", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="question", cascade=CascadeType.ALL)
 	private List<Answer> answers;
 	
 	@Column(name="item_id")

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="myinfohome" extends="myinfo">
+		<put-attribute name="body" value="/WEB-INF/views/myinfo-home.jsp"/>
+	</definition>
+	<definition name="myinfodetail" extends="myinfo">
+		<put-attribute name="body" value="/WEB-INF/views/myinfo-detail.jsp"/>
+	</definition>
+	<definition name="myinforeviews" extends="myinfo">
+		<put-attribute name="body" value="/WEB-INF/views/myinfo-reviews.jsp"/>
+	</definition>
+	<definition name="myinfoquestions" extends="myinfo">
+		<put-attribute name="body" value="/WEB-INF/views/myinfo-questions.jsp"/>
+	</definition>
+	<definition name="myinfoanswers" extends="myinfo">
+		<put-attribute name="body" value="/WEB-INF/views/myinfo-answers.jsp"/>
+	</definition>
+</tiles-definitions>

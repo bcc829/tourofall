@@ -2,13 +2,16 @@ package net.bulldozer.tourofall.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -45,6 +48,16 @@ public class User {
 	
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
 	private UserRole role;
+	
+	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
+	private List<Review> reviews;
+	
+	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
+	private List<Question> questions;
+
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade= CascadeType.ALL)
+	private List<Answer> answers;
+	
 	
 	@Transient
 	private int checked = -2;
@@ -162,6 +175,27 @@ public class User {
 	public void setChecked(int checked) {
 		this.checked = checked;
 	}
-	
-	
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
+
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
 }

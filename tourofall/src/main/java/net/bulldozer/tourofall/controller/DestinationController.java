@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import net.bulldozer.tourofall.service.DestinationService;
+import net.bulldozer.tourofall.service.TourApiService;
 import net.bulldozer.tourofall.service.QnAService;
 import net.bulldozer.tourofall.service.ReviewService;
 import net.bulldozer.tourofall.service.UserService;
@@ -18,7 +18,7 @@ import net.bulldozer.tourofall.service.UserService;
 public class DestinationController {
 	private static final String resPath="/{itemTypeId}/{itemId}";
 	@Autowired
-	private DestinationService destinationService;
+	private TourApiService tourApiService;
 	
 	@Autowired
 	private UserService userService;
@@ -31,7 +31,7 @@ public class DestinationController {
 	
 	@RequestMapping("/info/basic"+resPath)
 	public String showBasicInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
-		JSONObject body = destinationService.getBasicInfo(itemId, itemTypeId);
+		JSONObject body = tourApiService.getBasicInfo(itemId, itemTypeId);
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
 			JSONObject item = (JSONObject) items.get("item");
@@ -46,7 +46,7 @@ public class DestinationController {
 
 	@RequestMapping("/info/intro"+resPath)
 	public String showIntroInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
-		JSONObject body = destinationService.getIntroInfo(itemId, itemTypeId);
+		JSONObject body = tourApiService.getIntroInfo(itemId, itemTypeId);
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
 			JSONObject item = (JSONObject) items.get("item");
@@ -89,7 +89,7 @@ public class DestinationController {
 
 	@RequestMapping("/info/detail"+resPath)
 	public String showDetailInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
-		JSONObject body = destinationService.getDetailInfo(itemId, itemTypeId);
+		JSONObject body = tourApiService.getDetailInfo(itemId, itemTypeId);
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
 
@@ -126,7 +126,7 @@ public class DestinationController {
 
 	@RequestMapping("/info/image"+resPath)
 	public String showImageInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
-		JSONObject body = destinationService.getImageInfo(itemId, itemTypeId);
+		JSONObject body = tourApiService.getImageInfo(itemId, itemTypeId);
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
 
