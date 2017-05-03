@@ -63,7 +63,12 @@ public class QnAController {
 	public String processRegisterAnswer(@PathVariable int questionId, Answer answer, Model model,
 			HttpServletRequest request) {
 		Question question = qnAService.getQuestionById(questionId);
-		answer.setUser(question.getUser());
+		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+		if(question.getUser().getId() == user.getId()){
+			answer.setUser(question.getUser());
+		}else{
+			answer.setUser(user);
+		}
 		answer.setQuestion(question);
 		qnAService.addAnswer(answer);
 		return "redirect:/qna/question/" + questionId;
