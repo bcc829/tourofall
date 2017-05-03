@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
-
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <title><tiles:insertAttribute name="title" /></title>
 </head>
 <body>

@@ -30,10 +30,6 @@ public class QnADao {
 	public Question getQuestionById(int questionId) {
 		Session session = sessionFactory.getCurrentSession();
 		Question question = session.get(Question.class, questionId);
-//		Query query = session.createQuery("from Answer where question_id = :question_id");
-//		query.setParameter("question_id", questionId);
-//		List<Answer> answers = query.list();
-//		question.setAnswers(answers);
 		return question;
 	}
 	public void addQuestion(Question question) {
@@ -43,5 +39,11 @@ public class QnADao {
 	public void addAnswer(Answer answer) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(answer);
+	}
+	public void incrementVisitor(int questionId) {
+		Session session = sessionFactory.getCurrentSession();
+		Question q = session.get(Question.class, questionId);
+		q.incrementVisitor();
+		session.update(q);
 	}
 }

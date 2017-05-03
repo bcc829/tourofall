@@ -1,5 +1,8 @@
 package net.bulldozer.tourofall.dao;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +30,17 @@ public class UserDao {
 		Integer id = (Integer) session.save(user);
 		System.out.println(user + "" +id);
 		
+	}
+	
+	public int checkDuplicate(String username) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from User where username = :username");
+		query.setParameter("username", username);
+		List<User> users = query.list();
+		System.out.println(users.size());
+		if(users.size() == 0){
+			return 0;
+		}
+		return 1;
 	}
 }

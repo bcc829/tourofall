@@ -45,6 +45,9 @@ public class Question {
 	@Column(name="item_type_id")
 	private int itemTypeId;
 	
+	public void incrementVisitor(){
+		visitor++;
+	}
 	public int getId() {
 		return id;
 	}

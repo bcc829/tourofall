@@ -26,6 +26,7 @@ public class QnAController {
 	
 	@RequestMapping(value = "/question/{questionId}", method = RequestMethod.GET)
 	public String showQuestionPage(@PathVariable int questionId, Model model) {
+		qnAService.incrementVisitor(questionId);
 		model.addAttribute("question", qnAService.getQuestionById(questionId));
 		model.addAttribute("answer", new Answer());
 		return "question";

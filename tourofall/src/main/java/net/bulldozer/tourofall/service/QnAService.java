@@ -26,4 +26,7 @@ public class QnAService {
 	public void addAnswer(Answer answer) {
 		dao.addAnswer(answer);
 	}
+	public void incrementVisitor(int questionId) {
+		dao.incrementVisitor(questionId);
+	}
 }

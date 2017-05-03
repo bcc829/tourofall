@@ -17,4 +17,7 @@ public class UserService {
 	public void addUser(User user){
 		dao.addUser(user);
 	}
+	public int checkDuplicate(String username){
+		return dao.checkDuplicate(username);
+	}
 }

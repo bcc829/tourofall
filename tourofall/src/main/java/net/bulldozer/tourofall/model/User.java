@@ -47,6 +47,9 @@ public class User {
 	private UserRole role;
 	
 	@Transient
+	private int checked = -2;
+	
+	@Transient
 	private String year;
 	@Transient
 	private String month;
@@ -150,6 +153,14 @@ public class User {
 
 	public void setRole(UserRole role) {
 		this.role = role;
+	}
+
+	public int getChecked() {
+		return checked;
+	}
+
+	public void setChecked(int checked) {
+		this.checked = checked;
 	}
 	
 	

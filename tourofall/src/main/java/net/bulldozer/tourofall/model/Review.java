@@ -37,7 +37,6 @@ public class Review {
 	@Column(name="created_date")
 	private Date createdDate = new Date();
 	
-	private int visitor;
 	private double score;
 	
 	@JoinColumn(name="user_id")
@@ -73,12 +72,6 @@ public class Review {
 	}
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
-	}
-	public int getVisitor() {
-		return visitor;
-	}
-	public void setVisitor(int visitor) {
-		this.visitor = visitor;
 	}
 	public double getScore() {
 		return score;

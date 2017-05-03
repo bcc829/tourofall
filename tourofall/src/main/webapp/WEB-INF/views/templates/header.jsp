@@ -9,6 +9,7 @@
 	 	<a href="<c:url value="/login"/>">로그인</a>
 	 </c:if>
 	 <c:if test="${pageContext.request.userPrincipal.name != null}">
+	 	<a href="<c:url value="/myinfo"/>">내정보</a>
 	 	<a href="<c:url value="/logout"/>">로그아웃</a>
 	 </c:if>
 	<a href="<c:url value="/join"/>">회원가입</a>
