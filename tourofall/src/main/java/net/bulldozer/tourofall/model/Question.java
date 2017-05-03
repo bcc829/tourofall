@@ -1,12 +1,11 @@
 package net.bulldozer.tourofall.model;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="questions")
@@ -37,8 +39,9 @@ public class Question {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private User user;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="question", cascade=CascadeType.ALL)
-	private List<Answer> answers;
+	private Set<Answer> answers;
 	
 	@Column(name="item_id")
 	private int itemId;
@@ -96,10 +99,10 @@ public class Question {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<Answer> getAnswers() {
+	public Set<Answer> getAnswers() {
 		return answers;
 	}
-	public void setAnswers(List<Answer> answers) {
+	public void setAnswers(Set<Answer> answers) {
 		this.answers = answers;
 	}
 }

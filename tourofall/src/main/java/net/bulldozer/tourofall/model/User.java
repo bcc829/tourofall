@@ -2,12 +2,11 @@ package net.bulldozer.tourofall.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -49,14 +50,17 @@ public class User {
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
 	private UserRole role;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
-	private List<Review> reviews;
+	private Set<Review> reviews;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
-	private List<Question> questions;
+	private Set<Question> questions;
 
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade= CascadeType.ALL)
-	private List<Answer> answers;
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
+	private Set<Answer> answers;
 	
 	
 	@Transient
@@ -176,26 +180,29 @@ public class User {
 		this.checked = checked;
 	}
 
-	public List<Review> getReviews() {
+	public Set<Review> getReviews() {
 		return reviews;
 	}
 
-	public void setReviews(List<Review> reviews) {
+	public void setReviews(Set<Review> reviews) {
 		this.reviews = reviews;
 	}
 
-	public List<Question> getQuestions() {
+	public Set<Question> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(List<Question> questions) {
+	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;
 	}
 
-	public List<Answer> getAnswers() {
+	public Set<Answer> getAnswers() {
 		return answers;
 	}
-	public void setAnswers(List<Answer> answers) {
+
+	public void setAnswers(Set<Answer> answers) {
 		this.answers = answers;
 	}
+
+	
 }
