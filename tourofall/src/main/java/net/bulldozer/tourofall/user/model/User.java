@@ -1,10 +1,8 @@
 package net.bulldozer.tourofall.user.model;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,14 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import net.bulldozer.tourofall.qna.model.Answer;
 import net.bulldozer.tourofall.qna.model.Question;
@@ -36,21 +31,13 @@ public class User {
 	@Column(name = "user_id")
 	private long id;
 	
-	@NotEmpty(message="ID를 입력해주세요")
-	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
 	private String username;
 	
-	@NotEmpty(message="Password를 입력해주세요")
-	@Size(min=8, message = "최소8자 이상 입력해주세요.")
 	private String password;
-	
-	@NotEmpty(message="이름을 입력해주세요")
-	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
+
 	private String name;
-	
-	
+		
 	private boolean gender;
-	
 	
 	private Date birth;
 	private boolean enabled = true;
@@ -69,19 +56,12 @@ public class User {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
 	private Collection<Answer> answers = new ArrayList<Answer>();
-	
-	
-	@Transient
-	private int checked = -2;
-	
-	@Transient
-	private String year;
-	@Transient
-	private String month;
-	@Transient
-	private String date;
+
 
 	
+	public static Builder getBuilder(){
+		return new Builder();
+	}
 	
 	public Collection<Review> getReviews() {
 		return new ArrayList<Review>(reviews);
@@ -188,59 +168,12 @@ public class User {
 		return birth;
 	}
 
-	public void setBirth() throws Exception{
-		String dateString = year+"/"+month+"/"+date;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		birth = sdf.parse(dateString);
-	}
-
-	public void setYear(String year) {
-
-		this.year = year;
-	}
-
-	public void setMonth(String month) {
-
-		this.month = month;
-	}
-
-	public void setDate(String date) {
-
-		this.date = date;
-	}
-
-	public String getYear() {
-		return year;
-	}
-
-	public String getMonth() {
-		return month;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", gender="
-				+ gender + ", birth=" + birth + ", enabled=" + enabled + "]";
-	}
-
 	public UserRole getRole() {
 		return role;
 	}
 
 	public void setRole(UserRole role) {
 		this.role = role;
-	}
-
-	public int getChecked() {
-		return checked;
-	}
-
-	public void setChecked(int checked) {
-		this.checked = checked;
 	}
 	@Override
 	public int hashCode() {
@@ -259,4 +192,43 @@ public class User {
         return builder.isEquals();
 	}
 	
+	public static class Builder{
+		private User user;
+		
+		public Builder(){
+			user = new User();
+			user.role = new UserRole("ROLE_USER");
+			user.role.setUser(user);
+		}
+		public Builder username(String username){
+			user.username = username;
+			return this;
+		}
+		public Builder password(String password){
+			user.password = password;
+			return this;
+		}
+		public Builder name(String name){
+			user.name = name;
+			return this;
+		}
+		public Builder birth(Date birth){
+			user.birth = birth;
+			return this;
+		}
+		public Builder gender(boolean gender){
+			user.gender = gender;
+			return this;
+		}
+		public User build(){
+			return user;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", gender="
+				+ gender + ", birth=" + birth + ", enabled=" + enabled + ", role=" + role + ", reviews=" + reviews
+				+ ", questions=" + questions + ", answers=" + answers + "]";
+	}
 }

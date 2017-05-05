@@ -1,5 +1,5 @@
 create table users (
-  user_id int(11) not null auto_increment,
+  user_id bigint(20) auto_increment,
   username varchar(45) not null,
   password varchar(255) not null,
   name varchar(45) not null,
@@ -11,7 +11,7 @@ create table users (
 );
 
 create table user_roles (
-  user_role_id int(11) not NULL auto_increment,
+  user_role_id bigint(20) auto_increment,
   user_id int(11) not NULL,
   role varchar(45) not NULL,
   primary key (user_role_id),
@@ -21,7 +21,7 @@ create table user_roles (
 
 
 create table reviews(
-	review_id int(11) auto_increment,
+	review_id bigint(20) auto_increment,
 	title varchar(45) not null,
 	content varchar(255) not null,
 	created_date timestamp default current_timestamp not null,
@@ -35,7 +35,7 @@ create table reviews(
 );
 
 create table questions(
-	question_id int(11) auto_increment,
+	question_id bigint(20) auto_increment,
 	title varchar(45) not null,
 	content varchar(255) not null,
 	created_date timestamp default current_timestamp not null,
@@ -48,7 +48,7 @@ create table questions(
 );
 
 create table answers(
-	answer_id int(11) auto_increment,
+	answer_id bigint(20) auto_increment,
 	content varchar(100) not null,
 	created_date timestamp default current_timestamp not null,
 	user_id int(11) not null,

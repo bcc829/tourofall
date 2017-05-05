@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import net.bulldozer.tourofall.user.model.User;
-import net.bulldozer.tourofall.user.model.UserRole;
+import net.bulldozer.tourofall.user.dto.RegistrationUserForm;
 import net.bulldozer.tourofall.user.service.UserService;
 import net.bulldozer.tourofall.util.DateList;
 
@@ -27,7 +26,7 @@ public class JoinController {
 		if(!model.containsAttribute("checkResult")){
 			model.addAttribute("checkResult", -3);
 		}
-		model.addAttribute("user", new User());
+		model.addAttribute("registrationUserForm", new RegistrationUserForm());
 		model.addAttribute("years", DateList.getYearList());
 		model.addAttribute("months", DateList.getMonthList());
 		model.addAttribute("dates", DateList.getDateList());
@@ -35,8 +34,8 @@ public class JoinController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processJoin(@Valid User user, BindingResult result, Model model) throws Exception {
-		int checkResult =  user.getChecked();
+	public String processJoin(@Valid RegistrationUserForm registrationUserForm, BindingResult result, Model model) throws Exception {
+		int checkResult =  registrationUserForm.getChecked();
 		System.out.println(checkResult);
 		if (result.hasErrors() || checkResult <= 0) {
 			if(checkResult == -3){
@@ -48,20 +47,14 @@ public class JoinController {
 			model.addAttribute("dates", DateList.getDateList());
 			return "join";
 		}
-
-		UserRole role = new UserRole("ROLE_USER");
-		user.setRole(role);
-		role.setUser(user);
-		user.setBirth();
-
-		userService.registerNewUser(user);
+		registrationUserForm.setBirth();
+		userService.registerNewUser(registrationUserForm);
 		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/duplicate", method = RequestMethod.GET)
 	public String processJoin(@RequestParam(value = "username") String username, RedirectAttributes model) {
 		int result;
-		System.out.println(username);
 		if (username.equals("")) {
 			result = -1;
 		} else {

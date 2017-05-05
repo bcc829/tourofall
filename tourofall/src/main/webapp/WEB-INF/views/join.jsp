@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div>
-	<sf:form commandName="user">
+	<sf:form commandName="registrationUserForm">
 		<table>
 			<tr>
 				<td>아이디</td>

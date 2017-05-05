@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.bulldozer.tourofall.user.dto.RegistrationUserForm;
 import net.bulldozer.tourofall.user.model.User;
 import net.bulldozer.tourofall.user.repository.UserRepository;
 
@@ -19,9 +20,16 @@ public class RepositoryUserService implements UserService{
 	
 	@Transactional
 	@Override
-	public User registerNewUser(User user) {
-		user.setPassword(encoder.encode(user.getPassword()));
-		return userRepository.save(user);
+	public void registerNewUser(RegistrationUserForm registrationUserForm) {
+		User newUser = User.getBuilder()
+				.username(registrationUserForm.getUsername())
+				.name(registrationUserForm.getName())
+				.password(encoder.encode(registrationUserForm.getPassword()))
+				.birth(registrationUserForm.getBirth())
+				.gender(registrationUserForm.getGender())
+				.build();
+		System.out.println(newUser);
+		userRepository.save(newUser);
 	}
 	
 	@Transactional(readOnly=true)
