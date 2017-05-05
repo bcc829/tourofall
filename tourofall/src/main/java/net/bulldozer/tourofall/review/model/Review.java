@@ -11,11 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import net.bulldozer.tourofall.user.model.User;
 import net.bulldozer.tourofall.util.CheckUserUtil;
@@ -28,14 +26,8 @@ public class Review {
 	@Column(name="review_id")
 	private long id;
 	
-	
-	@NotEmpty(message="제목을 입력해주세요")
-	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
 	private String title;
 	
-	
-	@NotEmpty(message="내용을 입력해주세요")
-	@Size(max=255, message = "최대 255까지 입력 가능합니다.")
 	private String content;
 	
 	
@@ -50,12 +42,16 @@ public class Review {
 	
 	@Column(name="item_id")
 	private int itemId;
+	
 	@Column(name="item_type_id")
 	private int itemTypeId;
 	
 	@Column(name="item_title")
 	private String itemTitle;
 	
+	public static Builder getBuilder(){
+		return new Builder();
+	}
 	public long getId() {
 		return id;
 	}
@@ -136,6 +132,38 @@ public class Review {
         return builder.isEquals();
 	}
 	
-	
+	public static class Builder{
+		Review review;
+		public Builder(){
+			review = new Review();
+		}
+		public Builder title(String title){
+			review.title = title;
+			return this;
+		}
+		public Builder content(String content){
+			review.content = content;
+			return this;
+		}
+		public Builder itemId(int itemId){
+			review.itemId = itemId;
+			return this;
+		}
+		public Builder itemTypeId(int itemTypeId){
+			review.itemTypeId = itemTypeId;
+			return this;
+		}
+		public Builder itemTitle(String itemTitle){
+			review.itemTitle = itemTitle;
+			return this;
+		}
+		public Builder user(User user){
+			review.user = user;
+			return this;
+		}
+		public Review build(){
+			return review;
+		}
+	}
 	
 }

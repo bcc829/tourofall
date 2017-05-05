@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.bulldozer.tourofall.review.dto.RegistrationReviewForm;
 import net.bulldozer.tourofall.review.model.Review;
 import net.bulldozer.tourofall.review.repository.ReviewRepository;
+import net.bulldozer.tourofall.user.model.User;
 
 @Service
 public class RepositoryReviewService implements ReviewService{
@@ -20,7 +22,15 @@ public class RepositoryReviewService implements ReviewService{
 		return reviewList;
 	}
 	@Transactional
-	public void registerNewReview(Review review) {
-		reviewRepository.save(review);
+	public void registerNewReview(RegistrationReviewForm registrationReviewForm, User user) {
+		Review newReview = Review.getBuilder()
+				.title(registrationReviewForm.getTitle())
+				.content(registrationReviewForm.getContent())
+				.itemId(registrationReviewForm.getItemId())
+				.itemTypeId(registrationReviewForm.getItemTypeId())
+				.itemTitle(registrationReviewForm.getItemTitle())
+				.user(user)
+				.build();
+		reviewRepository.save(newReview);
 	}
 }

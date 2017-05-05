@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.bulldozer.tourofall.destination.service.TourApiService;
-import net.bulldozer.tourofall.review.model.Review;
+import net.bulldozer.tourofall.review.dto.RegistrationReviewForm;
 import net.bulldozer.tourofall.review.service.ReviewService;
 import net.bulldozer.tourofall.user.model.User;
 import net.bulldozer.tourofall.user.service.UserService;
@@ -32,11 +32,11 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/write/{itemTypeId}/{itemId}", method = RequestMethod.GET)
 	public String showReviewForm(@PathVariable int itemId,@PathVariable int itemTypeId, Model model, HttpServletRequest request) {
-		Review review = new Review();
-		review.setItemId(itemId);
-		review.setItemTypeId(itemTypeId);
-		if (!model.containsAttribute("review"))
-			model.addAttribute("review", review);
+		RegistrationReviewForm registrationReviewForm = new RegistrationReviewForm(); 
+		registrationReviewForm.setItemId(itemId);
+		registrationReviewForm.setItemTypeId(itemTypeId);
+		if (!model.containsAttribute("registrationReviewForm"))
+			model.addAttribute("registrationReviewForm", registrationReviewForm);
 
 		if (!model.containsAttribute("result")) {
 			System.out.println("Binding result not rendered");
@@ -47,18 +47,16 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String processRegisterReview(@Valid Review review, BindingResult result, RedirectAttributes model,
+	public String processRegisterReview(@Valid RegistrationReviewForm registrationReviewForm, BindingResult result, RedirectAttributes model,
 			HttpServletRequest request) throws Exception {
 		if (result.hasErrors()) {
-			model.addFlashAttribute("review", review);
-			model.addFlashAttribute("org.springframework.validation.BindingResult.review", result);
-			return "redirect:/dest/info/review/write/" + review.getItemTypeId() +"/"+review.getItemId();
+			model.addFlashAttribute("registrationReviewForm", registrationReviewForm);
+			model.addFlashAttribute("org.springframework.validation.BindingResult.registrationReviewForm", result);
+			return "redirect:/review/write/" + registrationReviewForm.getItemTypeId() +"/"+registrationReviewForm.getItemId();
 		}
 		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
-		review.setUser(user);
-		review.setItemTitle(tourApiService.getItemTitle(review.getItemId()));
-		user.addReview(review);
-		reviewService.registerNewReview(review);
-		return "redirect:/dest/info/basic/" + review.getItemTypeId() +"/"+review.getItemId();
+		registrationReviewForm.setItemTitle(tourApiService.getItemTitle(registrationReviewForm.getItemId()));
+		reviewService.registerNewReview(registrationReviewForm, user);
+		return "redirect:/dest/info/basic/" + registrationReviewForm.getItemTypeId() +"/"+registrationReviewForm.getItemId();
 	}
 }
