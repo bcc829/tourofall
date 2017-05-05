@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div>
-	<h3>${user.name}</h3>
+	<h3>${lastName}&nbsp;${firstName}님의 개인정보</h3>
 	<table>
 		<tr>
 			<th>아이디</th>

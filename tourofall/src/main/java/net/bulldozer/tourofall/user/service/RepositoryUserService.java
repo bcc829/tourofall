@@ -23,7 +23,8 @@ public class RepositoryUserService implements UserService{
 	public void registerNewUser(RegistrationUserForm registrationUserForm) {
 		User newUser = User.getBuilder()
 				.username(registrationUserForm.getUsername())
-				.name(registrationUserForm.getName())
+				.firstName(registrationUserForm.getFirstName())
+				.lastName(registrationUserForm.getLastName())
 				.password(encoder.encode(registrationUserForm.getPassword()))
 				.birth(registrationUserForm.getBirth())
 				.gender(registrationUserForm.getGender())

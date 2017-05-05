@@ -30,21 +30,24 @@ public class MyInfoController {
 	@RequestMapping("/reviews")
 	public String showMyInfoReviews(Model model, HttpServletRequest request){
 		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
-		model.addAttribute("name", user.getName());
+		model.addAttribute("firstName", user.getFirstName());
+		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("reviews", user.getReviews());
 		return "myinfo-reviews";
 	}
 	@RequestMapping("/questions")
 	public String showMyInfoQuestions(Model model, HttpServletRequest request){
 		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
-		model.addAttribute("name", user.getName());
+		model.addAttribute("firstName", user.getFirstName());
+		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("questions", user.getQuestions());
 		return "myinfo-questions";
 	}
 	@RequestMapping("/answers")
 	public String showMyInfoAnswers(Model model, HttpServletRequest request){
 		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
-		model.addAttribute("name", user.getName());
+		model.addAttribute("firstName", user.getFirstName());
+		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("answers", user.getAnswers());
 		return "myinfo-answers";
 	}

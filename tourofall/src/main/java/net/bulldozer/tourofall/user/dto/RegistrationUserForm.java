@@ -19,7 +19,11 @@ public class RegistrationUserForm {
 	
 	@NotEmpty(message="이름을 입력해주세요")
 	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
-	private String name;
+	private String firstName;
+	
+	@NotEmpty(message="성을 입력해주세요")
+	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
+	private String lastName;
 	
 	private boolean gender;
 	
@@ -47,15 +51,18 @@ public class RegistrationUserForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 	public boolean getGender() {
 		return gender;
 	}

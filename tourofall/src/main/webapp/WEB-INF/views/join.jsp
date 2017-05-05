@@ -50,11 +50,15 @@
 			</tr>
 			<tr>
 				<td>이름</td>
-				<td><sf:input path="name" maxlength="45" /></td>
+				<td><sf:input path="firstName" maxlength="45" /></td>
+				<td>성</td>
+				<td><sf:input path="lastName" maxlength="45" /></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><sf:errors path="name" /></td>
+				<td><sf:errors path="firstName" /></td>
+				<td></td>
+				<td><sf:errors path="lastName" /></td>
 			</tr>
 			<tr>
 				<td>성별</td>

@@ -33,9 +33,13 @@ public class User {
 	
 	private String username;
 	
+	@Column(name="first_name")
+	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
+	
 	private String password;
-
-	private String name;
 		
 	private boolean gender;
 	
@@ -57,6 +61,23 @@ public class User {
 	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
 	private Collection<Answer> answers = new ArrayList<Answer>();
 
+
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
 	
 	public static Builder getBuilder(){
@@ -132,13 +153,6 @@ public class User {
 		this.username = username;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getPassword() {
 		return password;
@@ -208,8 +222,12 @@ public class User {
 			user.password = password;
 			return this;
 		}
-		public Builder name(String name){
-			user.name = name;
+		public Builder firstName(String firstName){
+			user.firstName = firstName;
+			return this;
+		}
+		public Builder lastName(String lastName){
+			user.lastName = lastName;
 			return this;
 		}
 		public Builder birth(Date birth){
@@ -227,8 +245,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", gender="
-				+ gender + ", birth=" + birth + ", enabled=" + enabled + ", role=" + role + ", reviews=" + reviews
-				+ ", questions=" + questions + ", answers=" + answers + "]";
+		return "User [id=" + id + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", password=" + password + ", gender=" + gender + ", birth=" + birth + ", enabled=" + enabled
+				+ ", role=" + role + ", reviews=" + reviews + ", questions=" + questions + ", answers=" + answers + "]";
 	}
+	
+	
 }
