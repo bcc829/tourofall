@@ -43,6 +43,9 @@ public class Answer {
 
 	public Answer(){}
 	
+	public static Builder getBuilder(){
+		return new Builder();
+	}
 	public long getId() {
 		return id;
 	}
@@ -107,5 +110,27 @@ public class Answer {
         EqualsBuilder builder = new EqualsBuilder();
         builder.append(this.id, otherAnswer.getId());
         return builder.isEquals();
+	}
+	public static class Builder{
+		Answer answer;
+		public Builder(){
+			answer = new Answer();
+		}
+		
+		public Builder content(String content){
+			answer.content = content;
+			return this;
+		}
+		public Builder user(User user){
+			answer.user = user;
+			return this;
+		}
+		public Builder question(Question question){
+			answer.question = question;
+			return this;
+		}
+		public Answer build(){
+			return answer;
+		}
 	}
 }

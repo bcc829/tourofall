@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.bulldozer.tourofall.qna.dto.RegistrationAnswerForm;
 import net.bulldozer.tourofall.qna.dto.RegistrationQuestionForm;
 import net.bulldozer.tourofall.qna.model.Answer;
 import net.bulldozer.tourofall.qna.model.Question;
@@ -28,6 +29,7 @@ public class QnAController {
 	
 	@Autowired
 	private AnswerService answerService;
+	
 	@Autowired
 	private UserService userService;
 	
@@ -35,7 +37,8 @@ public class QnAController {
 	public String showQuestionPage(@PathVariable int questionId, Model model) {
 		questionService.incrementVisitor(questionId);
 		model.addAttribute("question", questionService.getQuestionById(questionId));
-		model.addAttribute("answer", new Answer());
+		if(!model.containsAttribute("registrationAnswerForm"))
+			model.addAttribute("registrationAnswerForm", new RegistrationAnswerForm());
 		return "question";
 	}
 
@@ -71,18 +74,16 @@ public class QnAController {
 	}
 
 	@RequestMapping(value = "/answer/write/{questionId}", method = RequestMethod.POST)
-	public String processRegisterAnswer(@PathVariable int questionId, Answer answer, Model model,
+	public String processRegisterAnswer(@Valid RegistrationAnswerForm registrationAnswerForm, BindingResult result, RedirectAttributes model, @PathVariable int questionId, 
 			HttpServletRequest request) {
+		if(result.hasErrors()){
+			model.addFlashAttribute("registrationAnswerForm", registrationAnswerForm);
+			model.addFlashAttribute("org.springframework.validation.BindingResult.registrationAnswerForm", result);
+			return "redirect:/qna/question/" + questionId;
+		}
 		Question question = questionService.getQuestionById(questionId);
 		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
-		if(question.getUser().getId() == user.getId()){
-			answer.setUser(question.getUser());
-		}else{
-			answer.setUser(user);
-		}
-		answer.setQuestion(question);
-		user.addAnswer(answer);
-		answerService.registerNewAnswer(answer);
+		answerService.registerNewAnswer(registrationAnswerForm,question,user);
 		return "redirect:/qna/question/" + questionId;
 	}
 }
