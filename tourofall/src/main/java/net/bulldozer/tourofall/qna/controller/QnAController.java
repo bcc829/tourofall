@@ -1,0 +1,81 @@
+package net.bulldozer.tourofall.qna.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import net.bulldozer.tourofall.qna.model.Answer;
+import net.bulldozer.tourofall.qna.model.Question;
+import net.bulldozer.tourofall.qna.service.AnswerService;
+import net.bulldozer.tourofall.qna.service.QuestionService;
+import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.service.UserService;
+
+@Controller
+@RequestMapping("/qna")
+public class QnAController {
+	@Autowired
+	private QuestionService questionService;
+	
+	@Autowired
+	private AnswerService answerService;
+	@Autowired
+	private UserService userService;
+	
+	@RequestMapping(value = "/question/{questionId}", method = RequestMethod.GET)
+	public String showQuestionPage(@PathVariable int questionId, Model model) {
+		questionService.incrementVisitor(questionId);
+		model.addAttribute("question", questionService.getQuestionById(questionId));
+		model.addAttribute("answer", new Answer());
+		return "question";
+	}
+
+	@RequestMapping(value = "/question/write/{itemTypeId}/{itemId}", method = RequestMethod.GET)
+	public String showQuestionForm(@PathVariable int itemId, @PathVariable int itemTypeId, Model model,
+			HttpServletRequest request) {
+		Question question = new Question();
+		question.setItemId(itemId);
+		question.setItemTypeId(itemTypeId);
+
+		if (!model.containsAttribute("question"))
+			model.addAttribute("question", question);
+
+		if (!model.containsAttribute("result")) {
+			System.out.println("Binding result not rendered");
+		}
+		model.addAttribute("username",
+				userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName())).getUsername());
+
+		return "question_write";
+	}
+
+	@RequestMapping(value = "/question/write", method = RequestMethod.POST)
+	public String processRegisterQuestion(Question question, Model model, HttpServletRequest request) {
+		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+		question.setUser(user);
+		user.addQuestion(question);
+		questionService.registerNewQuestion(question);
+		return "redirect:/dest/info/basic/" + question.getItemTypeId() + "/" + question.getItemId();
+	}
+
+	@RequestMapping(value = "/answer/write/{questionId}", method = RequestMethod.POST)
+	public String processRegisterAnswer(@PathVariable int questionId, Answer answer, Model model,
+			HttpServletRequest request) {
+		Question question = questionService.getQuestionById(questionId);
+		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+		if(question.getUser().getId() == user.getId()){
+			answer.setUser(question.getUser());
+		}else{
+			answer.setUser(user);
+		}
+		answer.setQuestion(question);
+		user.addAnswer(answer);
+		answerService.registerNewAnswer(answer);
+		return "redirect:/qna/question/" + questionId;
+	}
+}
