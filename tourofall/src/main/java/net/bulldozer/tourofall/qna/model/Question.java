@@ -54,6 +54,9 @@ public class Question {
 	@Column(name="item_type_id")
 	private int itemTypeId;
 	
+	public static Builder getBuilder(){
+		return new Builder();
+	}
 	public void incrementVisitor(){
 		visitor++;
 	}
@@ -143,4 +146,36 @@ public class Question {
         builder.append(this.id, otherQuestion.getId());
         return builder.isEquals();
 	}
+	
+	public static class Builder{
+		Question question;
+		public Builder(){
+			question = new Question();
+		}
+		public Builder title(String title){
+			question.title = title;
+			return this;
+		}
+		public Builder content(String content){
+			question.content = content;
+			return this;
+		}
+		public Builder itemId(int itemId){
+			question.itemId = itemId;
+			return this;
+		}
+		public Builder itemTypeId(int itemTypeId){
+			question.itemTypeId = itemTypeId;
+			return this;
+		}
+		
+		public Builder user(User user){
+			question.user = user;
+			return this;
+		}
+		public Question build(){
+			return question;
+		}
+	}
+	
 }
