@@ -1,13 +1,13 @@
 package net.bulldozer.tourofall.user.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.bulldozer.tourofall.security.dto.AuthenticationUserDetails;
 import net.bulldozer.tourofall.user.model.User;
 import net.bulldozer.tourofall.user.service.UserService;
 
@@ -22,30 +22,33 @@ public class MyInfoController {
 		return "myinfo-home";
 	}
 	@RequestMapping("/detail")
-	public String showMyInfoDetail(Model model, HttpServletRequest request){
-		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
-		model.addAttribute("user", user);
+	public String showMyInfoDetail(Model model){
+		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+		model.addAttribute("userDetails", authenticationUserDetails);
 		return "myinfo-detail";
 	}
 	@RequestMapping("/reviews")
-	public String showMyInfoReviews(Model model, HttpServletRequest request){
-		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+	public String showMyInfoReviews(Model model){
+		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUserId(authenticationUserDetails.getId());
 		model.addAttribute("firstName", user.getFirstName());
 		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("reviews", user.getReviews());
 		return "myinfo-reviews";
 	}
 	@RequestMapping("/questions")
-	public String showMyInfoQuestions(Model model, HttpServletRequest request){
-		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+	public String showMyInfoQuestions(Model model){
+		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUserId(authenticationUserDetails.getId());
 		model.addAttribute("firstName", user.getFirstName());
 		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("questions", user.getQuestions());
 		return "myinfo-questions";
 	}
 	@RequestMapping("/answers")
-	public String showMyInfoAnswers(Model model, HttpServletRequest request){
-		User user = userService.getUserByUserId(Integer.parseInt(request.getUserPrincipal().getName()));
+	public String showMyInfoAnswers(Model model){
+		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUserId(authenticationUserDetails.getId());
 		model.addAttribute("firstName", user.getFirstName());
 		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("answers", user.getAnswers());

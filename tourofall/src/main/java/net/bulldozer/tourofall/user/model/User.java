@@ -7,11 +7,12 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -22,6 +23,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import net.bulldozer.tourofall.qna.model.Answer;
 import net.bulldozer.tourofall.qna.model.Question;
 import net.bulldozer.tourofall.review.model.Review;
+import net.bulldozer.tourofall.security.dto.Role;
 
 @Entity
 @Table(name = "users")
@@ -40,14 +42,14 @@ public class User {
 	private String lastName;
 	
 	private String password;
-		
 	private boolean gender;
-	
 	private Date birth;
-	private boolean enabled = true;
 	
-	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
-	private UserRole role;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(name = "role", length = 20, nullable = false)
+    private Role role = Role.ROLE_USER;
+	
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
@@ -161,16 +163,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public boolean isGender() {
+	public boolean getGender() {
 		return gender;
 	}
 
@@ -181,14 +174,16 @@ public class User {
 	public Date getBirth() {
 		return birth;
 	}
-
-	public UserRole getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(UserRole role) {
-		this.role = role;
+	public void setBirth(Date birth) {
+		this.birth = birth;
 	}
+
+	
+	
 	@Override
 	public int hashCode() {
 		HashCodeBuilder builder = new HashCodeBuilder();
@@ -211,8 +206,7 @@ public class User {
 		
 		public Builder(){
 			user = new User();
-			user.role = new UserRole("ROLE_USER");
-			user.role.setUser(user);
+			user.role = Role.ROLE_USER;
 		}
 		public Builder username(String username){
 			user.username = username;
@@ -238,6 +232,10 @@ public class User {
 			user.gender = gender;
 			return this;
 		}
+		public Builder role(Role role){
+			user.role = role;
+			return this;
+		}
 		public User build(){
 			return user;
 		}
@@ -246,9 +244,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", password=" + password + ", gender=" + gender + ", birth=" + birth + ", enabled=" + enabled
-				+ ", role=" + role + ", reviews=" + reviews + ", questions=" + questions + ", answers=" + answers + "]";
+				+ ", password=" + password + ", gender=" + gender + ", birth=" + birth + ", role=" + role + ", reviews="
+				+ reviews + ", questions=" + questions + ", answers=" + answers + "]";
 	}
-	
-	
 }

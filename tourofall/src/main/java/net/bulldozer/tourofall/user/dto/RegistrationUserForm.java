@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import net.bulldozer.tourofall.security.dto.Role;
+
 public class RegistrationUserForm {
 	
 	@NotEmpty(message="ID를 입력해주세요")
@@ -28,8 +30,6 @@ public class RegistrationUserForm {
 	private boolean gender;
 	
 	private Date birth;
-	
-	private boolean enabled = true;
 
 	private int checked = -2;
 	
@@ -79,14 +79,6 @@ public class RegistrationUserForm {
 		String dateString = year+"/"+month+"/"+date;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		birth = sdf.parse(dateString);
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 	public int getChecked() {
 		return checked;

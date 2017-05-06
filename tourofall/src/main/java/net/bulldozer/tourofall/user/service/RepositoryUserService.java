@@ -37,6 +37,11 @@ public class RepositoryUserService implements UserService{
 	public User getUserByUserId(long id){
 		return userRepository.findOne(id);
 	}
+	@Transactional(readOnly=true)
+	public User getUserByUsername(String username){
+		return userRepository.findByUsername(username);
+	}
+	
 	
 	@Transactional(readOnly=true)
 	public int checkDuplicate(String username) {
