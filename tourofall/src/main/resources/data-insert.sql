@@ -7,3 +7,5 @@ INSERT INTO reviews(title,content,score,user_id,item_id,item_type_id,item_title)
 INSERT INTO reviews(title,content,score,user_id,item_id,item_type_id,item_title) VALUES('Good Man','i like the horse',4,3,131257,28,'렛츠런파크서울 (서울경마공원)');
 INSERT INTO questions(title,content,user_id,item_id,item_type_id) VALUES('경복궁은 어떻게 가야 빠르게 갑니까?','빠른 답변 부탁드립니다.',1,126508,12);
 INSERT INTO answers(content,user_id,question_id) VALUES('나도 모릅니다.',1,1);
+
+INSERT INTO UserConnection VALUES('1128415467305323','facebook','1128415467305323',1,'강민규','https://www.facebook.com/app_scoped_user_id/1128415467305323/','https://graph.facebook.com/v2.5/1128415467305323/picture','EAAEVqXZBGrmIBAG8xCXHH1XJ4aCDMynRjMfwnPtcdZ/Bo1zzovChGxytZBOWRcTX4gmF6ja1rZAupB0DgPDvqfQzFvn74C655ABthA4fta5jjgzIHBUPVELnrvPXZANCWnHJZCkdhhoCGySUWc0CpZB3pMSfjpe98LoZD',NULL,NULL,1499550884030);

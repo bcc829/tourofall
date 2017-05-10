@@ -10,6 +10,20 @@ create table users (
   constraint uc_users unique key(username),
   constraint pk_users primary key(user_id)
 );
+create table UserConnection(
+	userId varchar(255) not null,
+	providerId varchar(255) not null,
+	providerUserId varchar(255),
+	rank int not null,
+	displayName varchar(255),
+	profileUrl varchar(512),
+	imageUrl varchar(512),
+	accessToken varchar(512) not null,
+	secret varchar(512),
+	refreshToken varchar(512),
+	expireTime bigint,
+	primary key (userId, providerId, providerUserId)
+);
 
 create table reviews(
 	review_id bigint(20) auto_increment,

@@ -1,6 +1,5 @@
 package net.bulldozer.tourofall.qna.dto;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
