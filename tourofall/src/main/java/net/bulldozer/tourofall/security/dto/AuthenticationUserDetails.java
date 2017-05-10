@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.social.security.SocialUser;
 
 import net.bulldozer.tourofall.user.model.Role;
+import net.bulldozer.tourofall.user.model.SocialService;
 
 public class AuthenticationUserDetails extends SocialUser {
 	private long id;
@@ -24,6 +25,8 @@ public class AuthenticationUserDetails extends SocialUser {
     
     private	boolean gender;
     
+    private SocialService signInProvider;
+    
 	public AuthenticationUserDetails(String username, String password,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
@@ -35,39 +38,25 @@ public class AuthenticationUserDetails extends SocialUser {
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	public String getFirstName() {
 		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
 	}
 	public String getLastName() {
 		return lastName;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
 	public Role getRole() {
 		return role;
-	}
-	public void setRole(Role role) {
-		this.role = role;
 	}
 	public Date getBirth() {
 		return birth;
 	}
-	public void setBirth(Date birth) {
-		this.birth = birth;
-	}
 	public boolean getGender() {
 		return gender;
 	}
-	public void setGender(boolean gender) {
-		this.gender = gender;
+	public SocialService getSignInProvider() {
+		return signInProvider;
 	}
+
 	@Override
 	public String toString() {
 		return "AuthenticationUserDetails [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", role="
@@ -83,6 +72,7 @@ public class AuthenticationUserDetails extends SocialUser {
 		private Role role;
 		private Date birth;
 		private boolean gender;
+		private SocialService signInProvider;
 		private Set<GrantedAuthority> authorities;
 		
 		public Builder(){
@@ -121,6 +111,10 @@ public class AuthenticationUserDetails extends SocialUser {
 		}
 		public Builder gender(boolean gender){
 			this.gender = gender;
+			return this;
+		}
+		public Builder signInProvider(SocialService signInProvider){
+			this.signInProvider = signInProvider;
 			return this;
 		}
 		

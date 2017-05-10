@@ -20,6 +20,7 @@ import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.ProviderSignInUtils;
+import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 import net.bulldozer.tourofall.security.service.SpringSecuritySignInAdapter;
@@ -68,17 +69,21 @@ public class SocialContext {
 		return usersConnectionRepository().createConnectionRepository(authentication.getName());
 	}
 	
-	
 	@Bean
 	public ConnectController connectController(){
 		return new ConnectController(connectionFactoryLocator(),connectionRepository());
 	}
 	
 	@Bean
-	public ProviderSignInController providerSignInController(){ 
-		return new ProviderSignInController(connectionFactoryLocator(),usersConnectionRepository(),new SpringSecuritySignInAdapter());
+	public SignInAdapter signInAdapter(){
+		return new SpringSecuritySignInAdapter();
 	}
 	
+	@Bean
+	public ProviderSignInController providerSignInController(){ 
+		return new ProviderSignInController(connectionFactoryLocator(),usersConnectionRepository(), signInAdapter());
+	}
+
 	@Bean
 	public ProviderSignInUtils providerSignInUtils(){
 		return new ProviderSignInUtils(connectionFactoryLocator(),usersConnectionRepository());

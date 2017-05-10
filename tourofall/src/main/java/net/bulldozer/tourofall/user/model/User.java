@@ -49,6 +49,10 @@ public class User {
     @Column(name = "role", length = 20, nullable = false)
     private Role role = Role.ROLE_USER;
 	
+	@Enumerated(EnumType.STRING)
+    @Column(name = "sign_in_provider", length = 20)
+    private SocialService signInProvider;
+	
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
@@ -68,18 +72,9 @@ public class User {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
 	public String getLastName() {
 		return lastName;
 	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	
 	public static Builder getBuilder(){
 		return new Builder();
@@ -142,46 +137,25 @@ public class User {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public String getUsername() {
 		return username;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
 	public String getPassword() {
 		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public boolean getGender() {
 		return gender;
 	}
-
-	public void setGender(boolean gender) {
-		this.gender = gender;
-	}
-
 	public Date getBirth() {
 		return birth;
 	}
 	public Role getRole() {
 		return role;
 	}
-
-	public void setBirth(Date birth) {
-		this.birth = birth;
-	}
-
 	
+	public SocialService getSignInProvider(){
+		return signInProvider;
+	}
 	
 	@Override
 	public int hashCode() {

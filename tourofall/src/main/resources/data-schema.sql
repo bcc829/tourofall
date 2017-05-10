@@ -7,6 +7,7 @@ create table users (
   role varchar(45) not null,
   gender tinyint not null,
   birth timestamp not null,
+  sign_in_provider varchar(45),
   constraint uc_users unique key(username),
   constraint pk_users primary key(user_id)
 );
