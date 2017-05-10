@@ -5,10 +5,6 @@
 	<h3>${userDetails.lastName}&nbsp;${userDetails.firstName}님의 개인정보</h3>
 	<table>
 		<tr>
-			<th>아이디</th>
-			<td>${userDetails.username}</td>
-		</tr>
-		<tr>
 			<th>성별</th>
 			<td>
 				<c:if test="${userDetails.gender}">여성</c:if>

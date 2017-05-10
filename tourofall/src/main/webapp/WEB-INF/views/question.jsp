@@ -7,7 +7,7 @@
 		<tr>
 			<td>
 				<h3>${question.title}</h3>
-				<p>${question.user.username} |${question.createdDate} | 조회수 : ${question.visitor}</p>
+				<p>${question.user.lastName} ${question.user.firstName}님 |${question.createdDate} | 조회수 : ${question.visitor}</p>
 			</td>
 		</tr>
 		<tr>
@@ -24,7 +24,7 @@
 		</tr>
 		<c:forEach var="answer" items="${question.answers}">
 			<tr>
-				<td>${answer.user.username}<br/>${answer.createdDate}</td>
+				<td>${answer.user.lastName} ${answer.user.firstName}님<br/>${answer.createdDate}</td>
 				<td>${answer.content}</td>
 			</tr>
 		</c:forEach>

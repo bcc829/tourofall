@@ -7,14 +7,25 @@ import org.springframework.security.web.authentication.logout.CookieClearingLogo
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LogController {
 	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public String showLoginForm(){
-		
+	public String showLoginForm(@RequestParam(value="error", required=false) String error,@RequestParam(value="logout", required=false) String logout,Model model){
+		if(error != null){
+			System.out.println("error filled");
+			error ="아이디나 비밀번호가 일치하지 않습니다.";
+		}
+		if(logout != null){
+			System.out.println("logout filled");
+			error ="로그아웃이 완료되었습니다.";
+		}
+		model.addAttribute("errorMsg", error);
+		model.addAttribute("logoutMsg", logout);
 		return "login";
 	}
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

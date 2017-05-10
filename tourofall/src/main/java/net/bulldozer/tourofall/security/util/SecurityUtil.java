@@ -16,13 +16,13 @@ public class SecurityUtil {
 
     public static void logInUser(User user) {
         LOGGER.info("Logging in user: {}", user);
-
         AuthenticationUserDetails userDetails = AuthenticationUserDetails.getBuilder()
         		.id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .password(user.getPassword())
                 .role(user.getRole())
+                .birth(user.getBirth())
                 .signInProvider(user.getSignInProvider())
                 .username(user.getUsername())
                 .build();

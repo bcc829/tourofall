@@ -32,7 +32,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 		.userDetailsService(userDetailsService())
-		.passwordEncoder(new StandardPasswordEncoder("53cr3t"));
+		.passwordEncoder(passwordEncoder());
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 				.formLogin()
 					.loginPage("/login")
 					.loginProcessingUrl("/login/authenticate")
-					.failureUrl("/login?error=아이디나 비밀번호가 일치하지 않습니다.")
+					.failureUrl("/login?error")
 					.defaultSuccessUrl("/");
 	}
 

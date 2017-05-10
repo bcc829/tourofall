@@ -11,7 +11,7 @@
 			<tr>
 				<td>
 					<h3>제목 : ${review.title}</h3>
-					<p>작성자 : ${review.user.username}</p>
+					<p>작성자 : ${review.user.lastName} ${review.user.firstName}님</p>
 					<p>작성일자 :
 						${review.createdDate.year+1900}년${review.createdDate.month+1}월${review.createdDate.date}일</p>
 					<p>평점 : ${review.score}</p>
@@ -28,7 +28,7 @@
 				<tr>
 					<td>${questionInfo.id}</td>
 					<td><a href="<c:url value="/qna/question/${questionInfo.id}"/>">${questionInfo.title}</a></td>
-					<td>${questionInfo.user.username}</td>
+					<td>${questionInfo.user.lastName} ${questionInfo.user.firstName}님</td>
 					<td>${questionInfo.visitor}</td>
 				</tr>
 			</c:forEach>

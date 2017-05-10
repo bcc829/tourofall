@@ -32,4 +32,8 @@
 	<definition name="question" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/question.jsp"/>
 	</definition>
+	
+	<definition name="login" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

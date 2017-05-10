@@ -25,7 +25,9 @@
 
                 
                 <input type="password" placeholder="Password" name="password" required>
-        
+        		<c:if test="${not empty errorMsg}">
+        			<p style="color:red">${errorMsg}</p>
+        		</c:if>
                 <button type="submit">Login</button>
                 
             </div>
