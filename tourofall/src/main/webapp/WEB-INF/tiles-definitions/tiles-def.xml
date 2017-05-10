@@ -14,4 +14,6 @@
 	<definition name="myinfo" template="/WEB-INF/views/templates/myinfo-layout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/templates/myinfo-header.jsp"/>
 	</definition>
+	<definition name="login" template="/WEB-INF/views/login.jsp">
+	</definition>
 </tiles-definitions>

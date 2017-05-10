@@ -56,6 +56,15 @@ span.psw {
     float:right;
     display:inline-block;
 }
+
+.facebook-button-container {
+    margin-top:1.3rem; 
+}
+.facebook-button-container button{
+    background-color: #4267B2;
+}
+
+
 @media (max-width:338px){
     span.psw {
         display: block;

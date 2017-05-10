@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LogController {
+	@RequestMapping(value="/login", method = RequestMethod.GET)
+	public String showLoginForm(){
+		
+		return "login";
+	}
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		CookieClearingLogoutHandler cookieClearingLogoutHandler = new CookieClearingLogoutHandler(

@@ -40,11 +40,22 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 		CharacterEncodingFilter filter = new CharacterEncodingFilter();
 		filter.setEncoding("UTF-8");
 		filter.setForceEncoding(true);
-		http.addFilterBefore(filter, CsrfFilter.class).authorizeRequests().antMatchers("/recommendation")
-				.authenticated().antMatchers("/evalmore").authenticated().antMatchers("/review/write/**")
-				.authenticated().antMatchers("/qna/question/write/**").authenticated()
-				.antMatchers("/qna/answer/write/**").authenticated().antMatchers("/myinfo/**").authenticated()
-				.anyRequest().permitAll().and().formLogin();
+		http
+			.addFilterBefore(filter, CsrfFilter.class)
+			.authorizeRequests()
+				.antMatchers("/recommendation").authenticated()
+				.antMatchers("/evalmore").authenticated()
+				.antMatchers("/review/write/**").authenticated()
+				.antMatchers("/qna/question/write/**").authenticated()
+				.antMatchers("/qna/answer/write/**").authenticated()
+				.antMatchers("/myinfo/**").authenticated()
+				.anyRequest().permitAll()
+			.and()
+				.formLogin()
+					.loginPage("/login")
+					.loginProcessingUrl("/login/authenticate")
+					.failureUrl("/login?error=아이디나 비밀번호가 일치하지 않습니다.")
+					.defaultSuccessUrl("/");
 	}
 
 	@Bean
