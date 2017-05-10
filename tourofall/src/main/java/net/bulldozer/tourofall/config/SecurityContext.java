@@ -11,8 +11,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import net.bulldozer.tourofall.security.service.AuthenticationSocialUserDetailsService;
 import net.bulldozer.tourofall.security.service.AuthenticationUserDetailsService;
 
 @Configuration
@@ -53,5 +55,10 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new AuthenticationUserDetailsService();
+	}
+	
+	@Bean
+	public SocialUserDetailsService socialDetailsService(){
+		return new AuthenticationSocialUserDetailsService(userDetailsService()); 
 	}
 }

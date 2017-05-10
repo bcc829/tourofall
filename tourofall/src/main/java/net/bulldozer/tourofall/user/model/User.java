@@ -23,7 +23,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import net.bulldozer.tourofall.qna.model.Answer;
 import net.bulldozer.tourofall.qna.model.Question;
 import net.bulldozer.tourofall.review.model.Review;
-import net.bulldozer.tourofall.security.dto.Role;
 
 @Entity
 @Table(name = "users")

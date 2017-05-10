@@ -7,9 +7,11 @@ import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.social.security.SocialUser;
 
-public class AuthenticationUserDetails extends User {
+import net.bulldozer.tourofall.user.model.Role;
+
+public class AuthenticationUserDetails extends SocialUser {
 	private long id;
 	 
     private String firstName;

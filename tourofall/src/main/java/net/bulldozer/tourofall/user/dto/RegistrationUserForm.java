@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import net.bulldozer.tourofall.user.model.SocialService;
+
 public class RegistrationUserForm {
 	
 	@NotEmpty(message="ID를 입력해주세요")
@@ -26,9 +28,11 @@ public class RegistrationUserForm {
 	private String lastName;
 	
 	private boolean gender;
-	
+
 	private Date birth;
 
+	private SocialService signInProvider;
+	
 	private int checked = -2;
 	
 	private String year;
@@ -77,6 +81,19 @@ public class RegistrationUserForm {
 		String dateString = year+"/"+month+"/"+date;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		birth = sdf.parse(dateString);
+	}
+	
+	public boolean isNormalRegistration(){
+		return signInProvider == null;
+	}
+	public boolean isSocialSignIn(){
+		return signInProvider != null;
+	}
+	public SocialService getSignInProvider() {
+		return signInProvider;
+	}
+	public void setSignInProvider(SocialService signInProvider) {
+		this.signInProvider = signInProvider;
 	}
 	public int getChecked() {
 		return checked;
