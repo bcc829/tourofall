@@ -20,7 +20,11 @@ public class RepositoryUserService implements UserService{
 	
 	@Transactional
 	@Override
-	public void registerNewUser(RegistrationUserForm registrationUserForm) {
+	public User registerNewUser(RegistrationUserForm registrationUserForm) throws DuplicateUsernameException{
+		if(checkUsernameDuplicate(registrationUserForm.getUsername())){
+			 throw new DuplicateUsernameException("The Username: " + registrationUserForm.getUsername() + " is already in use.");
+		}
+		
 		User newUser = User.getBuilder()
 				.username(registrationUserForm.getUsername())
 				.firstName(registrationUserForm.getFirstName())
@@ -28,9 +32,11 @@ public class RepositoryUserService implements UserService{
 				.password(encoder.encode(registrationUserForm.getPassword()))
 				.birth(registrationUserForm.getBirth())
 				.gender(registrationUserForm.getGender())
+				.signInProvider(registrationUserForm.getSignInProvider())
 				.build();
+		// user의 role은 따로 건네주지 않음 : 기본적으로 ROLE_USER 권한을 부여받음
 		System.out.println(newUser);
-		userRepository.save(newUser);
+		return userRepository.save(newUser);
 	}
 	
 	@Transactional(readOnly=true)
@@ -43,12 +49,12 @@ public class RepositoryUserService implements UserService{
 	}
 	
 	
-	@Transactional(readOnly=true)
-	public int checkDuplicate(String username) {
+	private boolean checkUsernameDuplicate(String username) {
 		User user = userRepository.findByUsername(username);
-		if(user == null){
-			return 0;
-		}
-		return 1;
+		
+		if(user != null)
+			return true;
+		
+		return false;
 	}
 }

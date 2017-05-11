@@ -4,8 +4,7 @@ import net.bulldozer.tourofall.user.dto.RegistrationUserForm;
 import net.bulldozer.tourofall.user.model.User;
 
 public interface UserService {
-	public void registerNewUser(RegistrationUserForm registrationUserForm);
+	public User registerNewUser(RegistrationUserForm registrationUserForm)throws DuplicateUsernameException;
 	public User getUserByUsername(String username);
 	public User getUserByUserId(long id);
-	public int checkDuplicate(String username);
 }

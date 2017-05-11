@@ -13,27 +13,44 @@
 <div class="form-container">
 <sf:form action="${pageContext.request.contextPath}/signup" method="post" commandName="registrationUserForm">
   <div class="container">
-    
-   	<sf:input path="username" placeholder="New ID" class="input"/>
-   	<sf:errors path="username" />
+    <c:if test="${registrationUserForm.signInProvider == null}">
+    	<h3>일반 가입자</h3>
+  	 	<sf:input path="username" placeholder="New ID" class="input"/>
+   		<sf:errors path="username" />
    	
-   	<sf:password path="password"  placeholder="New Password"/>    
-   	<sf:errors path="password" />
+   		<sf:password path="password"  placeholder="New Password"/>    
+   		<sf:errors path="password" />
    	
-   	<sf:password path="confirmPassword" placeholder="Repeat Password"/>
-	<sf:errors path="confirmPassword" />
+   		<sf:password path="confirmPassword" placeholder="Repeat Password"/>
+		<sf:errors path="confirmPassword" />
 	
-	<sf:input path="lastName" placeholder="Last Name" class="input name"/>
-	<sf:errors path="lastName" />
+		<sf:input path="lastName" placeholder="Last Name" class="input name"/>
+		<sf:errors path="lastName" />
 	
-	<sf:input path="firstName" placeholder="First Name" class="input name"/>
-	<sf:errors path="firstName" />
+		<sf:input path="firstName" placeholder="First Name" class="input name"/>
+		<sf:errors path="firstName" />
 
-    <div class="check-container">
-        <label style="display:block;"><b>성별</b></label>
-        <span><sf:radiobutton path="gender" value="0"/>남성</span>
-        <span><sf:radiobutton path="gender" value="1"/>여성</span>
-    </div>
+    	<div class="check-container">
+        	<label style="display:block;"><b>성별</b></label>
+        	<span><sf:radiobutton path="gender" value="0"/>남성</span>
+        	<span><sf:radiobutton path="gender" value="1"/>여성</span>
+    	</div>
+    </c:if>
+    <c:if test="${registrationUserForm.signInProvider == 'facebook'}">
+    	<h3>페이스북 가입자</h3>
+    </c:if>
+    <c:if test="${registrationUserForm.signInProvider == 'twitter'}">
+    	<h3>트위터 가입자</h3>
+    </c:if>
+    <c:if test="${registrationUserForm.signInProvider != null}">
+    	<sf:hidden path="username"/>
+    	<sf:hidden path="password"/>
+    	<sf:hidden path="confirmPassword"/>
+    	<sf:hidden path="lastName"/>
+    	<sf:hidden path="firstName"/>
+    	<sf:hidden path="gender"/>
+    	<sf:hidden path="signInProvider"/>
+    </c:if>
     <div class="check-container">
         <label style="display:block;"><b>생일</b></label>   
         <sf:select path="year">

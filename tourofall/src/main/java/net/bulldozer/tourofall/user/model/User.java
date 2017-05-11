@@ -209,6 +209,10 @@ public class User {
 			user.role = role;
 			return this;
 		}
+		public Builder signInProvider(SocialService signInProvider){
+			user.signInProvider = signInProvider;
+			return this;
+		}
 		public User build(){
 			return user;
 		}

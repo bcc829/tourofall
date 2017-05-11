@@ -12,7 +12,7 @@ import net.bulldozer.tourofall.user.validation.annotation.FieldMatch;
 
 @FieldMatch(first="password",second="confirmPassword", message="비밀번호가 불일치합니다.")
 public class RegistrationUserForm {
-	
+	public static final String FILE_NAME_USERNAME = "username";
 	@NotEmpty(message="ID를 입력해주세요")
 	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
 	private String username;
@@ -38,8 +38,6 @@ public class RegistrationUserForm {
 	private Date birth;
 
 	private SocialService signInProvider;
-	
-	private int checked = -2;
 	
 	private String year;
 	private String month;
@@ -101,12 +99,6 @@ public class RegistrationUserForm {
 	public void setSignInProvider(SocialService signInProvider) {
 		this.signInProvider = signInProvider;
 	}
-	public int getChecked() {
-		return checked;
-	}
-	public void setChecked(int checked) {
-		this.checked = checked;
-	}
 	public String getYear() {
 		return year;
 	}
@@ -130,6 +122,12 @@ public class RegistrationUserForm {
 	}
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+	@Override
+	public String toString() {
+		return "RegistrationUserForm [username=" + username + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", gender=" + gender + ", birth=" + birth + ", signInProvider="
+				+ signInProvider + "]";
 	}
 	
 }

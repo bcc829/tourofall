@@ -24,6 +24,7 @@ import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 import net.bulldozer.tourofall.security.service.SpringSecuritySignInAdapter;
+import net.bulldozer.tourofall.user.service.ConnectionManager;
 
 
 @Configuration
@@ -87,5 +88,10 @@ public class SocialContext {
 	@Bean
 	public ProviderSignInUtils providerSignInUtils(){
 		return new ProviderSignInUtils(connectionFactoryLocator(),usersConnectionRepository());
+	}
+	
+	@Bean
+	public ConnectionManager connectionManager(){
+		return new ConnectionManager(facebookConnectionFactory() ,providerSignInUtils());
 	}
 }
