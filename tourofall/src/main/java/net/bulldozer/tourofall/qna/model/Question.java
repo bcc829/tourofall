@@ -20,8 +20,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import net.bulldozer.tourofall.common.util.CheckUserUtil;
 import net.bulldozer.tourofall.user.model.User;
-import net.bulldozer.tourofall.util.CheckUserUtil;
 
 @Entity
 @Table(name="questions")

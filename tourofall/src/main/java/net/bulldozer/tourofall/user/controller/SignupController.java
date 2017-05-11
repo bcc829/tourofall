@@ -13,59 +13,32 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.bulldozer.tourofall.user.dto.RegistrationUserForm;
 import net.bulldozer.tourofall.user.service.UserService;
-import net.bulldozer.tourofall.util.DateList;
+import net.bulldozer.tourofall.user.util.DateList;
 
 @Controller
-@RequestMapping("/join")
-public class JoinController {
+@RequestMapping("/signup")
+public class SignupController {
 	@Autowired
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showJoinPage(Model model) {
-		if(!model.containsAttribute("checkResult")){
-			model.addAttribute("checkResult", -3);
-		}
 		model.addAttribute("registrationUserForm", new RegistrationUserForm());
 		model.addAttribute("years", DateList.getYearList());
 		model.addAttribute("months", DateList.getMonthList());
 		model.addAttribute("dates", DateList.getDateList());
-		return "join";
+		return "signup";
 	}
-
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public String processJoin(@Valid RegistrationUserForm registrationUserForm, BindingResult result, Model model) throws Exception {
-		int checkResult =  registrationUserForm.getChecked();
-		System.out.println(checkResult);
-		if (result.hasErrors() || checkResult <= 0) {
-			if(checkResult == -3){
-				checkResult = -2;
-			}
-			model.addAttribute("checkResult", checkResult);
+
+		if (result.hasErrors()) {
 			model.addAttribute("years", DateList.getYearList());
 			model.addAttribute("months", DateList.getMonthList());
 			model.addAttribute("dates", DateList.getDateList());
-			return "join";
+			return "signup";
 		}
-		registrationUserForm.setBirth();
-		userService.registerNewUser(registrationUserForm);
 		return "redirect:/";
-	}
-
-	@RequestMapping(value = "/duplicate", method = RequestMethod.GET)
-	public String processJoin(@RequestParam(value = "username") String username, RedirectAttributes model) {
-		int result;
-		if (username.equals("")) {
-			result = -1;
-		} else {
-			if (userService.checkDuplicate(username) == 1) {
-				result = 0;
-			} else {
-				result = 1;
-				model.addFlashAttribute("username", username);
-			}
-		}
-		model.addFlashAttribute("checkResult", result);
-		return "redirect:/join";
 	}
 }

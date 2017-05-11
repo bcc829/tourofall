@@ -12,5 +12,5 @@
 	 	<a href="<c:url value="/myinfo"/>">내정보</a>
 	 	<a href="<c:url value="/logout"/>">로그아웃</a>
 	 </c:if>
-	<a href="<c:url value="/join"/>">회원가입</a>
+	<a href="<c:url value="/signup"/>">회원가입</a>
 </div>

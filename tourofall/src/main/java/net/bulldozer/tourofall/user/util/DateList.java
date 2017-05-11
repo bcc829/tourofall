@@ -1,4 +1,4 @@
-package net.bulldozer.tourofall.util;
+package net.bulldozer.tourofall.user.util;
 
 import java.util.ArrayList;
 import java.util.List;

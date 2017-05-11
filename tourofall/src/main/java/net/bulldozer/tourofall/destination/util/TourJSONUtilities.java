@@ -1,4 +1,4 @@
-package net.bulldozer.tourofall.util;
+package net.bulldozer.tourofall.destination.util;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

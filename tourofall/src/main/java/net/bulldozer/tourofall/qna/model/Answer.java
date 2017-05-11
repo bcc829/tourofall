@@ -15,8 +15,8 @@ import javax.persistence.Table;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import net.bulldozer.tourofall.common.util.CheckUserUtil;
 import net.bulldozer.tourofall.user.model.User;
-import net.bulldozer.tourofall.util.CheckUserUtil;
 
 @Entity
 @Table(name="answers")

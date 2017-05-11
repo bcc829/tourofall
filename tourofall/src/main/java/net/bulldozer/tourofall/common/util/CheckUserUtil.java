@@ -1,4 +1,4 @@
-package net.bulldozer.tourofall.util;
+package net.bulldozer.tourofall.common.util;
 
 import net.bulldozer.tourofall.user.model.User;
 

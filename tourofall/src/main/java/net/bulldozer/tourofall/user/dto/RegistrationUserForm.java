@@ -8,7 +8,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import net.bulldozer.tourofall.user.model.SocialService;
+import net.bulldozer.tourofall.user.validation.annotation.FieldMatch;
 
+@FieldMatch(first="password",second="confirmPassword", message="비밀번호가 불일치합니다.")
 public class RegistrationUserForm {
 	
 	@NotEmpty(message="ID를 입력해주세요")
@@ -18,6 +20,10 @@ public class RegistrationUserForm {
 	@NotEmpty(message="Password를 입력해주세요")
 	@Size(min=8, message = "최소8자 이상 입력해주세요.")
 	private String password;
+	
+	@NotEmpty(message="중복확인 Password를 입력해주세요")
+	@Size(min=8, message = "최소8자 이상 입력해주세요.")
+	private String confirmPassword;
 	
 	@NotEmpty(message="이름을 입력해주세요")
 	@Size(max=45, message = "최대 45까지 입력 가능합니다.")
@@ -76,7 +82,7 @@ public class RegistrationUserForm {
 	public Date getBirth() {
 		return birth;
 	}
-
+	
 	public void setBirth() throws Exception{
 		String dateString = year+"/"+month+"/"+date;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -119,6 +125,11 @@ public class RegistrationUserForm {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 	
 }

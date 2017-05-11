@@ -1,4 +1,4 @@
-package net.bulldozer.tourofall.util;
+package net.bulldozer.tourofall.destination.util;
 
 import java.io.IOException;
 import java.net.URLDecoder;
