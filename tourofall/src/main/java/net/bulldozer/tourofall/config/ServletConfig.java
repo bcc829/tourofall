@@ -19,7 +19,8 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 		"net.bulldozer.tourofall.destination.controller",
 		"net.bulldozer.tourofall.qna.controller",
 		"net.bulldozer.tourofall.review.controller",
-		"net.bulldozer.tourofall.user.controller"
+		"net.bulldozer.tourofall.user.controller",
+		"net.bulldozer.tourofall.recommend.controller"
 })
 public class ServletConfig extends WebMvcConfigurerAdapter{
 	

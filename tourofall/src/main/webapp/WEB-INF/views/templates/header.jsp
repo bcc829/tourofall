@@ -4,8 +4,8 @@
 <div>
 	<a href="<c:url value="/search/simple"/>">간편검색</a>
 	<a href="<c:url value="/search/detail"/>">상세검색</a>
-	<a href="<c:url value="/recommendation"/>">추천여행지</a>
-	<a href="<c:url value="/evalmore"/>">추천더하기</a>
+	<a href="<c:url value="/recommend"/>">추천여행지</a>
+	<a href="<c:url value="/recommend/evalmore"/>">추천더하기</a>
 	 <c:if test="${pageContext.request.userPrincipal.name == null}">
 	 	<a href="<c:url value="/login"/>">로그인</a>
 	 	<a href="<c:url value="/signup"/>">회원가입</a>

@@ -142,6 +142,4 @@ public class DestinationController {
 		model.addAttribute("questionInfoes", questionService.getQuestionsByItemId(itemId));
 		return "dest-imageinfo";
 	}
-	
-	
 }

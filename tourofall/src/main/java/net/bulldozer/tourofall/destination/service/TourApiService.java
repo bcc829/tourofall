@@ -16,13 +16,25 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import net.bulldozer.tourofall.destination.util.TourJSONUtilities;
 import net.bulldozer.tourofall.destination.util.TourUriUtilities;
+import net.bulldozer.tourofall.recommend.dto.DestinationEval;
 
 @Service
 public class TourApiService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	
+	public DestinationEval getDestinationEvalInfo(String itemId) throws Exception{
+		Map<String,String> parameter = new HashMap<String,String>();
+		parameter.put("contentId", itemId);
+		parameter.put("defaultYN", "Y");
+		parameter.put("firstImageYN", "Y");
+		JSONObject items = (JSONObject)(sendAndReceiveDataFromApiServer("detailCommon",parameter).get("items"));
+		JSONObject item = (JSONObject)items.get("item");
+		
+		
+		DestinationEval dEval = new DestinationEval(itemId, (String)item.get("firstimage"), (String)item.get("title"), 0);
+		return dEval;
+	}
 	private JSONObject sendAndReceiveDataFromApiServer(String serviceName, Map<String,String> parameter) throws Exception{
 		UriComponentsBuilder urIbuilder = TourUriUtilities.getBaseUriComponentsBuilder(serviceName);
 		Set<String> parameterName = parameter.keySet();
@@ -37,7 +49,7 @@ public class TourApiService {
 		String jsonResult = restTemplate.getForObject(uri, String.class);
 		return TourJSONUtilities.getTourItems(jsonResult);
 	}
-	
+	 
 	public JSONObject getSimpleSearchResult(String query, String pageNum) throws Exception {
 		Map<String,String> parameter = new HashMap<String,String>();
 		parameter.put("keyword", URLDecoder.decode(URLEncoder.encode(query, "UTF-8"), "UTF-8"));
