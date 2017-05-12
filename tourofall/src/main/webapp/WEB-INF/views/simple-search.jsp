@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div>
-	<form action="<c:url value="/search"/>" method="get">
-		<input type="text" name="s" /> <input type="submit" value="search" />
+	<form action="<c:url value="/search/simple"/>" method="get">
+		<input type="text" name="s" value="${query}"/> <input type="submit" value="search" />
 	</form>
 	<div>
 
@@ -20,24 +20,24 @@
 					<tr>
 						<td colspan="2">
 							<c:if test="${pageNo-5 >= 1}">
-								<a href="<c:url value="/search?s=${query}&p=${pageNo-5}"/>">&lt;&lt;</a>
+								<a href="<c:url value="/search/simple?s=${query}&p=${pageNo-5}"/>">&lt;&lt;</a>
 							</c:if>
 							&nbsp;
 							<c:if test="${pageNo-1 >= 1}">
-								<a href="<c:url value="/search?s=${query}&p=${pageNo-1}"/>">&lt;</a>
+								<a href="<c:url value="/search/simple?s=${query}&p=${pageNo-1}"/>">&lt;</a>
 							</c:if>
 							&nbsp;
 							<c:forEach var="rowNum" items="${rowNumList}">
-								<a href="<c:url value="/search?s=${query}&p=${rowNum}"/>">${rowNum}</a>&nbsp;&nbsp;
+								<a href="<c:url value="/search/simple?s=${query}&p=${rowNum}"/>">${rowNum}</a>&nbsp;&nbsp;
 							</c:forEach>
 							
 							
 							<c:if test="${pageNo + 1 <= totalPage}">
-								<a href="<c:url value="/search?s=${query}&p=${pageNo+1}"/>">&gt;</a>
+								<a href="<c:url value="/search/simple?s=${query}&p=${pageNo+1}"/>">&gt;</a>
 							</c:if>
 							&nbsp;
 							<c:if test="${pageNo + 5 <= totalPage}">
-								<a href="<c:url value="/search?s=${query}&p=${pageNo+5}"/>">&gt;&gt;</a>	
+								<a href="<c:url value="/search/simple?s=${query}&p=${pageNo+5}"/>">&gt;&gt;</a>	
 							</c:if>
 								
 						</td>

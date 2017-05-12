@@ -13,8 +13,12 @@
 		<put-attribute name="body" value="/WEB-INF/views/evalmore.jsp"/>
 	</definition>
 	
-	<definition name="search" extends="base">
-		<put-attribute name="body" value="/WEB-INF/views/search.jsp"/>
+	<definition name="simple_search" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/simple-search.jsp"/>
+	</definition>
+	
+	<definition name="detail_search" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/detail-search.jsp"/>
 	</definition>
 	
 	<definition name="review_write" extends="base">

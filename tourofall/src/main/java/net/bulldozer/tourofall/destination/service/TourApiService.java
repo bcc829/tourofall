@@ -16,6 +16,8 @@ import net.bulldozer.tourofall.destination.util.TourUriUtilities;
 public class TourApiService {
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	
 	public String getItemTitle(int contentId) throws Exception{
 		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("detailCommon")
 				.queryParam("contentId"     , contentId)
@@ -85,10 +87,24 @@ public class TourApiService {
 		return TourJSONUtilities.getTourItems(jsonResult);
 	}
 	
-	public JSONObject getSearchResult(String query, String pageNum) throws Exception {
+	public JSONObject getSimpleSearchResult(String query, String pageNum) throws Exception {
 		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("searchKeyword")
 				.queryParam("keyword", URLDecoder.decode(URLEncoder.encode(query, "UTF-8"), "UTF-8"))
 				.queryParam("pageNo", pageNum)
+				.queryParam("arrange", (String) "A")
+				.queryParam("listYN", (String) "Y")
+				.build().encode().toUri();		
+		String jsonResult = restTemplate.getForObject(uri, String.class);
+		return TourJSONUtilities.getTourItems(jsonResult);
+	}
+	public JSONObject getDetailSearchResult(String query, String pageNum,String ta, String sc, String a) throws Exception{
+		System.out.println(query+", "+pageNum+", "+ta+", "+sc+", "+a);
+		URI uri = TourUriUtilities.getBaseUriComponentsBuilder("searchKeyword")
+				.queryParam("keyword", URLDecoder.decode(URLEncoder.encode(query, "UTF-8"), "UTF-8"))
+				.queryParam("pageNo",pageNum)
+				.queryParam("contentTypeId", ta)
+				.queryParam("cat1", sc)
+				.queryParam("areaCode", a)
 				.queryParam("arrange", (String) "A")
 				.queryParam("listYN", (String) "Y")
 				.build().encode().toUri();		
