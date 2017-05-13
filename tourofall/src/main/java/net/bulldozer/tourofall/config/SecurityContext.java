@@ -14,8 +14,8 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import net.bulldozer.tourofall.security.service.AuthenticationSocialUserDetailsService;
-import net.bulldozer.tourofall.security.service.AuthenticationUserDetailsService;
+import net.bulldozer.tourofall.security.service.SocialUserAuthenticationDetailsService;
+import net.bulldozer.tourofall.security.service.UserAuthenticationDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -44,6 +44,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 			.addFilterBefore(filter, CsrfFilter.class)
 			.authorizeRequests()
 				.antMatchers("/recommend/**").authenticated()
+				.antMatchers("/eval/**").authenticated()
 				.antMatchers("/review/write/**").authenticated()
 				.antMatchers("/qna/question/write/**").authenticated()
 				.antMatchers("/qna/answer/write/**").authenticated()
@@ -64,11 +65,11 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return new AuthenticationUserDetailsService();
+		return new UserAuthenticationDetailsService();
 	}
 	
 	@Bean
 	public SocialUserDetailsService socialDetailsService(){
-		return new AuthenticationSocialUserDetailsService(userDetailsService()); 
+		return new SocialUserAuthenticationDetailsService(userDetailsService()); 
 	}
 }

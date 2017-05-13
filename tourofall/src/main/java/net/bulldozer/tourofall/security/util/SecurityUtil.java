@@ -7,7 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import net.bulldozer.tourofall.security.dto.AuthenticationUserDetails;
+import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.model.User;
 
 public class SecurityUtil {
@@ -16,7 +16,7 @@ public class SecurityUtil {
 
     public static void logInUser(User user) {
         LOGGER.info("Logging in user: {}", user);
-        AuthenticationUserDetails userDetails = AuthenticationUserDetails.getBuilder()
+        UserAuthenticationDetails userDetails = UserAuthenticationDetails.getBuilder()
         		.id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())

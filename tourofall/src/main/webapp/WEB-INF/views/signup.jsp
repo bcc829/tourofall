@@ -11,7 +11,7 @@
 <body>
 <h2 class="sign-title"><a href="#">Tour Of All</a></h2>
 <div class="form-container">
-<sf:form action="${pageContext.request.contextPath}/signup" method="post" commandName="registrationUserForm">
+<sf:form action="${pageContext.request.contextPath}/signup" method="post" commandName="userRegistrationForm">
   <div class="container">
     <c:if test="${registrationUserForm.signInProvider == null}">
     	<h3>일반 가입자</h3>

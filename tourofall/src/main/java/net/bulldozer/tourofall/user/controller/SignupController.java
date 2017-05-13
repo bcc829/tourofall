@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
 import net.bulldozer.tourofall.security.util.SecurityUtil;
-import net.bulldozer.tourofall.user.dto.RegistrationUserForm;
+import net.bulldozer.tourofall.user.dto.UserRegistrationForm;
 import net.bulldozer.tourofall.user.model.User;
 import net.bulldozer.tourofall.user.service.ConnectionManager;
 import net.bulldozer.tourofall.user.service.DuplicateUsernameException;
@@ -29,7 +29,7 @@ public class SignupController {
 	@Autowired
 	private ConnectionManager connectionManager;
 	
-	protected static final String MODEL_NAME_REGISTRATION_USER = "registrationUserForm";
+	protected static final String MODEL_NAME_REGISTRATION_USER = "userRegistrationForm";
 	protected static final String ERROR_MESSAGE_USERNAME_EXIST = "아이디가 이미 존재합니다.";
 	
 	private void addDateList(Model model){
@@ -40,23 +40,23 @@ public class SignupController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showJoinPage(Model model, WebRequest request) {
 		Connection<?> connection = connectionManager.getConnection(request);
-		RegistrationUserForm dto = connectionManager.createRegistrationUserForm(connection);
-		model.addAttribute(MODEL_NAME_REGISTRATION_USER, dto);
+		UserRegistrationForm userRegistrationForm = connectionManager.createRegistrationUserForm(connection);
+		model.addAttribute(MODEL_NAME_REGISTRATION_USER, userRegistrationForm);
 		addDateList(model);
 		return "signup";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processJoin(@Valid RegistrationUserForm registrationUserForm, BindingResult result, Model model, WebRequest request)
+	public String processJoin(@Valid UserRegistrationForm userRegistrationForm, BindingResult result, Model model, WebRequest request)
 			throws Exception {
 		if (result.hasErrors()) {
 			addDateList(model);
 			return "signup";
 		}
-		registrationUserForm.setBirth();
-		System.out.println(registrationUserForm);
+		userRegistrationForm.setBirth();
+		System.out.println(userRegistrationForm);
 		
-		User createdUser = createUser(registrationUserForm,result);
+		User createdUser = createUser(userRegistrationForm,result);
 		if(createdUser == null){
 			addDateList(model);
 			return "signup";
@@ -66,13 +66,13 @@ public class SignupController {
 		connectionManager.signupForConnectionRepository(createdUser.getUsername(), request);
 		return "redirect:/";
 	}
-	private User createUser(RegistrationUserForm registrationUserForm, BindingResult result){
+	private User createUser(UserRegistrationForm userRegistrationForm, BindingResult result){
 		User createdUser = null;
 		
 		try{
-			createdUser = userService.registerNewUser(registrationUserForm);
+			createdUser = userService.registerNewUser(userRegistrationForm);
 		}catch(DuplicateUsernameException ex){
-			addFieldError(MODEL_NAME_REGISTRATION_USER, RegistrationUserForm.FILE_NAME_USERNAME, registrationUserForm.getUsername(),ERROR_MESSAGE_USERNAME_EXIST,result);
+			addFieldError(MODEL_NAME_REGISTRATION_USER, UserRegistrationForm.FILE_NAME_USERNAME, userRegistrationForm.getUsername(),ERROR_MESSAGE_USERNAME_EXIST,result);
 		}
 		return createdUser;
 	}

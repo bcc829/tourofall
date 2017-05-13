@@ -17,10 +17,11 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @ComponentScan(basePackages={
 		"net.bulldozer.tourofall.common.controller",
 		"net.bulldozer.tourofall.destination.controller",
-		"net.bulldozer.tourofall.qna.controller",
+		"net.bulldozer.tourofall.question.controller",
 		"net.bulldozer.tourofall.review.controller",
 		"net.bulldozer.tourofall.user.controller",
-		"net.bulldozer.tourofall.recommend.controller"
+		"net.bulldozer.tourofall.recommendation.controller",
+		"net.bulldozer.tourofall.evaluation.controller"
 })
 public class ServletConfig extends WebMvcConfigurerAdapter{
 	

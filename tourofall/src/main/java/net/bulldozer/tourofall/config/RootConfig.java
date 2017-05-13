@@ -14,10 +14,12 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @ComponentScan(basePackages={
 		"net.bulldozer.tourofall.destination.service",
-		"net.bulldozer.tourofall.qna.service",
+		"net.bulldozer.tourofall.question.service",
+		"net.bulldozer.tourofall.answer.service",
 		"net.bulldozer.tourofall.review.service",
 		"net.bulldozer.tourofall.user.service",
-		"net.bulldozer.tourofall.recommend.service"
+		"net.bulldozer.tourofall.recommendation.service",
+		"net.bulldozer.tourofall.evaluation.service"
 })
 @Import({PersistenceContext.class,SecurityContext.class})
 @PropertySource("classpath:application.properties")

@@ -22,22 +22,22 @@
 	<div class="container">
 		<!-- Example row of columns -->
 
-		<sf:form  action = "${pageContext.request.contextPath}/recommend/evalmore" method = "post" commandName="destinationEvalForm">
+		<sf:form  action = "${pageContext.request.contextPath}/eval/evalmore" method = "post" commandName="evaluationRegistrationsForm">
 			<div class="row">
-				<c:forEach var="destinationEval" items="${destinationEvalForm.destinationEvals}" varStatus="status">
+				<c:forEach var="evaluationRegistration" items="${evaluationRegistrationsForm.evaluationRegistrations}" varStatus="status">
 					<div class="col-sm-4">
-						<sf:hidden path="destinationEvals[${status.index}].itemId"/>
-						<p class="lead">${destinationEval.title}</p>
-						<sf:hidden path="destinationEvals[${status.index}].title"/>
-						<img alt="이미지 없음" src="${destinationEval.imageUrl}" width="100%" >
-						<sf:hidden path="destinationEvals[${status.index}].imageUrl"/>
+						<sf:hidden path="evaluationRegistrations[${status.index}].itemId"/>
+						<p class="lead">${evaluationRegistration.title}</p>
+						<sf:hidden path="evaluationRegistrations[${status.index}].title"/>
+						<img alt="이미지 없음" src="${evaluationRegistration.imageUrl}" width="100%" >
+						<sf:hidden path="evaluationRegistrations[${status.index}].imageUrl"/>
 						<p>
 							평점<br />
-							<input type = "radio" name="destinationEvals[${status.index}].score" value="1"/>1&nbsp;
-							<input type = "radio" name="destinationEvals[${status.index}].score" value="2"/>2&nbsp;
-							<input type = "radio" name="destinationEvals[${status.index}].score" value="3"/>3&nbsp;
-							<input type = "radio" name="destinationEvals[${status.index}].score" value="4"/>4&nbsp;
-							<input type = "radio" name="destinationEvals[${status.index}].score" value="5"/>5
+							<input type = "radio" name="evaluationRegistrations[${status.index}].score" value="1"/>1&nbsp;
+							<input type = "radio" name="evaluationRegistrations[${status.index}].score" value="2"/>2&nbsp;
+							<input type = "radio" name="evaluationRegistrations[${status.index}].score" value="3"/>3&nbsp;
+							<input type = "radio" name="evaluationRegistrations[${status.index}].score" value="4"/>4&nbsp;
+							<input type = "radio" name="evaluationRegistrations[${status.index}].score" value="5"/>5
 						</p>
 					</div>
 				</c:forEach>

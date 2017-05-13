@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import net.bulldozer.tourofall.security.dto.AuthenticationUserDetails;
+import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.model.User;
 import net.bulldozer.tourofall.user.service.UserService;
 
@@ -23,14 +23,14 @@ public class MyInfoController {
 	}
 	@RequestMapping("/detail")
 	public String showMyInfoDetail(Model model){
-		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-		model.addAttribute("userDetails", authenticationUserDetails);
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+		model.addAttribute("userAuthenticationDetails", userAuthenticationDetails);
 		return "myinfo-detail";
 	}
 	@RequestMapping("/reviews")
 	public String showMyInfoReviews(Model model){
-		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUserId(authenticationUserDetails.getId());
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
 		model.addAttribute("firstName", user.getFirstName());
 		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("reviews", user.getReviews());
@@ -38,8 +38,8 @@ public class MyInfoController {
 	}
 	@RequestMapping("/questions")
 	public String showMyInfoQuestions(Model model){
-		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUserId(authenticationUserDetails.getId());
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
 		model.addAttribute("firstName", user.getFirstName());
 		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("questions", user.getQuestions());
@@ -47,8 +47,8 @@ public class MyInfoController {
 	}
 	@RequestMapping("/answers")
 	public String showMyInfoAnswers(Model model){
-		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUserId(authenticationUserDetails.getId());
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
 		model.addAttribute("firstName", user.getFirstName());
 		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("answers", user.getAnswers());
@@ -56,8 +56,8 @@ public class MyInfoController {
 	}
 	@RequestMapping("/evals")
 	public String showMyInfoEvals(Model model){
-		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUserId(authenticationUserDetails.getId());
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
 		model.addAttribute("firstName", user.getFirstName());
 		model.addAttribute("lastName", user.getLastName());
 		model.addAttribute("evaluations", user.getEvaluations());

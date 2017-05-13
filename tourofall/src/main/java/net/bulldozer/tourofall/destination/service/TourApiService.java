@@ -16,14 +16,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import net.bulldozer.tourofall.destination.util.TourJSONUtilities;
 import net.bulldozer.tourofall.destination.util.TourUriUtilities;
-import net.bulldozer.tourofall.recommend.dto.DestinationEval;
+import net.bulldozer.tourofall.evaluation.dto.EvaluationRegistration;
 
 @Service
 public class TourApiService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	public DestinationEval getDestinationEvalInfo(String itemId) throws Exception{
+	public EvaluationRegistration getEvaluationRegistrationsInfo(String itemId) throws Exception{
 		Map<String,String> parameter = new HashMap<String,String>();
 		parameter.put("contentId", itemId);
 		parameter.put("defaultYN", "Y");
@@ -32,7 +32,7 @@ public class TourApiService {
 		JSONObject item = (JSONObject)items.get("item");
 		
 		
-		DestinationEval dEval = new DestinationEval(Integer.parseInt(itemId), (String)item.get("firstimage"), (String)item.get("title"), 0);
+		EvaluationRegistration dEval = new EvaluationRegistration(Integer.parseInt(itemId), (String)item.get("firstimage"), (String)item.get("title"), 0);
 		return dEval;
 	}
 	private JSONObject sendAndReceiveDataFromApiServer(String serviceName, Map<String,String> parameter) throws Exception{

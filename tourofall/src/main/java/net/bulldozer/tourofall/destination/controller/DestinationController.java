@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import net.bulldozer.tourofall.destination.service.TourApiService;
-import net.bulldozer.tourofall.qna.service.QuestionService;
+import net.bulldozer.tourofall.question.service.QuestionService;
 import net.bulldozer.tourofall.review.service.ReviewService;
 
 @Controller

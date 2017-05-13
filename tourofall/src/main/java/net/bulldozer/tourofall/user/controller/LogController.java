@@ -33,8 +33,6 @@ public class LogController {
 		CookieClearingLogoutHandler cookieClearingLogoutHandler = new CookieClearingLogoutHandler(
 				AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY);
 		cookieClearingLogoutHandler.logout(request, response, null);
-		// Invalidates HTTP Session. Removes the Authentication from the
-		// SecurityContext
 		SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
 		securityContextLogoutHandler.logout(request, response, null);
 		return "redirect:/login?logout";

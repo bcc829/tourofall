@@ -11,7 +11,7 @@ import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.web.context.request.WebRequest;
 
-import net.bulldozer.tourofall.user.dto.RegistrationUserForm;
+import net.bulldozer.tourofall.user.dto.UserRegistrationForm;
 import net.bulldozer.tourofall.user.model.SocialService;
 import net.bulldozer.tourofall.user.util.RandomUtil;
 
@@ -29,8 +29,8 @@ public class ConnectionManager {
 	public void signupForConnectionRepository(String userId, WebRequest request){
 		providerSignInUtils.doPostSignUp(userId, request);
 	}
-	public RegistrationUserForm createRegistrationUserForm(Connection<?> connection) {
-		RegistrationUserForm dto = new RegistrationUserForm();
+	public UserRegistrationForm createRegistrationUserForm(Connection<?> connection) {
+		UserRegistrationForm dto = new UserRegistrationForm();
 		if (connection != null) {
 			ConnectionData connectionData = connection.createData();
 			switch (connectionData.getProviderId()) {

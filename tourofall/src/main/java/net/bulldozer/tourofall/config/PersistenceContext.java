@@ -18,10 +18,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableJpaRepositories(basePackages={
-		"net.bulldozer.tourofall.qna.repository",
+		"net.bulldozer.tourofall.answer.repository",
+		"net.bulldozer.tourofall.question.repository",
 		"net.bulldozer.tourofall.review.repository",
 		"net.bulldozer.tourofall.user.repository",
-		"net.bulldozer.tourofall.recommend.repository"
+		"net.bulldozer.tourofall.recommendation.repository",
+		"net.bulldozer.tourofall.evaluation.repository"
 })
 @EnableTransactionManagement
 public class PersistenceContext {
@@ -51,10 +53,11 @@ public class PersistenceContext {
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setPackagesToScan(new String[]{
-                "net.bulldozer.tourofall.qna.model",
+                "net.bulldozer.tourofall.question.model",
+                "net.bulldozer.tourofall.answer.model",
                 "net.bulldozer.tourofall.review.model",
                 "net.bulldozer.tourofall.user.model",
-                "net.bulldozer.tourofall.recommend.model"
+                "net.bulldozer.tourofall.evaluation.model"
         });
  
         Properties jpaProperties = new Properties();

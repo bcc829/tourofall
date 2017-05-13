@@ -20,9 +20,9 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import net.bulldozer.tourofall.qna.model.Answer;
-import net.bulldozer.tourofall.qna.model.Question;
-import net.bulldozer.tourofall.recommend.model.Evaluation;
+import net.bulldozer.tourofall.answer.model.Answer;
+import net.bulldozer.tourofall.evaluation.model.Evaluation;
+import net.bulldozer.tourofall.question.model.Question;
 import net.bulldozer.tourofall.review.model.Review;
 
 @Entity
