@@ -13,7 +13,7 @@
 <div class="form-container">
 <sf:form action="${pageContext.request.contextPath}/signup" method="post" commandName="userRegistrationForm">
   <div class="container">
-    <c:if test="${registrationUserForm.signInProvider == null}">
+    <c:if test="${userRegistrationForm.signInProvider == null}">
     	<h3>일반 가입자</h3>
   	 	<sf:input path="username" placeholder="New ID" class="input"/>
    		<sf:errors path="username" />
@@ -36,13 +36,13 @@
         	<span><sf:radiobutton path="gender" value="1"/>여성</span>
     	</div>
     </c:if>
-    <c:if test="${registrationUserForm.signInProvider == 'facebook'}">
+    <c:if test="${userRegistrationForm.signInProvider == 'facebook'}">
     	<h3>페이스북 가입자</h3>
     </c:if>
-    <c:if test="${registrationUserForm.signInProvider == 'twitter'}">
+    <c:if test="${userRegistrationForm.signInProvider == 'twitter'}">
     	<h3>트위터 가입자</h3>
     </c:if>
-    <c:if test="${registrationUserForm.signInProvider != null}">
+    <c:if test="${userRegistrationForm.signInProvider != null}">
     	<sf:hidden path="username"/>
     	<sf:hidden path="password"/>
     	<sf:hidden path="confirmPassword"/>

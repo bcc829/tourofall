@@ -1,6 +1,5 @@
 package net.bulldozer.tourofall.user.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.ConnectionKey;
@@ -18,17 +17,21 @@ import net.bulldozer.tourofall.user.util.RandomUtil;
 public class ConnectionManager {
 	private FacebookConnectionFactory facebookConnectionFactory;
 	private ProviderSignInUtils providerSignInUtils;
-	
-	public ConnectionManager(FacebookConnectionFactory facebookConnectionFactory,ProviderSignInUtils providerSignInUtils){
+
+	public ConnectionManager(FacebookConnectionFactory facebookConnectionFactory,
+			ProviderSignInUtils providerSignInUtils) {
 		this.facebookConnectionFactory = facebookConnectionFactory;
 		this.providerSignInUtils = providerSignInUtils;
 	}
-	public Connection<?> getConnection(WebRequest request){
+
+	public Connection<?> getConnection(WebRequest request) {
 		return providerSignInUtils.getConnectionFromSession(request);
 	}
-	public void signupForConnectionRepository(String userId, WebRequest request){
+
+	public void signupForConnectionRepository(String userId, WebRequest request) {
 		providerSignInUtils.doPostSignUp(userId, request);
 	}
+
 	public UserRegistrationForm createRegistrationUserForm(Connection<?> connection) {
 		UserRegistrationForm dto = new UserRegistrationForm();
 		if (connection != null) {
@@ -41,19 +44,19 @@ public class ConnectionManager {
 				String[] fields = { "first_name", "last_name", "gender", "id" };
 				User userProfile = facebook.fetchObject("me", User.class, fields);
 				dto.setUsername(userProfile.getId());
-				
+
 				final String password = Integer.toString(RandomUtil.getEightChiphersInteger());
 				dto.setPassword(password);
 				dto.setConfirmPassword(password);
-				
-				if(userProfile.getGender().equals("male"))
+
+				if (userProfile.getGender().equals("male"))
 					dto.setGender(false);
 				else
 					dto.setGender(true);
-				
+
 				dto.setFirstName(userProfile.getFirstName());
 				dto.setLastName(userProfile.getLastName());
-				
+
 				ConnectionKey providerKey = facebookConnection.getKey();
 				dto.setSignInProvider(SocialService.valueOf(providerKey.getProviderId()));
 				break;

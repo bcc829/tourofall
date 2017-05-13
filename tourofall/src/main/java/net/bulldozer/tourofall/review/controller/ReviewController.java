@@ -43,7 +43,8 @@ public class ReviewController {
 			System.out.println("Binding result not rendered");
 		}
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("username", userAuthenticationDetails.getUsername());
+		model.addAttribute("firstName", userAuthenticationDetails.getFirstName());
+		model.addAttribute("lastName", userAuthenticationDetails.getLastName());
 		return "review_write";
 	}
 	

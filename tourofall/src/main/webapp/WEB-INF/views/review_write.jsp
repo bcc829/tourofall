@@ -7,7 +7,7 @@
 		<table>
 			<tr>
 				<td>작성자</td>
-				<td>${username}</td>
+				<td>${lastName}${firstName}</td>
 				<sf:hidden path="itemId"/>
 				<sf:hidden path="itemTypeId"/>
 			</tr>

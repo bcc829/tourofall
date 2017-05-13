@@ -38,7 +38,7 @@ public class SignupController {
 		model.addAttribute("dates", DateList.getDateList());
 	}
 	@RequestMapping(method = RequestMethod.GET)
-	public String showJoinPage(Model model, WebRequest request) {
+	public String showSignupPage(Model model, WebRequest request) {
 		Connection<?> connection = connectionManager.getConnection(request);
 		UserRegistrationForm userRegistrationForm = connectionManager.createRegistrationUserForm(connection);
 		model.addAttribute(MODEL_NAME_REGISTRATION_USER, userRegistrationForm);
