@@ -16,4 +16,7 @@
 	<definition name="myinfo-answers" extends="base">
 		<put-attribute name="body" value="myinfoanswers" />
 	</definition>
+	<definition name="myinfo-evals" extends="base">
+		<put-attribute name="body" value="myinfoevals" />
+	</definition>
 </tiles-definitions>

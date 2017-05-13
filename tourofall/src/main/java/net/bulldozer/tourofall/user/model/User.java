@@ -22,6 +22,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import net.bulldozer.tourofall.qna.model.Answer;
 import net.bulldozer.tourofall.qna.model.Question;
+import net.bulldozer.tourofall.recommend.model.Evaluation;
 import net.bulldozer.tourofall.review.model.Review;
 
 @Entity
@@ -66,6 +67,9 @@ public class User {
 	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
 	private Collection<Answer> answers = new ArrayList<Answer>();
 
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="key.user", cascade= CascadeType.ALL)
+	private Collection<Evaluation> evaluations = new ArrayList<Evaluation>();
 
 	
 	public String getFirstName() {
@@ -115,6 +119,24 @@ public class User {
 		question.setUser(null);
 	}
 	
+	public Collection<Evaluation> getEvaluations(){
+		return new ArrayList<Evaluation>(evaluations);
+	}
+	
+
+	public void addEvaluation(Evaluation evaluation){
+		if(evaluations.contains(evaluation))
+			return ;
+		evaluations.add(evaluation);
+		evaluation.setUser(this);
+	}
+	public void removeEvaluation(Evaluation evaluation){
+		if(evaluations.contains(evaluation))
+			return ;
+		evaluations.remove(evaluation);
+		evaluation.setUser(null);
+	}
+	
 	public Collection<Answer> getAnswers(){
 		return new ArrayList<Answer>(answers);
 	}
@@ -132,6 +154,7 @@ public class User {
 		answers.remove(answer);
 		answer.setUser(null);
 	}
+	
 
 	public long getId() {
 		return id;
@@ -221,7 +244,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", password=" + password + ", gender=" + gender + ", birth=" + birth + ", role=" + role + ", reviews="
-				+ reviews + ", questions=" + questions + ", answers=" + answers + "]";
+				+ ", password=" + password + ", gender=" + gender + ", birth=" + birth + ", role=" + role
+				+ ", signInProvider=" + signInProvider + ", reviews=" + reviews + ", questions=" + questions
+				+ ", answers=" + answers + ", evaluations=" + evaluations + "]";
 	}
 }

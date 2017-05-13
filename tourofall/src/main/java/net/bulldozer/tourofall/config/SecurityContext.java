@@ -43,8 +43,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 		http
 			.addFilterBefore(filter, CsrfFilter.class)
 			.authorizeRequests()
-				.antMatchers("/recommendation").authenticated()
-				.antMatchers("/evalmore").authenticated()
+				.antMatchers("/recommend/**").authenticated()
 				.antMatchers("/review/write/**").authenticated()
 				.antMatchers("/qna/question/write/**").authenticated()
 				.antMatchers("/qna/answer/write/**").authenticated()

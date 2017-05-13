@@ -32,7 +32,7 @@ public class TourApiService {
 		JSONObject item = (JSONObject)items.get("item");
 		
 		
-		DestinationEval dEval = new DestinationEval(itemId, (String)item.get("firstimage"), (String)item.get("title"), 0);
+		DestinationEval dEval = new DestinationEval(Integer.parseInt(itemId), (String)item.get("firstimage"), (String)item.get("title"), 0);
 		return dEval;
 	}
 	private JSONObject sendAndReceiveDataFromApiServer(String serviceName, Map<String,String> parameter) throws Exception{

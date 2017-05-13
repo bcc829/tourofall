@@ -54,4 +54,13 @@ public class MyInfoController {
 		model.addAttribute("answers", user.getAnswers());
 		return "myinfo-answers";
 	}
+	@RequestMapping("/evals")
+	public String showMyInfoEvals(Model model){
+		AuthenticationUserDetails authenticationUserDetails = (AuthenticationUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUserId(authenticationUserDetails.getId());
+		model.addAttribute("firstName", user.getFirstName());
+		model.addAttribute("lastName", user.getLastName());
+		model.addAttribute("evaluations", user.getEvaluations());
+		return "myinfo-evals";
+	}
 }

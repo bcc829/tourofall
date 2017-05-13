@@ -5,7 +5,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>
 	</definition>
 	
-	<definition name="recommendation" extends="base">
+	<definition name="recommend" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/recommendation.jsp"/>
 	</definition>
 	

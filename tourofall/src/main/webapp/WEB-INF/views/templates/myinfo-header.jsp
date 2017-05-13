@@ -6,4 +6,5 @@
 	<a href="<c:url value="/myinfo/reviews"/>">내 리뷰</a>
 	<a href="<c:url value="/myinfo/questions"/>">내 질문</a>
 	<a href="<c:url value="/myinfo/answers"/>">내 댓글</a>
+	<a href="<c:url value="/myinfo/evals"/>">내 평가</a>
 </div>

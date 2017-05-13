@@ -16,4 +16,8 @@
 	<definition name="myinfoanswers" extends="myinfo">
 		<put-attribute name="body" value="/WEB-INF/views/myinfo-answers.jsp"/>
 	</definition>
+	
+	<definition name="myinfoevals" extends="myinfo">
+		<put-attribute name="body" value="/WEB-INF/views/myinfo-evals.jsp"/>
+	</definition>
 </tiles-definitions>

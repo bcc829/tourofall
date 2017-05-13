@@ -51,5 +51,7 @@
 	</definition>
 	<definition name="detailinfo-lodge" extends="destinfo">
 		<put-attribute name="body" value="/WEB-INF/views/detailinfo/detailinfo-lodge.jsp"/>
-	</definition>
+	</definition
+	
+	>
 </tiles-definitions>

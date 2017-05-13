@@ -16,7 +16,8 @@ import org.springframework.web.client.RestTemplate;
 		"net.bulldozer.tourofall.destination.service",
 		"net.bulldozer.tourofall.qna.service",
 		"net.bulldozer.tourofall.review.service",
-		"net.bulldozer.tourofall.user.service"
+		"net.bulldozer.tourofall.user.service",
+		"net.bulldozer.tourofall.recommend.service"
 })
 @Import({PersistenceContext.class,SecurityContext.class})
 @PropertySource("classpath:application.properties")

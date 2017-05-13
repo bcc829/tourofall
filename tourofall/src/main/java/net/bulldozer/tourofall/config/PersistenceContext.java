@@ -20,7 +20,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages={
 		"net.bulldozer.tourofall.qna.repository",
 		"net.bulldozer.tourofall.review.repository",
-		"net.bulldozer.tourofall.user.repository"
+		"net.bulldozer.tourofall.user.repository",
+		"net.bulldozer.tourofall.recommend.repository"
 })
 @EnableTransactionManagement
 public class PersistenceContext {
@@ -53,6 +54,7 @@ public class PersistenceContext {
                 "net.bulldozer.tourofall.qna.model",
                 "net.bulldozer.tourofall.review.model",
                 "net.bulldozer.tourofall.user.model",
+                "net.bulldozer.tourofall.recommend.model"
         });
  
         Properties jpaProperties = new Properties();

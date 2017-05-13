@@ -1,23 +1,23 @@
 package net.bulldozer.tourofall.recommend.dto;
 
 public class DestinationEval {
-	private String itemId;
+	private int itemId;
 	private String imageUrl;
 	private String title;
 	private double score;
 	
 	public DestinationEval(){}
-	public DestinationEval(String itemId,String imageUrl, String title, double score) {
+	public DestinationEval(int itemId,String imageUrl, String title, double score) {
 		this.itemId = itemId;
 		this.imageUrl = imageUrl;
 		this.title = title;
 		this.score = score;
 	}
-	public String getItemId() {
+	public int getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(String itemId) {
+	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
 

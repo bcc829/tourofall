@@ -63,3 +63,10 @@ create table answers(
 	constraint fk_answers1 foreign key(user_id) references users(user_id),
 	constraint fk_answers2 foreign key(question_id) references questions(question_id)
 );
+create table evaluations(
+	user_id bigint(20) not null,
+	item_id int(11) not null,
+	score double default 0 not null,
+	constraint pk_evaluations primary key(user_id,item_id),
+	constraint fk_evaluations foreign key(user_id) references users(user_id)
+);
