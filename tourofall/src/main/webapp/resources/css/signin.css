@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+
+.facebook-button-container {
+    margin-top:1.3rem; 
+}
+.facebook-button-container button{
+    background-color: #4267B2;
+}
+
+.image-container {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+img.avatar {
+    width: 40%;
+    height:150px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+}
+span.psw {
+    font-size: 1.2rem
+}
+.component-right{
+    float:right;
+    display:inline-block;
+}
+
+.form-horizontal .form-group{
+	padding-left:14px;
+	padding-right:14px;
+}
+button {
+    background-color: #0096ff;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+@media (max-width:338px){
+    span.psw {
+        display: block;
+        text-align:center;
+    }
+    .component-right{
+        float:none;
+        display:block;
+        text-align:center;
+    }
+}

@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <title><tiles:insertAttribute name="title" /></title>
 </head>
 <body>
@@ -25,5 +25,6 @@
 	<div>
 		<tiles:insertAttribute name="footer" />
 	</div>
+	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
 </body>
 </html>

@@ -37,8 +37,8 @@
 		<put-attribute name="body" value="/WEB-INF/views/question.jsp"/>
 	</definition>
 	
-	<definition name="login" extends="base">
-		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+	<definition name="signin" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/signin.jsp" />
 	</definition>
 	<definition name="signup" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/signup.jsp" />

@@ -6,25 +6,30 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/common_style.css"/>">
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/login_style.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/sign-common.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/signin.css"/>">
 <title>Tour of all에 로그인</title>
 </head>
 <body>
 	<h2 class="sign-title"><a href="#">Tour Of All</a></h2>
-	<div class="form-container">
-        <form action="<c:url value="/login/authenticate"/>" method="post">
+	<div class="sign-form-container">
+        <form action="<c:url value="/signin/authenticate"/>" method="post" class="form-horizontal">
         	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <div class="imgcontainer">
+        	<c:if test="${not empty signoutMsg}">
+        			<p style="color:blue">${signoutMsg}</p>
+        		</c:if>
+            <div class="image-container">
                 <img src="<c:url value="/resources/images/default_profile.jpg"/>" alt="Avatar" class="avatar">
             </div>
 
-            <div class="container">
+            <div class="sign-container">
+                <div class="form-group">
+                	<input type="text" class="form-control" placeholder="ID" name="username" required>
+				</div>
                 
-                <input type="text" placeholder="ID" name="username" required>
-
-                
-                <input type="password" placeholder="Password" name="password" required>
+                <div class="form-group">
+                	<input type="password" class="form-control" placeholder="Password" name="password" required>
+                </div>
         		<c:if test="${not empty errorMsg}">
         			<p style="color:red">${errorMsg}</p>
         		</c:if>
@@ -35,7 +40,7 @@
 		<div class="facebook-button-container">
         	<form action="<c:url value="/signin/facebook"/>" method="post">
         		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        		<div class="container">
+        		<div class="sign-container">
 					<button type="submit"><i class="fa fa-facebook-square" style="font-size:2rem"></i>&nbsp;&nbsp;&nbsp;Sign in with Facebook</button>
 				</div>
 			</form>

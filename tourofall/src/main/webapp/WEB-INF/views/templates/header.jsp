@@ -7,11 +7,11 @@
 	<a href="<c:url value="/recommend"/>">추천여행지</a>
 	<a href="<c:url value="/eval/evalmore"/>">추천더하기</a>
 	 <c:if test="${pageContext.request.userPrincipal.name == null}">
-	 	<a href="<c:url value="/login"/>">로그인</a>
+	 	<a href="<c:url value="/signin"/>">로그인</a>
 	 	<a href="<c:url value="/signup"/>">회원가입</a>
 	 </c:if>
 	 <c:if test="${pageContext.request.userPrincipal.name != null}">
 	 	<a href="<c:url value="/myinfo"/>">내정보</a>
-	 	<a href="<c:url value="/logout"/>">로그아웃</a>
+	 	<a href="<c:url value="/signout"/>">로그아웃</a>
 	 </c:if>
 </div>

@@ -52,9 +52,9 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 				.anyRequest().permitAll()
 			.and()
 				.formLogin()
-					.loginPage("/login")
-					.loginProcessingUrl("/login/authenticate")
-					.failureUrl("/login?error")
+					.loginPage("/signin")
+					.loginProcessingUrl("/signin/authenticate")
+					.failureUrl("/signin?error")
 					.defaultSuccessUrl("/");
 	}
 

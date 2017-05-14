@@ -10,7 +10,7 @@
 </head>
 <body>
 <h2 class="sign-title"><a href="#">Tour Of All</a></h2>
-<div class="form-container">
+<div class="sign-form-container">
 <sf:form action="${pageContext.request.contextPath}/signup" method="post" commandName="userRegistrationForm">
   <div class="container">
     <c:if test="${userRegistrationForm.signInProvider == null}">
