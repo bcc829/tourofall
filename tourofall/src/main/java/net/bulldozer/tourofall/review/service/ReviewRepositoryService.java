@@ -55,4 +55,9 @@ public class ReviewRepositoryService implements ReviewService{
 				.build();
 		reviewRepository.save(newReview);
 	}
+	@Transactional(readOnly=true)
+	@Override
+	public Review findByUserIdAndItemId(long id,int itemId) {
+		return reviewRepository.findByUserIdAndItemId(id,itemId);
+	}
 }

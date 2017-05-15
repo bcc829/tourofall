@@ -43,4 +43,7 @@
 	<definition name="signup" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/signup.jsp" />
 	</definition>
+	<definition name="duplicated_review">
+		<put-attribute name="body" value="/WEB-INF/views/errorpage/duplicatedReview.jsp" />
+	</definition>
 </tiles-definitions>

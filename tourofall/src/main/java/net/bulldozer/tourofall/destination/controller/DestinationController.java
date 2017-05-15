@@ -3,6 +3,7 @@ package net.bulldozer.tourofall.destination.controller;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import net.bulldozer.tourofall.destination.service.TourApiService;
 import net.bulldozer.tourofall.question.service.QuestionService;
+import net.bulldozer.tourofall.review.model.Review;
 import net.bulldozer.tourofall.review.service.ReviewService;
+import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 
 @Controller
 @RequestMapping("/dest")
@@ -25,6 +28,24 @@ public class DestinationController {
 	@Autowired
 	private QuestionService questionService;
 	
+	public void addAttributeToModel(int itemId, int itemTypeId,Model model){
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(!principal.equals("anonymousUser")){
+			UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Review review = reviewService.findByUserIdAndItemId(userAuthenticationDetails.getId(), itemId);
+			if(review == null){
+				model.addAttribute("reviewWrite", true);
+			}
+		}else{
+			model.addAttribute("reviewWrite", true);
+		}
+		
+		model.addAttribute("itemId", itemId);
+		model.addAttribute("itemTypeId", itemTypeId);
+		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
+		model.addAttribute("questionInfoes", questionService.getQuestionsByItemId(itemId));
+		
+	}
 	@RequestMapping("/info/basic"+resPath)
 	public String showBasicInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
 		JSONObject body = tourApiService.getBasicInfo(itemId, itemTypeId);
@@ -33,10 +54,8 @@ public class DestinationController {
 			JSONObject item = (JSONObject) items.get("item");
 			model.addAttribute("basicInfo", item);
 		}
-		model.addAttribute("itemId", itemId);
-		model.addAttribute("itemTypeId", itemTypeId);
-		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
-		model.addAttribute("questionInfoes", questionService.getQuestionsByItemId(itemId));
+		addAttributeToModel(itemId,itemTypeId,model);
+		
 		return "dest-basicinfo";
 	}
 
@@ -48,10 +67,7 @@ public class DestinationController {
 			JSONObject item = (JSONObject) items.get("item");
 			model.addAttribute("introInfo", item);
 		}
-		model.addAttribute("itemId", itemId);
-		model.addAttribute("itemTypeId", itemTypeId);
-		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
-		model.addAttribute("questionInfoes", questionService.getQuestionsByItemId(itemId));
+		addAttributeToModel(itemId,itemTypeId,model);
 		String type = "";
 
 		switch (itemTypeId) {
@@ -99,10 +115,7 @@ public class DestinationController {
 				System.out.println("detailInfo selected");
 			}
 		}
-		model.addAttribute("itemId", itemId);
-		model.addAttribute("itemTypeId", itemTypeId);
-		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
-		model.addAttribute("questionInfoes", questionService.getQuestionsByItemId(itemId));
+		addAttributeToModel(itemId,itemTypeId,model);
 		String type = "";
 
 		switch (itemTypeId) {
@@ -136,10 +149,7 @@ public class DestinationController {
 				System.out.println("imageInfo selected");
 			}
 		}
-		model.addAttribute("itemId", itemId);
-		model.addAttribute("itemTypeId", itemTypeId);
-		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
-		model.addAttribute("questionInfoes", questionService.getQuestionsByItemId(itemId));
+		addAttributeToModel(itemId,itemTypeId,model);
 		return "dest-imageinfo";
 	}
 }

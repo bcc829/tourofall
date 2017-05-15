@@ -5,7 +5,9 @@
 	<table>
 		<tr>
 			<th><h3>리뷰</h3></th>
-			<td><a href="<c:url value="/review/write/${itemTypeId}/${itemId}"/>">리뷰 작성하기</a></td>
+			<c:if test="${reviewWrite}">
+				<td><a href="<c:url value="/review/write/${itemTypeId}/${itemId}"/>">리뷰 작성하기</a></td>
+			</c:if>
 		</tr>
 		<c:forEach var="review" items="${reviews}">
 			<tr>

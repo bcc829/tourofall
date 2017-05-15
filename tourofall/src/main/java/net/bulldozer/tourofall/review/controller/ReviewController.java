@@ -3,13 +3,17 @@ package net.bulldozer.tourofall.review.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.bulldozer.tourofall.evaluation.model.Evaluation;
@@ -17,7 +21,6 @@ import net.bulldozer.tourofall.evaluation.service.EvaluationService;
 import net.bulldozer.tourofall.review.dto.ReviewRegistrationForm;
 import net.bulldozer.tourofall.review.service.ReviewService;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
-import net.bulldozer.tourofall.user.model.User;
 import net.bulldozer.tourofall.user.service.UserService;
 
 @Controller
@@ -66,5 +69,14 @@ public class ReviewController {
 		
 		reviewService.registerNewReview(reviewRegistrationForm);
 		return "redirect:/dest/info/basic/" + reviewRegistrationForm.getItemTypeId() +"/"+reviewRegistrationForm.getItemId();
+	}
+	
+	@ResponseStatus(value=HttpStatus.CONFLICT,reason="이미 있는 리뷰 내용입니다. ")
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public String processingDuplicatedReviews(Model model,DataIntegrityViolationException ex){
+		
+		model.addAttribute("errorMsg", ex.getMessage());
+		
+		return "duplicated_review";
 	}
 }
