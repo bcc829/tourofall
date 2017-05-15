@@ -2,8 +2,14 @@ package net.bulldozer.tourofall.evaluation.model;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import net.bulldozer.tourofall.user.model.User;
@@ -12,40 +18,49 @@ import net.bulldozer.tourofall.user.model.User;
 @Table(name="evaluations")
 public class Evaluation implements Serializable{
 	
-	@EmbeddedId
-	private EvaluationKey key = new EvaluationKey();
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="evaluation_id")
+	private long id;
 	
+	@JoinColumn(name="user_id")
+	@ManyToOne(cascade=CascadeType.MERGE)
+	private User user;
+	
+	@Column(name="item_id")
+	private int itemId;
 	
 	private double score;
 
 	public static Builder getBuilder(){
 		return new Builder();
 	}
+	
+	
+	public long getId() {
+		return id;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
 	public User getUser() {
-		return key.getUser();
+		return user;
 	}
 
 	public void setUser(User user) {
-		key.setUser(user);
+		this.user = user;
 	}
 
 	public int getItemId() {
-		return key.getItemId();
+		return itemId;
 	}
 
 	public void setItemId(int itemId) {
-		key.setItemId(itemId);
-	}
-	
-	
-
-	public EvaluationKey getKey() {
-		return key;
-	}
-
-
-	public void setKey(EvaluationKey key) {
-		this.key = key;
+		this.itemId = itemId;
 	}
 
 
@@ -65,12 +80,12 @@ public class Evaluation implements Serializable{
 			evaluation = new Evaluation();
 		}
 		public Builder user(User user){
-			evaluation.setUser(user);
+			evaluation.user = user;
 			return this;
 		}
 		
 		public Builder itemId(int itemId){
-			evaluation.setItemId(itemId);
+			evaluation.itemId = itemId;
 			return this;
 		}
 		

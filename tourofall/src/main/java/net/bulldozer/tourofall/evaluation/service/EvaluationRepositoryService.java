@@ -26,6 +26,12 @@ public class EvaluationRepositoryService implements EvaluationService{
 		evaluationRepository.save(evaluation);
 	}
 
+	@Transactional(readOnly=true)
+	@Override
+	public Evaluation findByUserIdAndItemId(long id,int itemId) {
+		return evaluationRepository.findByUserIdAndItemId(id,itemId);
+	}
+
 	
 	
 	

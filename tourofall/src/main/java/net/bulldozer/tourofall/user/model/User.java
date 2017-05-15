@@ -68,7 +68,7 @@ public class User {
 	private Collection<Answer> answers = new ArrayList<Answer>();
 
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="key.user", cascade= CascadeType.ALL)
+	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
 	private Collection<Evaluation> evaluations = new ArrayList<Evaluation>();
 
 	

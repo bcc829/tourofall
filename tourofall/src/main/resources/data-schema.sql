@@ -25,17 +25,28 @@ create table UserConnection(
 	expireTime bigint,
 	primary key (userId, providerId, providerUserId)
 );
-
+create table evaluations(
+	evaluation_id bigint(20) auto_increment,
+	user_id bigint(20) not null,
+	item_id int(11) not null,
+	score double default 0 not null,
+	constraint pk_evaluations primary key(evaluation_id),
+	constraint unique_evaluations unique(user_id,item_id),
+	constraint fk_evaluations foreign key(user_id) references users(user_id)
+);
 create table reviews(
 	review_id bigint(20) auto_increment,
 	title varchar(45) not null,
 	content varchar(255) not null,
 	created_date timestamp default current_timestamp not null,
-	score double default 0 not null,
 	user_id int(11) not null,
 	item_id int(11) not null,
+	evaluation_id bigint(20) not null,
 	constraint pk_reviews primary key(review_id),
-	constraint fk_reviews foreign key(user_id) references users(user_id)
+	constraint unique_reviews unique(user_id,item_id),
+	constraint fk_reviews1 foreign key(user_id) references users(user_id),
+	constraint fk_reviews2 foreign key(evaluation_id) references evaluations(evaluation_id)
+	
 );
 
 create table questions(
@@ -59,11 +70,4 @@ create table answers(
 	constraint pk_answers primary key(answer_id),
 	constraint fk_answers1 foreign key(user_id) references users(user_id),
 	constraint fk_answers2 foreign key(question_id) references questions(question_id)
-);
-create table evaluations(
-	user_id bigint(20) not null,
-	item_id int(11) not null,
-	score double default 0 not null,
-	constraint pk_evaluations primary key(user_id,item_id),
-	constraint fk_evaluations foreign key(user_id) references users(user_id)
 );

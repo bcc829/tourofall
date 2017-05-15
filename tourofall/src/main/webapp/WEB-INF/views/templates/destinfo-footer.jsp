@@ -14,7 +14,7 @@
 					<p>작성자 : ${review.user.lastName} ${review.user.firstName}님</p>
 					<p>작성일자 :
 						${review.createdDate.year+1900}년${review.createdDate.month+1}월${review.createdDate.date}일</p>
-					<p>평점 : ${review.score}</p>
+					<p>평점 : ${review.evaluation.score}</p>
 					<p>내용 : ${review.content}</p>
 				</td>
 			</tr>

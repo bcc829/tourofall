@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.bulldozer.tourofall.evaluation.model.Evaluation;
+import net.bulldozer.tourofall.evaluation.service.EvaluationService;
 import net.bulldozer.tourofall.review.dto.ReviewRegistrationForm;
 import net.bulldozer.tourofall.review.service.ReviewService;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
@@ -27,15 +29,28 @@ public class ReviewController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private EvaluationService evaluationService;
+	
+	
 	@RequestMapping(value = "/write/{itemTypeId}/{itemId}", method = RequestMethod.GET)
 	public String showReviewForm(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) {
 		ReviewRegistrationForm reviewRegistrationForm = new ReviewRegistrationForm(); 
 		reviewRegistrationForm.setItemId(itemId);
 		reviewRegistrationForm.setItemTypeId(itemTypeId);
+		
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		Evaluation evaluation = evaluationService.findByUserIdAndItemId(userAuthenticationDetails.getId(),itemId);
+		if(evaluation != null){
+			reviewRegistrationForm.setScore(evaluation.getScore());
+		}
+		
+		
 		if (!model.containsAttribute("reviewRegistrationForm"))
 			model.addAttribute("reviewRegistrationForm", reviewRegistrationForm);
-
-		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		
 		model.addAttribute("firstName", userAuthenticationDetails.getFirstName());
 		model.addAttribute("lastName", userAuthenticationDetails.getLastName());
 		return "review_write";
@@ -48,10 +63,8 @@ public class ReviewController {
 			model.addFlashAttribute("org.springframework.validation.BindingResult.reviewRegistrationForm", result);
 			return "redirect:/review/write/" + reviewRegistrationForm.getItemTypeId() +"/"+reviewRegistrationForm.getItemId();
 		}
-		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
 		
-		reviewService.registerNewReview(reviewRegistrationForm, user);
+		reviewService.registerNewReview(reviewRegistrationForm);
 		return "redirect:/dest/info/basic/" + reviewRegistrationForm.getItemTypeId() +"/"+reviewRegistrationForm.getItemId();
 	}
 }
