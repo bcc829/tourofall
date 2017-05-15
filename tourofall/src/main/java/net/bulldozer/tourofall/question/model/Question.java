@@ -52,8 +52,6 @@ public class Question {
 	
 	@Column(name="item_id")
 	private int itemId;
-	@Column(name="item_type_id")
-	private int itemTypeId;
 	
 	public static Builder getBuilder(){
 		return new Builder();
@@ -96,12 +94,6 @@ public class Question {
 	}
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
-	}
-	public int getItemTypeId() {
-		return itemTypeId;
-	}
-	public void setItemTypeId(int itemTypeId) {
-		this.itemTypeId = itemTypeId;
 	}
 	public User getUser() {
 		return user;
@@ -163,10 +155,6 @@ public class Question {
 		}
 		public Builder itemId(int itemId){
 			question.itemId = itemId;
-			return this;
-		}
-		public Builder itemTypeId(int itemTypeId){
-			question.itemTypeId = itemTypeId;
 			return this;
 		}
 		

@@ -21,8 +21,6 @@ public class ReviewRegistrationForm {
 	
 	private int itemTypeId;
 
-	private String itemTitle;
-
 	public ReviewRegistrationForm() {
 	}
 
@@ -57,11 +55,5 @@ public class ReviewRegistrationForm {
 	}
 	public void setItemTypeId(int itemTypeId) {
 		this.itemTypeId = itemTypeId;
-	}
-	public String getItemTitle() {
-		return itemTitle;
-	}
-	public void setItemTitle(String itemTitle) {
-		this.itemTitle = itemTitle;
 	}
 }

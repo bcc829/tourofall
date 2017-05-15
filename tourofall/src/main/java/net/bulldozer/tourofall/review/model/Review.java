@@ -43,12 +43,6 @@ public class Review {
 	@Column(name="item_id")
 	private int itemId;
 	
-	@Column(name="item_type_id")
-	private int itemTypeId;
-	
-	@Column(name="item_title")
-	private String itemTitle;
-	
 	public static Builder getBuilder(){
 		return new Builder();
 	}
@@ -58,6 +52,7 @@ public class Review {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -102,19 +97,6 @@ public class Review {
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
-	public int getItemTypeId() {
-		return itemTypeId;
-	}
-	public void setItemTypeId(int itemTypeId) {
-		this.itemTypeId = itemTypeId;
-	}
-	
-	public String getItemTitle() {
-		return itemTitle;
-	}
-	public void setItemTitle(String itemTitle) {
-		this.itemTitle = itemTitle;
-	}
 	@Override
 	public int hashCode() {
 		HashCodeBuilder builder = new HashCodeBuilder();
@@ -145,16 +127,12 @@ public class Review {
 			review.content = content;
 			return this;
 		}
+		public Builder score(double score){
+			review.score=score;
+			return this;
+		}
 		public Builder itemId(int itemId){
 			review.itemId = itemId;
-			return this;
-		}
-		public Builder itemTypeId(int itemTypeId){
-			review.itemTypeId = itemTypeId;
-			return this;
-		}
-		public Builder itemTitle(String itemTitle){
-			review.itemTitle = itemTitle;
 			return this;
 		}
 		public Builder user(User user){

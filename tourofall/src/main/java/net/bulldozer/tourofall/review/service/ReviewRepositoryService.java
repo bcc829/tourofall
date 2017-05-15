@@ -27,8 +27,7 @@ public class ReviewRepositoryService implements ReviewService{
 				.title(registrationReviewForm.getTitle())
 				.content(registrationReviewForm.getContent())
 				.itemId(registrationReviewForm.getItemId())
-				.itemTypeId(registrationReviewForm.getItemTypeId())
-				.itemTitle(registrationReviewForm.getItemTitle())
+				.score(registrationReviewForm.getScore())
 				.user(user)
 				.build();
 		reviewRepository.save(newReview);
