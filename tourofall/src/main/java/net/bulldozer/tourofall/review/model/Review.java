@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -47,6 +48,9 @@ public class Review {
 	@JoinColumn(name="evaluation_id")
 	@OneToOne(cascade={CascadeType.PERSIST})
 	private Evaluation evaluation = new Evaluation();
+	
+	@Transient
+	private String itemTitle;
 	
 	public static Builder getBuilder(){
 		return new Builder();
@@ -97,7 +101,12 @@ public class Review {
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
-	
+	public String getItemTitle() {
+		return itemTitle;
+	}
+	public void setItemTitle(String itemTitle) {
+		this.itemTitle = itemTitle;
+	}
 	
 	public Evaluation getEvaluation() {
 		return evaluation;

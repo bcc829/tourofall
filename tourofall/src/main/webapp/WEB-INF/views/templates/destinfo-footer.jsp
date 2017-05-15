@@ -30,7 +30,7 @@
 				<tr>
 					<td>${questionInfo.id}</td>
 					<td><a href="<c:url value="/qna/question/${questionInfo.id}"/>">${questionInfo.title}</a></td>
-					<td>${questionInfo.user.lastName} ${questionInfo.user.firstName}님</td>
+					<td>${questionInfo.lastName} ${questionInfo.firstName}님</td>
 					<td>${questionInfo.visitor}</td>
 				</tr>
 			</c:forEach>

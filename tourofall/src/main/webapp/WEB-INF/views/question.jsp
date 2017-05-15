@@ -7,7 +7,7 @@
 		<tr>
 			<td>
 				<h3>${question.title}</h3>
-				<p>${question.user.lastName} ${question.user.firstName}님 |${question.createdDate} | 조회수 : ${question.visitor}</p>
+				<p>${question.lastName} ${question.firstName}님 |${question.createdDate} | 조회수 : ${question.visitor}</p>
 			</td>
 		</tr>
 		<tr>

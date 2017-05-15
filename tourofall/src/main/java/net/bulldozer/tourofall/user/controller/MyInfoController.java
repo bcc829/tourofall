@@ -16,51 +16,54 @@ import net.bulldozer.tourofall.user.service.UserService;
 public class MyInfoController {
 	@Autowired
 	private UserService userService;
-	
+
+	private void addModelToView(Model model){
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("questionCount", userService.getQuestionsSizeByUserId(userAuthenticationDetails.getId()));
+		model.addAttribute("answerCount", userService.getAnswersSizeByUserId(userAuthenticationDetails.getId()));
+		model.addAttribute("reviewCount", userService.getReviewsSizeByUserId(userAuthenticationDetails.getId()));
+		model.addAttribute("evaluationCount", userService.getEvaluationsSizeByUserId(userAuthenticationDetails.getId()));
+	}
 	@RequestMapping(method=RequestMethod.GET)
-	public String showMyInfoHome(){
+	public String showMyInfoHome(Model model){
+		
+		
+		addModelToView(model);
 		return "myinfo-home";
 	}
 	@RequestMapping("/detail")
 	public String showMyInfoDetail(Model model){
-		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		addModelToView(model);
 		model.addAttribute("userAuthenticationDetails", userAuthenticationDetails);
 		return "myinfo-detail";
 	}
 	@RequestMapping("/reviews")
 	public String showMyInfoReviews(Model model){
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
-		model.addAttribute("firstName", user.getFirstName());
-		model.addAttribute("lastName", user.getLastName());
-		model.addAttribute("reviews", user.getReviews());
+		addModelToView(model);
+		model.addAttribute("reviews", userService.getReviewsByUserId(userAuthenticationDetails.getId()));
 		return "myinfo-reviews";
 	}
 	@RequestMapping("/questions")
 	public String showMyInfoQuestions(Model model){
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
-		model.addAttribute("firstName", user.getFirstName());
-		model.addAttribute("lastName", user.getLastName());
-		model.addAttribute("questions", user.getQuestions());
+		addModelToView(model);
+		model.addAttribute("questions", userService.getQuestionsByUserId(userAuthenticationDetails.getId()));
 		return "myinfo-questions";
 	}
 	@RequestMapping("/answers")
 	public String showMyInfoAnswers(Model model){
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
-		model.addAttribute("firstName", user.getFirstName());
-		model.addAttribute("lastName", user.getLastName());
-		model.addAttribute("answers", user.getAnswers());
+		addModelToView(model);
+		model.addAttribute("answers", userService.getAnswersByUserId(userAuthenticationDetails.getId()));
 		return "myinfo-answers";
 	}
-	@RequestMapping("/evals")
+	@RequestMapping("/evaluations")
 	public String showMyInfoEvals(Model model){
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
-		model.addAttribute("firstName", user.getFirstName());
-		model.addAttribute("lastName", user.getLastName());
-		model.addAttribute("evaluations", user.getEvaluations());
-		return "myinfo-evals";
+		addModelToView(model);
+		model.addAttribute("evaluations", userService.getEvaluationsByUserId(userAuthenticationDetails.getId()));
+		return "myinfo-evaluations";
 	}
 }
