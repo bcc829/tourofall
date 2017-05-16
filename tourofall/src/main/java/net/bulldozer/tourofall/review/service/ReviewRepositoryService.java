@@ -7,13 +7,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.bulldozer.tourofall.evaluation.model.Evaluation;
+import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.repository.EvaluationRepository;
+import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.dto.ReviewRegistrationForm;
-import net.bulldozer.tourofall.review.model.Review;
 import net.bulldozer.tourofall.review.repository.ReviewRepository;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.repository.UserRepository;
 
 @Service

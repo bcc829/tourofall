@@ -9,8 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.social.security.SocialUser;
 
-import net.bulldozer.tourofall.user.model.Role;
-import net.bulldozer.tourofall.user.model.SocialService;
+import net.bulldozer.tourofall.user.dto.Role;
+import net.bulldozer.tourofall.user.dto.SocialService;
 
 public class UserAuthenticationDetails extends SocialUser {
 	private long id;

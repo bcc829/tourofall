@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.repository.UserRepository;
 
 public class UserAuthenticationDetailsService implements UserDetailsService {

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 
 import net.bulldozer.tourofall.security.util.SecurityUtil;
+import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.dto.UserRegistrationForm;
-import net.bulldozer.tourofall.user.model.User;
 import net.bulldozer.tourofall.user.service.ConnectionManager;
 import net.bulldozer.tourofall.user.service.DuplicateUsernameException;
 import net.bulldozer.tourofall.user.service.UserService;

@@ -1,7 +1,5 @@
-package net.bulldozer.tourofall.question.model;
+package net.bulldozer.tourofall.review.dto;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -12,52 +10,50 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
-import net.bulldozer.tourofall.answer.model.Answer;
 import net.bulldozer.tourofall.common.util.CheckUserUtil;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.evaluation.dto.Evaluation;
+import net.bulldozer.tourofall.user.dto.User;
 
 @Entity
-@Table(name="questions")
-public class Question {
+@Table(name="reviews")
+public class Review {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="question_id")
+	@Column(name="review_id")
 	private long id;
 	
 	private String title;
 	
 	private String content;
 	
+	
 	@Column(name="created_date")
 	private Date createdDate = new Date();
-	
-	private int visitor;
-	
 	
 	@JoinColumn(name="user_id")
 	@ManyToOne(cascade=CascadeType.MERGE)
 	private User user;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="question", cascade=CascadeType.ALL)
-	private Collection<Answer> answers = new ArrayList<Answer>();
-	
 	@Column(name="item_id")
 	private int itemId;
 	
+	
+	@JoinColumn(name="evaluation_id")
+	@OneToOne(cascade={CascadeType.PERSIST})
+	private Evaluation evaluation = new Evaluation();
+	
+	@Transient
+	private String itemTitle;
+	
 	public static Builder getBuilder(){
 		return new Builder();
-	}
-	public void incrementVisitor(){
-		visitor++;
 	}
 	public long getId() {
 		return id;
@@ -65,6 +61,7 @@ public class Question {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -83,18 +80,6 @@ public class Question {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public int getVisitor() {
-		return visitor;
-	}
-	public void setVisitor(int visitor) {
-		this.visitor = visitor;
-	}
-	public int getItemId() {
-		return itemId;
-	}
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
 	public User getUser() {
 		return user;
 	}
@@ -104,24 +89,30 @@ public class Question {
 		User oldUser = this.user;
 		this.user = newUser;
 		if(oldUser != null)
-			oldUser.removeQuestion(this);
+			oldUser.removeReview(this);
 		if(user != null)
-			user.addQuestion(this);
+			user.addReview(this);
+		
 	}
-	public Collection<Answer> getAnswers() {
-		return new ArrayList<Answer>(answers);
+	
+	public int getItemId() {
+		return itemId;
 	}
-	public void addAnswer(Answer answer){
-		if(answers.contains(answer))
-			return ;
-		answers.add(answer);
-		answer.setQuestion(this);
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
-	public void removeAnswer(Answer answer){
-		if(answers.contains(answer))
-			return ;
-		answers.remove(answer);
-		answer.setQuestion(null);
+	public String getItemTitle() {
+		return itemTitle;
+	}
+	public void setItemTitle(String itemTitle) {
+		this.itemTitle = itemTitle;
+	}
+	
+	public Evaluation getEvaluation() {
+		return evaluation;
+	}
+	public void setEvaluation(Evaluation evaluation) {
+		this.evaluation = evaluation;
 	}
 	@Override
 	public int hashCode() {
@@ -131,39 +122,42 @@ public class Question {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Question)) {
+		if (!(obj instanceof Review)) {
             return false;
         }
-		Question otherQuestion  = (Question) obj;
+        Review otherReview  = (Review) obj;
         EqualsBuilder builder = new EqualsBuilder();
-        builder.append(this.id, otherQuestion.getId());
+        builder.append(this.id, otherReview.getId());
         return builder.isEquals();
 	}
 	
 	public static class Builder{
-		Question question;
+		Review review;
 		public Builder(){
-			question = new Question();
+			review = new Review();
 		}
 		public Builder title(String title){
-			question.title = title;
+			review.title = title;
 			return this;
 		}
 		public Builder content(String content){
-			question.content = content;
+			review.content = content;
 			return this;
 		}
 		public Builder itemId(int itemId){
-			question.itemId = itemId;
+			review.itemId = itemId;
 			return this;
 		}
-		
 		public Builder user(User user){
-			question.user = user;
+			review.user = user;
 			return this;
 		}
-		public Question build(){
-			return question;
+		public Builder evaluation(Evaluation evaluation){
+			review.evaluation = evaluation;
+			return this;
+		}
+		public Review build(){
+			return review;
 		}
 	}
 	

@@ -1,5 +1,7 @@
-package net.bulldozer.tourofall.answer.model;
+package net.bulldozer.tourofall.question.dto;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -10,92 +12,117 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
+import net.bulldozer.tourofall.answer.dto.Answer;
 import net.bulldozer.tourofall.common.util.CheckUserUtil;
-import net.bulldozer.tourofall.question.model.Question;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 
 @Entity
-@Table(name="answers")
-public class Answer {
+@Table(name="questions")
+public class Question {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="answer_id")
+	@Column(name="question_id")
 	private long id;
+	
+	private String title;
 	
 	private String content;
 	
 	@Column(name="created_date")
 	private Date createdDate = new Date();
 	
+	private int visitor;
+	
 	
 	@JoinColumn(name="user_id")
 	@ManyToOne(cascade=CascadeType.MERGE)
 	private User user;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="question", cascade=CascadeType.ALL)
+	private Collection<Answer> answers = new ArrayList<Answer>();
 	
-	@JoinColumn(name="question_id")
-	@ManyToOne(cascade=CascadeType.MERGE)
-	private Question question;
-
-	public Answer(){}
+	@Column(name="item_id")
+	private int itemId;
 	
 	public static Builder getBuilder(){
 		return new Builder();
 	}
+	public void incrementVisitor(){
+		visitor++;
+	}
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public String getContent() {
 		return content;
 	}
-
 	public void setContent(String content) {
 		this.content = content;
 	}
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
+	public int getVisitor() {
+		return visitor;
+	}
+	public void setVisitor(int visitor) {
+		this.visitor = visitor;
+	}
+	public int getItemId() {
+		return itemId;
+	}
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 	public User getUser() {
 		return user;
 	}
-	
-
 	public void setUser(User newUser) {
 		if(CheckUserUtil.sameAsFormer(user, newUser))
 			return ;
 		User oldUser = this.user;
 		this.user = newUser;
 		if(oldUser != null)
-			oldUser.removeAnswer(this);
+			oldUser.removeQuestion(this);
 		if(user != null)
-			user.addAnswer(this);
-		
+			user.addQuestion(this);
 	}
-
-	public Question getQuestion() {
-		return question;
+	public Collection<Answer> getAnswers() {
+		return new ArrayList<Answer>(answers);
 	}
-
-	public void setQuestion(Question question) {
-		this.question = question;
+	public void addAnswer(Answer answer){
+		if(answers.contains(answer))
+			return ;
+		answers.add(answer);
+		answer.setQuestion(this);
 	}
-	
+	public void removeAnswer(Answer answer){
+		if(answers.contains(answer))
+			return ;
+		answers.remove(answer);
+		answer.setQuestion(null);
+	}
 	@Override
 	public int hashCode() {
 		HashCodeBuilder builder = new HashCodeBuilder();
@@ -104,34 +131,40 @@ public class Answer {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Answer)) {
+		if (!(obj instanceof Question)) {
             return false;
         }
-        Answer otherAnswer  = (Answer) obj;
+		Question otherQuestion  = (Question) obj;
         EqualsBuilder builder = new EqualsBuilder();
-        builder.append(this.id, otherAnswer.getId());
+        builder.append(this.id, otherQuestion.getId());
         return builder.isEquals();
 	}
+	
 	public static class Builder{
-		Answer answer;
+		Question question;
 		public Builder(){
-			answer = new Answer();
+			question = new Question();
+		}
+		public Builder title(String title){
+			question.title = title;
+			return this;
+		}
+		public Builder content(String content){
+			question.content = content;
+			return this;
+		}
+		public Builder itemId(int itemId){
+			question.itemId = itemId;
+			return this;
 		}
 		
-		public Builder content(String content){
-			answer.content = content;
-			return this;
-		}
 		public Builder user(User user){
-			answer.user = user;
+			question.user = user;
 			return this;
 		}
-		public Builder question(Question question){
-			answer.question = question;
-			return this;
-		}
-		public Answer build(){
-			return answer;
+		public Question build(){
+			return question;
 		}
 	}
+	
 }

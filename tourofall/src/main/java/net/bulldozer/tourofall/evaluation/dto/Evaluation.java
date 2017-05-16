@@ -1,4 +1,4 @@
-package net.bulldozer.tourofall.evaluation.model;
+package net.bulldozer.tourofall.evaluation.dto;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 
 @Entity
 @Table(name="evaluations")

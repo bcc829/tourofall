@@ -10,8 +10,8 @@ import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.web.context.request.WebRequest;
 
+import net.bulldozer.tourofall.user.dto.SocialService;
 import net.bulldozer.tourofall.user.dto.UserRegistrationForm;
-import net.bulldozer.tourofall.user.model.SocialService;
 import net.bulldozer.tourofall.user.util.RandomUtil;
 
 public class ConnectionManager {

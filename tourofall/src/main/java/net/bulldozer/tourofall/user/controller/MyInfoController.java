@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.service.UserService;
 
 @Controller

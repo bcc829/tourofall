@@ -7,7 +7,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import net.bulldozer.tourofall.user.model.SocialService;
 import net.bulldozer.tourofall.user.validation.annotation.FieldMatch;
 
 @FieldMatch(first="password",second="confirmPassword", message="비밀번호가 불일치합니다.")

@@ -14,11 +14,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.bulldozer.tourofall.answer.dto.AnswerRegistrationForm;
 import net.bulldozer.tourofall.answer.service.AnswerService;
+import net.bulldozer.tourofall.question.dto.Question;
 import net.bulldozer.tourofall.question.dto.QuestionRegistrationForm;
-import net.bulldozer.tourofall.question.model.Question;
 import net.bulldozer.tourofall.question.service.QuestionService;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.service.UserService;
 
 @Controller

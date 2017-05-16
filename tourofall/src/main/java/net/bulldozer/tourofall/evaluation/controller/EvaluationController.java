@@ -16,7 +16,7 @@ import net.bulldozer.tourofall.evaluation.dto.EvaluationRegistration;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRegistrationsForm;
 import net.bulldozer.tourofall.evaluation.service.EvaluationService;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.service.UserService;
 
 @Controller

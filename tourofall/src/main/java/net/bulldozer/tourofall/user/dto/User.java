@@ -1,4 +1,4 @@
-package net.bulldozer.tourofall.user.model;
+package net.bulldozer.tourofall.user.dto;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,10 +20,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import net.bulldozer.tourofall.answer.model.Answer;
-import net.bulldozer.tourofall.evaluation.model.Evaluation;
-import net.bulldozer.tourofall.question.model.Question;
-import net.bulldozer.tourofall.review.model.Review;
+import net.bulldozer.tourofall.answer.dto.Answer;
+import net.bulldozer.tourofall.evaluation.dto.Evaluation;
+import net.bulldozer.tourofall.question.dto.Question;
+import net.bulldozer.tourofall.review.dto.Review;
 
 @Entity
 @Table(name = "users")

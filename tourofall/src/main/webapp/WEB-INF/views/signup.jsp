@@ -5,11 +5,12 @@
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/common_style.css"/>">
-    <link rel="stylesheet" type="text/css" href="<c:url value="resources/css/signup_style.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/sign/common_style.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="resources/css/sign/signup_style.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
 </head>
 <body>
-<h2 class="sign-title"><a href="#">Tour Of All</a></h2>
+<h2 class="sign-title"><a href="<c:url value="/"/>">Tour Of All</a></h2>
 <div class="sign-form-container">
 <sf:form action="${pageContext.request.contextPath}/signup" method="post" commandName="userRegistrationForm">
   <div class="container">

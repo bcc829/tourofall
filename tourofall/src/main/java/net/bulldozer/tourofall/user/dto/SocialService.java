@@ -1,4 +1,4 @@
-package net.bulldozer.tourofall.user.model;
+package net.bulldozer.tourofall.user.dto;
 
 public enum SocialService {
 	facebook,

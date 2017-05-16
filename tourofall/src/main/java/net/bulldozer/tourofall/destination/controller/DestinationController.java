@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import net.bulldozer.tourofall.destination.service.TourApiService;
 import net.bulldozer.tourofall.question.service.QuestionService;
-import net.bulldozer.tourofall.review.model.Review;
+import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.service.ReviewService;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 

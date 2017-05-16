@@ -6,12 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="<c:url value="/resources/css/sign-common.css"/>">
-<link rel="stylesheet" href="<c:url value="/resources/css/signin.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/sign/sign-common.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/sign/signin.css"/>">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <title>Tour of all에 로그인</title>
 </head>
 <body>
-	<h2 class="sign-title"><a href="#">Tour Of All</a></h2>
+	<h2 class="sign-title"><a href="<c:url value="/"/>">Tour Of All</a></h2>
 	<div class="sign-form-container">
         <form action="<c:url value="/signin/authenticate"/>" method="post" class="form-horizontal">
         	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

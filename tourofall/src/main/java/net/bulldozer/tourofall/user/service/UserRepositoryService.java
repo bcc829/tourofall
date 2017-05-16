@@ -8,16 +8,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.bulldozer.tourofall.answer.dto.Answer;
 import net.bulldozer.tourofall.answer.dto.AnswerRenderingModel;
-import net.bulldozer.tourofall.answer.model.Answer;
+import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModel;
-import net.bulldozer.tourofall.evaluation.model.Evaluation;
+import net.bulldozer.tourofall.question.dto.Question;
 import net.bulldozer.tourofall.question.dto.QuestionRenderingModel;
-import net.bulldozer.tourofall.question.model.Question;
+import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.dto.ReviewRenderingModel;
-import net.bulldozer.tourofall.review.model.Review;
+import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.dto.UserRegistrationForm;
-import net.bulldozer.tourofall.user.model.User;
 import net.bulldozer.tourofall.user.repository.UserRepository;
 
 

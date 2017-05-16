@@ -2,9 +2,9 @@ package net.bulldozer.tourofall.question.service;
 
 import java.util.List;
 
+import net.bulldozer.tourofall.question.dto.Question;
 import net.bulldozer.tourofall.question.dto.QuestionRegistrationForm;
-import net.bulldozer.tourofall.question.model.Question;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 
 public interface QuestionService {
 	public List<Question> getQuestionsByItemId(int itemId);

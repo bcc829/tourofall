@@ -1,6 +1,6 @@
 package net.bulldozer.tourofall.common.util;
 
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 
 public class CheckUserUtil {
 	public static boolean sameAsFormer(User nowUser, User newUser){

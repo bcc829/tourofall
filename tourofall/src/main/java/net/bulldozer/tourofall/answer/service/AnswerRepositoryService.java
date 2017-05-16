@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.bulldozer.tourofall.answer.dto.Answer;
 import net.bulldozer.tourofall.answer.dto.AnswerRegistrationForm;
-import net.bulldozer.tourofall.answer.model.Answer;
 import net.bulldozer.tourofall.answer.repository.AnswerRepository;
-import net.bulldozer.tourofall.question.model.Question;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.question.dto.Question;
+import net.bulldozer.tourofall.user.dto.User;
 
 @Service
 public class AnswerRepositoryService implements AnswerService {

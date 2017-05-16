@@ -53,11 +53,11 @@ public class PersistenceContext {
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setPackagesToScan(new String[]{
-                "net.bulldozer.tourofall.question.model",
-                "net.bulldozer.tourofall.answer.model",
-                "net.bulldozer.tourofall.review.model",
-                "net.bulldozer.tourofall.user.model",
-                "net.bulldozer.tourofall.evaluation.model"
+                "net.bulldozer.tourofall.question.dto",
+                "net.bulldozer.tourofall.answer.dto",
+                "net.bulldozer.tourofall.review.dto",
+                "net.bulldozer.tourofall.user.dto",
+                "net.bulldozer.tourofall.evaluation.dto"
         });
  
         Properties jpaProperties = new Properties();

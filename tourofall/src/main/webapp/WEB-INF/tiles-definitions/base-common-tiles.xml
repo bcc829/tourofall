@@ -37,12 +37,14 @@
 		<put-attribute name="body" value="/WEB-INF/views/question.jsp"/>
 	</definition>
 	
-	<definition name="signin" extends="base">
-		<put-attribute name="body" value="/WEB-INF/views/signin.jsp" />
+	<definition name="signin" template="/WEB-INF/views/signin.jsp">
 	</definition>
-	<definition name="signup" extends="base">
-		<put-attribute name="body" value="/WEB-INF/views/signup.jsp" />
+	<definition name="signup" template="/WEB-INF/views/signup.jsp">
 	</definition>
+	
+	
+	
+	
 	<definition name="duplicated_review">
 		<put-attribute name="body" value="/WEB-INF/views/errorpage/duplicatedReview.jsp" />
 	</definition>

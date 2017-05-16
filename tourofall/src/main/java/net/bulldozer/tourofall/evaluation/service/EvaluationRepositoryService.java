@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRegistration;
-import net.bulldozer.tourofall.evaluation.model.Evaluation;
 import net.bulldozer.tourofall.evaluation.repository.EvaluationRepository;
-import net.bulldozer.tourofall.user.model.User;
+import net.bulldozer.tourofall.user.dto.User;
 
 @Service
 public class EvaluationRepositoryService implements EvaluationService{
