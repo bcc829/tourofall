@@ -1,5 +1,5 @@
 function collapseNavbar() {
-    if ($(".navbar").offset().top > 400) {
+    if ($(".navbar").offset().top > 200) {
         $(".navbar-fixed-top").addClass("top-nav-collapse");
     } else {
         $(".navbar-fixed-top").removeClass("top-nav-collapse");

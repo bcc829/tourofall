@@ -7,6 +7,7 @@ import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModel;
 import net.bulldozer.tourofall.question.dto.QuestionRenderingModel;
 import net.bulldozer.tourofall.review.dto.ReviewRenderingModel;
 import net.bulldozer.tourofall.user.dto.User;
+import net.bulldozer.tourofall.user.dto.UserModificationForm;
 import net.bulldozer.tourofall.user.dto.UserRegistrationForm;
 
 public interface UserService {
@@ -21,4 +22,5 @@ public interface UserService {
 	public int getAnswersSizeByUserId(long id);
 	public int getReviewsSizeByUserId(long id);
 	public int getEvaluationsSizeByUserId(long id);
+	public UserModificationForm getUserModificationFormByUserId(long id);
 }

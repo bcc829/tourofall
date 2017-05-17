@@ -12,22 +12,20 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
-<!-- bootstrap Core java script -->
-<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-	
-<!-- jquery  -->
-<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.min.js"/>"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 <!-- Plugin JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <title><tiles:insertAttribute name="title" /></title>
 </head>
-<body>
+<body style="background:#F0F8FF;">
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
-	<div style="height:1000px;">
+	<div style="height:2000px;">
 		<tiles:insertAttribute name="body" />
 	</div>
 	<div>

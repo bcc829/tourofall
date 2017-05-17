@@ -13,4 +13,5 @@ INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('경마장 
 INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('마쟁이들 천국입니다','돈 다일어요',2,131257,3);
 INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('Good Man','i like the horse',3,131257,4);
 INSERT INTO questions(title,content,user_id,item_id) VALUES('경복궁은 어떻게 가야 빠르게 갑니까?','빠른 답변 부탁드립니다.',1,126508);
-INSERT INTO answers(content,user_id,question_id) VALUES('나도 모릅니다.',1,1);
+INSERT INTO answers(content,user_id,question_id) VALUES('알려줘요',1,1);
+INSERT INTO answers(content,user_id,question_id) VALUES('부톽해여.',1,1);

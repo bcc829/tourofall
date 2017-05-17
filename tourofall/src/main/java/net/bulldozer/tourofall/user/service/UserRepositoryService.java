@@ -1,6 +1,7 @@
 package net.bulldozer.tourofall.user.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import net.bulldozer.tourofall.question.dto.QuestionRenderingModel;
 import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.dto.ReviewRenderingModel;
 import net.bulldozer.tourofall.user.dto.User;
+import net.bulldozer.tourofall.user.dto.UserModificationForm;
 import net.bulldozer.tourofall.user.dto.UserRegistrationForm;
 import net.bulldozer.tourofall.user.repository.UserRepository;
 
@@ -132,6 +134,7 @@ public class UserRepositoryService implements UserService{
 		return answerRenderingModels;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Collection<ReviewRenderingModel> getReviewsByUserId(long id) {
 		User user = userRepository.findOne(id);
@@ -150,6 +153,7 @@ public class UserRepositoryService implements UserService{
 		return reviewRenderingModels;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Collection<EvaluationRenderingModel> getEvaluationsByUserId(long id) {
 		User user = userRepository.findOne(id);
@@ -164,5 +168,27 @@ public class UserRepositoryService implements UserService{
 			evaluationRenderingModels.add(evaluationRenderingModel);
 		}
 		return evaluationRenderingModels;
+	}
+	
+	@Transactional(readOnly=true)
+	@Override
+	public UserModificationForm getUserModificationFormByUserId(long id){
+		User user = userRepository.findOne(id);
+		
+		UserModificationForm userModificationForm = new UserModificationForm();
+		
+		userModificationForm.setId(user.getId());
+		userModificationForm.setUsername(user.getUsername());
+		userModificationForm.setGender(user.getGender());
+		userModificationForm.setLastName(user.getLastName());
+		userModificationForm.setFirstName(user.getFirstName());
+		userModificationForm.setSignInProvider(user.getSignInProvider());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(user.getBirth());
+		userModificationForm.setYear(Integer.toString(cal.get(Calendar.YEAR)));
+		userModificationForm.setMonth(Integer.toString(cal.get(Calendar.MONTH)+1));
+		userModificationForm.setDate(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
+		
+		return userModificationForm;
 	}
 }

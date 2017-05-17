@@ -6,7 +6,7 @@
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
-	<div>
+	<div >
 		<tiles:insertAttribute name="body" />
 	</div>
 </div>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.service.UserService;
+import net.bulldozer.tourofall.user.util.DateList;
 
 @Controller
 @RequestMapping("/myinfo")
@@ -24,18 +25,24 @@ public class MyInfoController {
 		model.addAttribute("reviewCount", userService.getReviewsSizeByUserId(userAuthenticationDetails.getId()));
 		model.addAttribute("evaluationCount", userService.getEvaluationsSizeByUserId(userAuthenticationDetails.getId()));
 	}
+	private void addDateList(Model model){
+		model.addAttribute("years", DateList.getYearList());
+		model.addAttribute("months", DateList.getMonthList());
+		model.addAttribute("dates", DateList.getDateList());
+	}
 	@RequestMapping(method=RequestMethod.GET)
 	public String showMyInfoHome(Model model){
-		
-		
 		addModelToView(model);
 		return "myinfo-home";
 	}
-	@RequestMapping("/detail")
+	@RequestMapping("/setting")
 	public String showMyInfoDetail(Model model){
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		addModelToView(model);
+		addDateList(model);
 		model.addAttribute("userAuthenticationDetails", userAuthenticationDetails);
+		model.addAttribute("userModificationForm", userService.getUserModificationFormByUserId(userAuthenticationDetails.getId()));
+		
 		return "myinfo-detail";
 	}
 	@RequestMapping("/reviews")

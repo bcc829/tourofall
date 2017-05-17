@@ -35,7 +35,7 @@ public class SearchController {
 		if(totalCount%numOfRows != 0){
 			totalPage++;
 		}
-		
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("pageNo", (Long)body.get("pageNo"));
 		model.addAttribute("totalPage", totalPage);
 		
