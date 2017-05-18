@@ -44,7 +44,7 @@
       					</li>
 	 				</c:if>
 	 				<c:if test="${pageContext.request.userPrincipal.name != null}">
-	 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user-circle"></i><span class="caret"></span></a>
+	 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">${pageContext.request.userPrincipal.name}<i class="fa fa-user-circle"></i><span class="caret"></span></a>
         					<ul class="dropdown-menu">
         						<li>
 	 								<a class="page-scroll" href="<c:url value="/myinfo"/>">내정보</a>

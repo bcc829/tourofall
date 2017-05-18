@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/search/search.css"/>">
-<script type="text/javascript" src="<c:url value="/resources/js/header/search-header.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/header/header.js"/>"></script>
 <div>
 	
 	<div class="empty-header">

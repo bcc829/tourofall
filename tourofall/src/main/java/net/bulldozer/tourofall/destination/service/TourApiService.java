@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import net.bulldozer.tourofall.destination.util.TourJSONUtilities;
 import net.bulldozer.tourofall.destination.util.TourUriUtilities;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRegistration;
+import net.bulldozer.tourofall.recommendation.dto.RecommendationRenderingModel;
 
 @Service
 public class TourApiService {
@@ -35,6 +36,19 @@ public class TourApiService {
 		EvaluationRegistration dEval = new EvaluationRegistration(Integer.parseInt(itemId), (String)item.get("firstimage"), (String)item.get("title"), 0);
 		return dEval;
 	}
+	public RecommendationRenderingModel getRecommendationRenderingModel(String itemId) throws Exception{
+		Map<String,String> parameter = new HashMap<String,String>();
+		parameter.put("contentId", itemId);
+		parameter.put("defaultYN", "Y");
+		parameter.put("firstImageYN", "Y");
+		JSONObject items = (JSONObject)(sendAndReceiveDataFromApiServer("detailCommon",parameter).get("items"));
+		JSONObject item = (JSONObject)items.get("item");
+		
+		
+		RecommendationRenderingModel recommendationRenderingModel = new RecommendationRenderingModel(Integer.parseInt(itemId), (String)item.get("firstimage"), (String)item.get("title"), 0,0);
+		return recommendationRenderingModel;
+	}
+	
 	private JSONObject sendAndReceiveDataFromApiServer(String serviceName, Map<String,String> parameter) throws Exception{
 		UriComponentsBuilder urIbuilder = TourUriUtilities.getBaseUriComponentsBuilder(serviceName);
 		Set<String> parameterName = parameter.keySet();

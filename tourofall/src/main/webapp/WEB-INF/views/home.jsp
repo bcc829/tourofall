@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/header/slide-intro.css"/>">
-<script type="text/javascript" src="<c:url value="/resources/js/header/header.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/header/home-header.js"/>"></script>
 <div>
 	<header class="masthead masthead-normal">
 			<div class="slideshow slide-fade">
@@ -10,7 +10,6 @@
 					<div id="bg1" class="slideshow-slide" style="background-image: url('http://tong.visitkorea.or.kr/cms/resource/55/652955_image2_1.jpg');"></div>
 					<div id="bg2" class="slideshow-slide" style="background-image: url('http://tong.visitkorea.or.kr/cms/resource/30/2480130_image2_1.jpg');"></div>
 					<div id="bg3" class="slideshow-slide" style="background-image: url('http://tong.visitkorea.or.kr/cms/resource/21/1813421_image2_1.jpg');"></div>
-				
 				</div>
 			</div>
 			<div class="masthead-text-wrapper">
@@ -39,11 +38,6 @@
 							</div>
 						</div>
 					</div>	
-					
-					
-					
-					
-					
 				</div>
 			</div>
 	</header>
