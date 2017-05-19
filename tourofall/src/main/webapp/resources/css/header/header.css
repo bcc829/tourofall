@@ -40,7 +40,7 @@
 	-moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    border-bottom: 0 solid #fff;
+    
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: -moz-box;
@@ -95,6 +95,7 @@
 .selected {
 	border-bottom: .5rem solid #fff;
 }
+
 @media(min-width:768px) {
 	.navbar-custom{
         padding: 20px 0;

@@ -72,6 +72,11 @@ public class User {
 	private Collection<Evaluation> evaluations = new ArrayList<Evaluation>();
 
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
+	private Collection<UserPreference> userPreferences = new ArrayList<UserPreference>();
+	
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -156,6 +161,25 @@ public class User {
 	}
 	
 
+	public Collection<UserPreference> getUserPreferences(){
+		return new ArrayList<UserPreference>(userPreferences);
+	}
+	
+
+	public void addUserPreference(UserPreference userPreference){
+		if(userPreferences.contains(userPreference))
+			return ;
+		userPreferences.add(userPreference);
+		userPreference.setUser(this);
+	}
+	public void removeUserPreference(UserPreference userPreference){
+		if(userPreferences.contains(userPreference))
+			return ;
+		userPreferences.remove(userPreference);
+		userPreference.setUser(null);
+	}
+	
+	
 	public long getId() {
 		return id;
 	}

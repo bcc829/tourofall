@@ -11,7 +11,7 @@ create table users (
   constraint uc_users unique key(username),
   constraint pk_users primary key(user_id)
 );
-create table UserConnection(
+create table userConnection(
 	userId varchar(255) not null,
 	providerId varchar(255) not null,
 	providerUserId varchar(255),
@@ -24,6 +24,14 @@ create table UserConnection(
 	refreshToken varchar(512),
 	expireTime bigint,
 	primary key (userId, providerId, providerUserId)
+);
+create table userPreferences(
+	userPreference_id bigint(20) auto_increment,
+	user_id bigint(20) not null,
+	item_type_id int(11) not null,
+	constraint pk_userPreferences primary key(userPreference_id),
+	constraint unique_userPreferences unique(user_id,item_type_id),
+	constraint fk_userPreferences foreign key(user_id) references users(user_id)
 );
 create table evaluations(
 	evaluation_id bigint(20) auto_increment,

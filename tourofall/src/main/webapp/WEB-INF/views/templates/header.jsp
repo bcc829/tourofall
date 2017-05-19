@@ -22,10 +22,10 @@
                         <a href="#page-top"></a>
                     </li>
             		<li>
-                    	<a class="page-scroll" href="<c:url value="/recommend"/>">추천여행지</a>
+                    	<a id="recommend" class="page-scroll" href="<c:url value="/recommend"/>">추천여행지</a>
                     </li>
           			<li>
-                    	<a class="page-scroll" href="<c:url value="/eval/evalmore"/>">추천더하기</a>
+                    	<a id="evalmore" class="page-scroll" href="<c:url value="/eval/evalmore"/>">추천더하기</a>
                     </li>
                     <li class="hidden-sm hidden-md hidden-lg">
                     	<a class="page-scroll" href="<c:url value="/search/simple"/>">검색하기</a>
@@ -52,7 +52,7 @@
                 <div class="visible-sm-block visible-md-block visible-lg-block clearfix">
                 <div class="nav navbar-nav navbar-right">
                 	<c:if test="${pageContext.request.userPrincipal.name == null}">
-                		<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-vcard"></i><span class="caret"></span></a>
+                		<li class="dropdown"><a id ="myinfo" class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-vcard"></i><span class="caret"></span></a>
         					<ul class="dropdown-menu">
           							<li>
 	 									<a class="page-scroll" href="<c:url value="/signin"/>">로그인</a>
@@ -64,7 +64,7 @@
       					</li>
 	 				</c:if>
 	 				<c:if test="${pageContext.request.userPrincipal.name != null}">
-	 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">${pageContext.request.userPrincipal.name}<i class="fa fa-user-circle"></i><span class="caret"></span></a>
+	 				<li class="dropdown"><a id ="myinfo" class="dropdown-toggle" data-toggle="dropdown" href="#">${pageContext.request.userPrincipal.name}<i class="fa fa-user-circle"></i><span class="caret"></span></a>
         					<ul class="dropdown-menu">
         						<li>
 	 								<a class="page-scroll" href="<c:url value="/myinfo"/>">내정보</a>
@@ -96,3 +96,4 @@
         <!-- /.container -->
     </nav>
 </div>
+<script type="text/javascript" src="<c:url value="/resources/js/header/common-header.js"/>"></script>

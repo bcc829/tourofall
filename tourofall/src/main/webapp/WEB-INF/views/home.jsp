@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/header/slide-intro.css"/>">
-<script type="text/javascript" src="<c:url value="/resources/js/header/home-header.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/header/big-header.js"/>"></script>
 <div>
 	<header class="masthead masthead-normal">
 			<div class="slideshow slide-fade">

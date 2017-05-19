@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/evaluation/evaluation.css"/>">
-<script type="text/javascript" src="<c:url value="/resources/js/header/header.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/header/small-header.js"/>"></script>
 <div>
 	
 	<div class="empty-header">

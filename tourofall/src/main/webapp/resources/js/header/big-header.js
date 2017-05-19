@@ -9,12 +9,11 @@ function collapseNavbar() {
 $(window).scroll(collapseNavbar);
 $(document).ready(collapseNavbar);
 
-function hoverDropdown(){
-	$('div.nav li.dropdown').hover(function() {
-		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
-		}, function() {
-		$(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
-	});
+function getUrlPath() {
+	var a = location.pathname.split("/");
+	//alert(a[2]);
+	if(a[2] == ""){
+		$("nav.navbar .navbar-header .navbar-brand").addClass("selected");
+	}
 }
-
-$(document).ready(hoverDropdown);
+$(document).ready(getUrlPath);

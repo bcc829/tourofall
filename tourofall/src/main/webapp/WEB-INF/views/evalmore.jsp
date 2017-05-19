@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/evaluation/evaluation.css"/>">
-<script type="text/javascript" src="<c:url value="/resources/js/header/header.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/header/small-header.js"/>"></script>
 <style>
 	.center-container{
 		text-align:center;

@@ -8,3 +8,12 @@ function collapseNavbar() {
 
 $(window).scroll(collapseNavbar);
 $(document).ready(collapseNavbar);
+
+function getUrlPath() {
+	var a = location.pathname.split("/");
+	//alert(a[2]);
+	if(a[2] == "myinfo"){
+		$("div.nav li #myinfo").addClass("selected");
+	}
+}
+$(document).ready(getUrlPath);
