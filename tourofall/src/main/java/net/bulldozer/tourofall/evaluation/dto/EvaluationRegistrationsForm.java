@@ -4,11 +4,13 @@ import java.util.List;
 
 public class EvaluationRegistrationsForm {
 	private List<EvaluationRegistration> evaluationRegistrations;
+	private long totalPage;
 	
 	public EvaluationRegistrationsForm(){}
 
-	public EvaluationRegistrationsForm(List<EvaluationRegistration> evaluationRegistrations) {
+	public EvaluationRegistrationsForm(List<EvaluationRegistration> evaluationRegistrations, long totalPage) {
 		this.evaluationRegistrations = evaluationRegistrations;
+		this.totalPage = totalPage;
 	}
 
 	public List<EvaluationRegistration> getEvaluationRegistrations() {
@@ -19,8 +21,19 @@ public class EvaluationRegistrationsForm {
 		this.evaluationRegistrations = evaluationRegistrations;
 	}
 
+	public long getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(long totalPage) {
+		this.totalPage = totalPage;
+	}
+
 	@Override
 	public String toString() {
-		return "EvaluationRegistrationsForm [evaluationRegistrations=" + evaluationRegistrations + "]";
+		return "EvaluationRegistrationsForm [evaluationRegistrations=" + evaluationRegistrations + ", totalPage="
+				+ totalPage + "]";
 	}
+
+
 }

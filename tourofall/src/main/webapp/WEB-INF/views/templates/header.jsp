@@ -26,10 +26,30 @@
                     </li>
           			<li>
                     	<a class="page-scroll" href="<c:url value="/eval/evalmore"/>">추천더하기</a>
-                    </li>	
+                    </li>
+                    <li class="hidden-sm hidden-md hidden-lg">
+                    	<a class="page-scroll" href="<c:url value="/search/simple"/>">검색하기</a>
+                    </li>
+                    <c:if test="${pageContext.request.userPrincipal.name == null}">
+                    	<li class="hidden-sm hidden-md hidden-lg">
+	 						<a class="page-scroll" href="<c:url value="/signin"/>">로그인</a>
+	 					</li>
+	 					<li class="hidden-sm hidden-md hidden-lg">
+	 						<a class="page-scroll" href="<c:url value="/signup"/>">회원가입</a>
+	 					</li>
+	 				</c:if>
+	 				<c:if test="${pageContext.request.userPrincipal.name != null}">
+      					<li class="hidden-sm hidden-md hidden-lg">
+							<a class="page-scroll" href="<c:url value="/myinfo"/>">내정보</a>
+						</li>
+		 				<li class="hidden-sm hidden-md hidden-lg">
+	 						<a class="page-scroll" href="<c:url value="/signout"/>">로그아웃</a>
+	 					</li>
+	 				</c:if>
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                 
                 </ul>
+                <div class="visible-sm-block visible-md-block visible-lg-block clearfix">
                 <div class="nav navbar-nav navbar-right">
                 	<c:if test="${pageContext.request.userPrincipal.name == null}">
                 		<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-vcard"></i><span class="caret"></span></a>
@@ -55,18 +75,20 @@
         					</ul>
 	 				</c:if>
                 </div>
+                
              	<div class="navbar-center">
-             	<form class="navbar-form" action="<c:url value="/search/simple"/>" method="get">
-      				<div class="input-group">
-        				<input type="text" class="form-control" placeholder="Search" name="s" value="${query}">
-        				<div class="input-group-btn">
-          					<button class="btn btn-default" type="submit">
-            					<i class="glyphicon glyphicon-search"></i>
-          					</button>
-        				</div>
-			        </div>
-    			</form>   
-    			</div>   
+             		<form class="navbar-form" action="<c:url value="/search/simple"/>" method="get">
+      					<div class="input-group">
+        					<input type="text" class="form-control" placeholder="Search" name="s" value="${query}">
+        					<div class="input-group-btn">
+          						<button class="btn btn-default" type="submit">
+            						<i class="glyphicon glyphicon-search"></i>
+          						</button>
+        					</div>
+			       		</div>
+    				</form>   
+    			</div>
+    			</div>
             </div>
             
             <!-- /.navbar-collapse -->

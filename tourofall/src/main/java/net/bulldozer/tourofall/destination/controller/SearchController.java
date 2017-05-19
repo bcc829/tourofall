@@ -35,9 +35,7 @@ public class SearchController {
 		if(totalCount%numOfRows != 0){
 			totalPage++;
 		}
-		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("pageNo", (Long)body.get("pageNo"));
-		model.addAttribute("totalPage", totalPage);
+		
 		
 		long listTotal = totalPage/PAGE_COUNT;
 			
@@ -57,6 +55,11 @@ public class SearchController {
 		}
 		
 		System.out.println(list);
+		
+		
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("pageNo", (Long)body.get("pageNo"));
+		model.addAttribute("totalPage", totalPage);
 		
 		model.addAttribute("rowNumList", list);
 		if (((Long)body.get("totalCount")) != 1) {

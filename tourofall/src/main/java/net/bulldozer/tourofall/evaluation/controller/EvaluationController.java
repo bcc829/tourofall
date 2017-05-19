@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,16 +35,20 @@ private static final String[] tmpList={"127749","127866","1968560","126612","170
 	private TourApiService tourApiService;
 	
 	@RequestMapping(value="/evalmore", method=RequestMethod.GET)
-	public String showEvaluationRegistrationsFormPage(@RequestParam(value="fin", required=false) String fin,Model model) throws Exception{
-		List<EvaluationRegistration> eList = new ArrayList<EvaluationRegistration>();
-		for(int i =0; i < tmpList.length; i++){
-			eList.add(tourApiService.getEvaluationRegistrationsInfo(tmpList[i]));
-		}
+	public String showEvaluationRegistrationsFormPage(@RequestParam(value="fin", required=false) String fin, @RequestParam(value="itemTypeId", defaultValue="12") int itemTypeId,@RequestParam(value="pageNo", defaultValue="1") int pageNo,  Model model) throws Exception{
+		System.out.println(""+itemTypeId+"+"+pageNo);
+		
+		
+//		for(int i =0; i < tmpList.length; i++){
+//			eList.add(tourApiService.getEvaluationRegistrationsInfo(tmpList[i]));
+//		}
 		if(fin != null){
 			fin = "평가등록이 완료되었습니다.";
 		}
 		model.addAttribute("fin", fin);
-		model.addAttribute("evaluationRegistrationsForm", new EvaluationRegistrationsForm(eList));
+		model.addAttribute("currentItemTypeId",itemTypeId);
+		model.addAttribute("currentPageNo",pageNo);
+		model.addAttribute("evaluationRegistrationsForm", tourApiService.getEvaluationRegistrationsForm(itemTypeId, pageNo));
 		return "evalmore";
 	}
 	@RequestMapping(value="/evalmore",method=RequestMethod.POST)
