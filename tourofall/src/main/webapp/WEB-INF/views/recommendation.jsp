@@ -55,8 +55,12 @@
 						</div>						
 					</div>
 				</c:forEach>
+				<div class="col-sm-12 center-container">
+					<input type="submit" value="제출하기" class="btn btn-primary">
+					<a href="<c:url value="/"/>" class="btn btn-default">그만하기</a>
+				</div>
 			</sf:form>
 		</div>
 	</div>
-	
+
 </div>

@@ -5,38 +5,38 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/evaluation/evaluation.css"/>">
 <script type="text/javascript" src="<c:url value="/resources/js/header/small-header.js"/>"></script>
-<style>
-	.center-container{
-		text-align:center;
-	}
-</style>
+<script type="text/javascript" src="<c:url value="/resources/js/evaluation/evaluation.js"/>"></script>
 <div>
 	<div class="empty-header">
 	</div>
-	<div class="center-container">
-		<h1>Please evaluate Tourist Attraction more</h1>
-		<c:if test="${not empty fin}">
-			<p class="lead">${fin}</p>
-			<a href="<c:url value="/"/>" class="btn btn-default">그만하기</a>
-		</c:if>
-	</div>
+	
 	<div class="container">
 		<div class="row">
 		<!-- Example row of columns -->
 			<div class="col-sm-2">
             	    <p class="copy-menu-title text-center">여행지 타입</p>
                 	<div class="list-group">
-                    	<a href="<c:url value="/eval/evalmore?itemTypeId=12"/>" class="list-group-item">관광지</a>
-                   		<a href="<c:url value="/eval/evalmore?itemTypeId=14"/>" class="list-group-item">문화시설</a>
-                   	 	<a href="<c:url value="/eval/evalmore?itemTypeId=15"/>" class="list-group-item">축제/공연/행사</a>
-                   	 	<a href="<c:url value="/eval/evalmore?itemTypeId=25"/>" class="list-group-item">여행코스</a>
-                   	 	<a href="<c:url value="/eval/evalmore?itemTypeId=28"/>" class="list-group-item">레포츠</a>
-                   	 	<a href="<c:url value="/eval/evalmore?itemTypeId=32"/>" class="list-group-item">숙박</a>
-                   	 	<a href="<c:url value="/eval/evalmore?itemTypeId=38"/>" class="list-group-item">쇼핑</a>
-                   	 	<a href="<c:url value="/eval/evalmore?itemTypeId=39"/>" class="list-group-item">음식점</a>
+                    	<a id ="sub-navbar-1" href="<c:url value="/eval/evalmore?itemCat1=A01&itemCat2=A0101"/>" class="list-group-item">자연관광지</a>
+                   		<a id ="sub-navbar-2" href="<c:url value="/eval/evalmore?itemCat1=A02&itemCat2=A0201"/>" class="list-group-item">역사관광지</a>
+                   	 	<a id ="sub-navbar-3" href="<c:url value="/eval/evalmore?itemCat1=A02&itemCat2=A0202"/>" class="list-group-item">휴양관광지</a>
+                   	 	<a id ="sub-navbar-4" href="<c:url value="/eval/evalmore?itemCat1=A02&itemCat2=A0203"/>" class="list-group-item">체험관광지</a>
+                   	 	<a id ="sub-navbar-5" href="<c:url value="/eval/evalmore?itemCat1=A02&itemCat2=A0204"/>" class="list-group-item">산업관광지</a>
+                   	 	<a id ="sub-navbar-6" href="<c:url value="/eval/evalmore?itemCat1=A02&itemCat2=A0205"/>" class="list-group-item">건축/조형물</a>
+                   	 	<a id ="sub-navbar-7" href="<c:url value="/eval/evalmore?itemCat1=A02&itemCat2=A0206"/>" class="list-group-item">문화시설</a>
+                   	 	<a id ="sub-navbar-8" href="<c:url value="/eval/evalmore?itemCat1=A03&itemCat2=A0302"/>" class="list-group-item">육상레포츠</a>
+                   	 	<a id ="sub-navbar-9" href="<c:url value="/eval/evalmore?itemCat1=A03&itemCat2=A0303"/>" class="list-group-item">수상레포츠</a>
+                   	 	<a id ="sub-navbar-10" href="<c:url value="/eval/evalmore?itemCat1=A03&itemCat2=A0304"/>" class="list-group-item">항공레포츠</a>
+                   	 	
                 	</div>
         	</div>
         	<div class="col-sm-10">
+        		<div class="center-container">
+					<h1>Please evaluate Tourist Attraction more</h1>
+					<c:if test="${not empty fin}">
+						<p class="lead">${fin}</p>
+						<a href="<c:url value="/"/>" class="btn btn-default">그만하기</a>
+					</c:if>
+				</div>
 				<sf:form  action = "${pageContext.request.contextPath}/eval/evalmore" method = "post" commandName="evaluationRegistrationsForm">
 					<c:forEach var="evaluationRegistration" items="${evaluationRegistrationsForm.evaluationRegistrations}" varStatus="status">
 						<div class="col-md-4 col-sm-6">
@@ -83,13 +83,13 @@
 				<div class="col-sm-12 center-container">
 					<ul class="pager">
 						<c:if test="${currentPageNo != 1}">
-							<li class="previous"><a href="<c:url value="/eval/evalmore?itemTypeId=12&pageNo=${currentPageNo-1}"/>">Previous</a></li>
+							<li class="previous"><a href="<c:url value="/eval/evalmore?itemCat1=${currentItemCat1}&itemCat2=${currentItemCat2}&pageNo=${currentPageNo-1}"/>">Previous</a></li>
 						</c:if>
 						<c:if test="${currentPageNo == 1}">
 							<li class="previous"><a href="#">Previous</a></li>
 						</c:if>
 						<c:if test="${currentPageNo != evaluationRegistrationsForm.totalPage}">
-    						<li class="next"><a href="<c:url value="/eval/evalmore?itemTypeId=12&pageNo=${currentPageNo+1}"/>">Next</a></li>
+    						<li class="next"><a href="<c:url value="/eval/evalmore?itemCat1=${currentItemCat1}&itemCat2=${currentItemCat2}&pageNo=${currentPageNo+1}"/>">Next</a></li>
     					</c:if>
     					<c:if test="${currentPageNo == evaluationRegistrationsForm.totalPage}">
     						<li class="next"><a href="#">Next</a></li>

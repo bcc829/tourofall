@@ -13,9 +13,14 @@
                 <a class="navbar-brand " href="<c:url value="/"/>">
                     <i class="fa fa-play-circle"></i>
                 </a>
+                <ul class="navbar-center">
+            		<li class="hidden-sm hidden-md hidden-lg">
+	 					<a class="page-scroll" href="<c:url value="/"/>">TourOfAll</a>
+	 			</li>
+            </ul>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
+			
             <div class="collapse navbar-collapse navbar-main-collapse">
             	<ul class="nav navbar-nav">
             		<li class="hidden">
@@ -42,13 +47,11 @@
       					<li class="hidden-sm hidden-md hidden-lg">
 							<a class="page-scroll" href="<c:url value="/myinfo"/>">내정보</a>
 						</li>
-		 				<li class="hidden-sm hidden-md hidden-lg">
-	 						<a class="page-scroll" href="<c:url value="/signout"/>">로그아웃</a>
-	 					</li>
 	 				</c:if>
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                
+                	
                 </ul>
+                
                 <div class="visible-sm-block visible-md-block visible-lg-block clearfix">
                 <div class="nav navbar-nav navbar-right">
                 	<c:if test="${pageContext.request.userPrincipal.name == null}">

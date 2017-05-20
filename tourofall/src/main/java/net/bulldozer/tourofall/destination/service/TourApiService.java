@@ -125,7 +125,7 @@ public class TourApiService {
 	}
 
 
-	public EvaluationRegistrationsForm getEvaluationRegistrationsForm(int itemTypeId, int pageNo) throws Exception {
+	public EvaluationRegistrationsForm getEvaluationRegistrationsForm(String itemCat1, String itemCat2, int pageNo) throws Exception {
 		List<EvaluationRegistration> evalList = new ArrayList<EvaluationRegistration>();
 		Map<String,String> parameter = new HashMap<String,String>();
 		long totalPage;
@@ -133,7 +133,8 @@ public class TourApiService {
 		int requestCount = 12;
 		while(true){
 			System.out.println(requestCount);
-			parameter.put("contentTypeId", Integer.toString(itemTypeId));
+			parameter.put("cat1", itemCat1);
+			parameter.put("cat2", itemCat2);
 			parameter.put("listYN", "Y");
 			parameter.put("arrange", "B");
 			parameter.put("numOfRows"  , "12");

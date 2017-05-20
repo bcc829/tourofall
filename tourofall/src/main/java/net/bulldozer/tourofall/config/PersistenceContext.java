@@ -23,7 +23,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 		"net.bulldozer.tourofall.review.repository",
 		"net.bulldozer.tourofall.user.repository",
 		"net.bulldozer.tourofall.recommendation.repository",
-		"net.bulldozer.tourofall.evaluation.repository"
+		"net.bulldozer.tourofall.evaluation.repository",
+		"net.bulldozer.tourofall.destination.repository"
 })
 @EnableTransactionManagement
 public class PersistenceContext {
@@ -57,7 +58,8 @@ public class PersistenceContext {
                 "net.bulldozer.tourofall.answer.dto",
                 "net.bulldozer.tourofall.review.dto",
                 "net.bulldozer.tourofall.user.dto",
-                "net.bulldozer.tourofall.evaluation.dto"
+                "net.bulldozer.tourofall.evaluation.dto",
+                "net.bulldozer.tourofall.destination.dto"
         });
  
         Properties jpaProperties = new Properties();

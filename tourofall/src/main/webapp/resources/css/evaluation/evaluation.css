@@ -165,7 +165,9 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
-
+.center-container{
+		text-align:center;
+}
 @media (max-width: 768px){
 	.empty-header{
 		height:5.1rem;

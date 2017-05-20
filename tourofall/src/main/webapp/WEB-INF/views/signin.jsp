@@ -5,52 +5,54 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="<c:url value="/resources/css/sign/sign-common.css"/>">
-<link rel="stylesheet" href="<c:url value="/resources/css/sign/signin.css"/>">
+
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/sign/signin.css"/>">
 <title>Tour of all에 로그인</title>
 </head>
 <body>
-	<h2 class="sign-title"><a href="<c:url value="/"/>">Tour Of All</a></h2>
-	<div class="sign-form-container">
-        <form action="<c:url value="/signin/authenticate"/>" method="post" class="form-horizontal">
-        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        	<c:if test="${not empty signoutMsg}">
-        			<p style="color:blue">${signoutMsg}</p>
-        		</c:if>
-            <div class="image-container">
-                <img src="<c:url value="/resources/images/default_profile.jpg"/>" alt="Avatar" class="avatar">
-            </div>
+	<div class="form-signin img-rounded">
+		<form action="<c:url value="/signin/authenticate"/>" method="post">
+			<c:if test="${not empty signoutMsg}">
+        		<p style="color:blue">${signoutMsg}</p>
+        	</c:if>
+			<h1 class="form-signin-heading" style="text-align: center;">Tour Of All</h1>
+			<img class="img-circle" src="https://lh3.googleusercontent.com/-N2dyACoEm4U/AAAAAAAAAAI/AAAAAAAAAAA/yFLJFGuSbZk/photo.jpg">
 
-            <div class="sign-container">
-                <div class="form-group">
-                	<input type="text" class="form-control" placeholder="ID" name="username" required>
+			<div class="form-group has-feedback has-feedback-left">
+				<div class="icon-addon addon-md">
+					<input id="userid" type="text" name="username" class="form-control" placeholder="아이디를 입력해주세요." />
+					<label for="userid" class="glyphicon glyphicon-user"  title="ID"></label>
 				</div>
-                
-                <div class="form-group">
-                	<input type="password" class="form-control" placeholder="Password" name="password" required>
-                </div>
-        		<c:if test="${not empty errorMsg}">
+				<div class="icon-addon addon-md">
+					<input type="password" name="password" id="password" class="form-control" placeholder="비밀번호를 입력해주세요." required>
+					<label for="password" class="glyphicon glyphicon-lock" title="PASSWORD"></label>
+				</div>
+				<c:if test="${not empty errorMsg}">
         			<p style="color:red">${errorMsg}</p>
         		</c:if>
-                <button type="submit">Login</button>
-                
-            </div>
-		</form>
-		<div class="facebook-button-container">
-        	<form action="<c:url value="/signin/facebook"/>" method="post">
-        		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        		<div class="sign-container">
-					<button type="submit"><i class="fa fa-facebook-square" style="font-size:2rem"></i>&nbsp;&nbsp;&nbsp;Sign in with Facebook</button>
+				<div class="checkbox">
+					<label class="labelsize"> <input type="checkbox" value="remember-me">
+						ID 저장하기
+					</label>
 				</div>
-			</form>
-		</div>
-        <div class="bottom-container" style="background-color:#f1f1f1">
-			<span class="psw"><a href="#">비밀번호 잃어버리셨나요?</a></span>
-			<span class="component-right"><input type="checkbox" checked="checked"> Remember me</span>
-        </div>
-        
-    </div>
+
+				<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
+				<button class="btn btn-lg btn-default btn-block buttonsize1" type="submit"><span>로그인</span>
+				</button>
+			</div>
+		</form>
+
+		<form action="<c:url value="/signin/facebook"/>" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
+				<button class="btn btn-lg btn-primary btn-block buttonsize2 fa fa-facebook-official" type="submit">
+					<span>Facebook 계정으로 로그인</span>
+				</button>
+				<ul>
+					<li><a href="#">회원가입</a>
+					<li><a href="#">아이디/비밀번호 찾기</a>
+				</ul>
+		</form>
+	</div>
 </body>
 </html>

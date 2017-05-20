@@ -35,8 +35,8 @@ private static final String[] tmpList={"127749","127866","1968560","126612","170
 	private TourApiService tourApiService;
 	
 	@RequestMapping(value="/evalmore", method=RequestMethod.GET)
-	public String showEvaluationRegistrationsFormPage(@RequestParam(value="fin", required=false) String fin, @RequestParam(value="itemTypeId", defaultValue="12") int itemTypeId,@RequestParam(value="pageNo", defaultValue="1") int pageNo,  Model model) throws Exception{
-		System.out.println(""+itemTypeId+"+"+pageNo);
+	public String showEvaluationRegistrationsFormPage(@RequestParam(value="fin", required=false) String fin, @RequestParam(value="itemCat1", defaultValue="A01") String  itemCat1, @RequestParam(value="itemCat2", defaultValue="A0101") String itemCat2, @RequestParam(value="pageNo", defaultValue="1") int pageNo,  Model model) throws Exception{
+		System.out.println(itemCat1+"+" + itemCat2 +"+"+pageNo);
 		
 		
 //		for(int i =0; i < tmpList.length; i++){
@@ -46,9 +46,10 @@ private static final String[] tmpList={"127749","127866","1968560","126612","170
 			fin = "평가등록이 완료되었습니다.";
 		}
 		model.addAttribute("fin", fin);
-		model.addAttribute("currentItemTypeId",itemTypeId);
+		model.addAttribute("currentItemCat1", itemCat1);
+		model.addAttribute("currentItemCat2", itemCat2);
 		model.addAttribute("currentPageNo",pageNo);
-		model.addAttribute("evaluationRegistrationsForm", tourApiService.getEvaluationRegistrationsForm(itemTypeId, pageNo));
+		model.addAttribute("evaluationRegistrationsForm", tourApiService.getEvaluationRegistrationsForm(itemCat1, itemCat2, pageNo));
 		return "evalmore";
 	}
 	@RequestMapping(value="/evalmore",method=RequestMethod.POST)

@@ -33,6 +33,18 @@ create table userPreferences(
 	constraint unique_userPreferences unique(user_id,item_type_id),
 	constraint fk_userPreferences foreign key(user_id) references users(user_id)
 );
+
+create table best_destinations(
+	best_destination_id bigint(20) auto_increment,
+	title varchar(45) not null,
+	address varchar(128) not null,
+	destination_type varchar(45) not null,
+	image_url varchar(128) not null,
+	item_id int(11) not null,
+	constraint pk_best_destinations primary key(best_destination_id),
+	constraint unique_best_destinations unique(item_id)
+);
+
 create table evaluations(
 	evaluation_id bigint(20) auto_increment,
 	user_id bigint(20) not null,
@@ -54,7 +66,6 @@ create table reviews(
 	constraint unique_reviews unique(user_id,item_id),
 	constraint fk_reviews1 foreign key(user_id) references users(user_id),
 	constraint fk_reviews2 foreign key(evaluation_id) references evaluations(evaluation_id)
-	
 );
 
 create table questions(
