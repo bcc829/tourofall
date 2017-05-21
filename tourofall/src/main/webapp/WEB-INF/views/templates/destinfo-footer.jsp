@@ -13,7 +13,7 @@
 			<tr>
 				<td>
 					<h3>제목 : ${reviewRenderingModel.title}</h3>
-					<p>작성자 : ${reviewRenderingModel.lastName} ${reviewRenderingModel.firstName}님</p>
+					<p>작성자 : <a href="<c:url value="/users/${reviewRenderingModel.userId}"/>">${reviewRenderingModel.lastName} ${reviewRenderingModel.firstName}님</a></p>
 					<p>작성일자 :
 						${reviewRenderingModel.createdDate.year+1900}년${reviewRenderingModel.createdDate.month+1}월${reviewRenderingModel.createdDate.date}일</p>
 					<p>평점 : ${reviewRenderingModel.score}</p>
@@ -29,8 +29,8 @@
 			<c:forEach var="questionRenderingModel" items="${questionRenderingModels}">
 				<tr>
 					<td>${questionInfo.id}</td>
-					<td><a href="<c:url value="/qna/question/${questionRenderingModel.id}"/>">${questionRenderingModel.title}</a></td>
-					<td>${questionRenderingModel.lastName} ${questionRenderingModel.firstName}님</td>
+					<td><a href="<c:url value="/qna/question/${questionRenderingModel.questionId}"/>">${questionRenderingModel.title}</a></td>
+					<td><a href="<c:url value="/users/${questionRenderingModel.userId}"/>">${questionRenderingModel.lastName} ${questionRenderingModel.firstName}님</a></td>
 					<td>${questionRenderingModel.visitor}</td>
 				</tr>
 			</c:forEach>

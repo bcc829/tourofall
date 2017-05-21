@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class ReviewRenderingModel {
+	private long userId;
 	private String title;
 	private String lastName;
 	private String firstName;
@@ -26,7 +27,10 @@ public class ReviewRenderingModel {
 		public Builder(){
 			reviewRenderingModel = new ReviewRenderingModel();
 		}
-		
+		public Builder userId(long userId){
+			reviewRenderingModel.userId = userId;
+			return this;
+		}
 		public Builder title(String title){
 			reviewRenderingModel.title = title;
 			return this;

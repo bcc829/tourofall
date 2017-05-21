@@ -24,7 +24,7 @@
 		</tr>
 		<c:forEach var="answerRenderingModel" items="${answerRenderingModels}">
 			<tr>
-				<td>${answerRenderingModel.lastName} ${answerRenderingModel.firstName}님<br/>${answerRenderingModel.createdDate}</td>
+				<td><a href="<c:url value="/users/${answerRenderingModel.userId}"/>">${answerRenderingModel.lastName} ${answerRenderingModel.firstName}님</a><br/>${answerRenderingModel.createdDate}</td>
 				<td>${answerRenderingModel.content}</td>
 			</tr>
 		</c:forEach>

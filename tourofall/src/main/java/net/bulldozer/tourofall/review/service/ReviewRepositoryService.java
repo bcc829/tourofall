@@ -38,6 +38,7 @@ public class ReviewRepositoryService implements ReviewService{
 		while(reviewIter.hasNext()){
 			Review review = reviewIter.next();
 			ReviewRenderingModel reviewRenderingModel = ReviewRenderingModel.getBuilder()
+														.userId(review.getUser().getId())
 														.title(review.getTitle())
 														.content(review.getContent())
 														.createdDate(review.getCreatedDate())

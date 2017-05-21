@@ -10,7 +10,8 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class QuestionRenderingModel{
-	private long id;
+	private long userId;
+	private long questionId;
 	private String title;
 	private String content;
 	private Date createdDate;
@@ -27,8 +28,12 @@ public class QuestionRenderingModel{
 		public Builder(){
 			questionRenderingModel =new QuestionRenderingModel();
 		}
-		public Builder id(long id){
-			questionRenderingModel.id = id;
+		public Builder userId(long userId){
+			questionRenderingModel.userId = userId;
+			return this;
+		}
+		public Builder questionId(long questionId){
+			questionRenderingModel.questionId = questionId;
 			return this;
 		}
 		public Builder title(String title){

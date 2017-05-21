@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AnswerRenderingModel{
+	private long userId;
 	private String lastName;
 	private String firstName;
 	private Date createdDate;
@@ -24,6 +25,10 @@ public class AnswerRenderingModel{
 		
 		public Builder(){
 			answerRenderingModel = new AnswerRenderingModel();
+		}
+		public Builder userId(long userId){
+			answerRenderingModel.userId = userId;
+			return this;
 		}
 		public Builder lastName(String lastName){
 			answerRenderingModel.lastName = lastName;

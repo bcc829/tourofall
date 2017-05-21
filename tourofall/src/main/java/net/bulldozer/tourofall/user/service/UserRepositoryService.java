@@ -122,7 +122,8 @@ public class UserRepositoryService implements UserService{
 		Collection<QuestionRenderingModel> questionRenderingModels = new ArrayList<QuestionRenderingModel>(); 
 		for(Question question : questions){
 			QuestionRenderingModel questionRenderingModel = QuestionRenderingModel.getBuilder()
-															.id(question.getId())
+															.userId(question.getUser().getId())
+															.questionId(question.getId())
 															.title(question.getTitle())
 															.content(question.getContent())
 															.createdDate(question.getCreatedDate())
@@ -143,6 +144,7 @@ public class UserRepositoryService implements UserService{
 		Collection<AnswerRenderingModel> answerRenderingModels = new ArrayList<AnswerRenderingModel>();
 		for(Answer answer : answers){
 			AnswerRenderingModel answerRenderingModel = AnswerRenderingModel.getBuilder()
+														.userId(user.getId())
 														.lastName(answer.getUser().getLastName())
 														.firstName(answer.getUser().getFirstName())
 														.createdDate(answer.getCreatedDate())
@@ -165,6 +167,7 @@ public class UserRepositoryService implements UserService{
 		
 		for(Review review : reviews){
 			ReviewRenderingModel reviewRenderingModel = ReviewRenderingModel.getBuilder()
+														.userId(user.getId())
 														.title(review.getTitle())
 														.content(review.getContent())
 														.createdDate(review.getCreatedDate())

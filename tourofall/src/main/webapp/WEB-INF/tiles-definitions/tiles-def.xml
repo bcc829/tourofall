@@ -11,8 +11,8 @@
 		<put-attribute name="header" value="/WEB-INF/views/templates/destinfo-header.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/templates/destinfo-footer.jsp"/>
 	</definition>
-	<definition name="myinfo" template="/WEB-INF/views/templates/myinfo-layout.jsp">
-		<put-attribute name="header" value="/WEB-INF/views/templates/myinfo-header.jsp"/>
+	<definition name="users" template="/WEB-INF/views/templates/users-layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/templates/users-header.jsp"/>
 	</definition>
 	
 </tiles-definitions>

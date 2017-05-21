@@ -34,9 +34,9 @@ public class ServletConfig extends WebMvcConfigurerAdapter{
 				"/WEB-INF/tiles-definitions/base-destinfo-tiles.xml",
 				"/WEB-INF/tiles-definitions/base-detailinfo-tiles.xml",
 				"/WEB-INF/tiles-definitions/base-introinfo-tiles.xml",
-				"/WEB-INF/tiles-definitions/base-myinfo-tiles.xml",
+				"/WEB-INF/tiles-definitions/base-users-tiles.xml",
 				"/WEB-INF/tiles-definitions/destinfo-tiles.xml",
-				"/WEB-INF/tiles-definitions/myinfo-tiles.xml"
+				"/WEB-INF/tiles-definitions/users-tiles.xml"
 				
 				});
 		return configurer;

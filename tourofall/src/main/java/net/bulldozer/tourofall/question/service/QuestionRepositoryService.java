@@ -38,6 +38,7 @@ public class QuestionRepositoryService implements QuestionService {
 		while(answerIter.hasNext()){
 			Answer answer = answerIter.next();
 			AnswerRenderingModel answerRenderingModel = AnswerRenderingModel.getBuilder()
+					.userId(answer.getUser().getId())
 					.lastName(answer.getUser().getLastName())
 					.firstName(answer.getUser().getFirstName())
 					.createdDate(answer.getCreatedDate())
@@ -61,7 +62,8 @@ public class QuestionRepositoryService implements QuestionService {
 			Question question = questionIter.next();
 			
 			QuestionRenderingModel questionRenderingModel = QuestionRenderingModel.getBuilder()
-					.id(question.getId())
+					.userId(question.getUser().getId())
+					.questionId(question.getId())
 					.title(question.getTitle())
 					.content(question.getContent())
 					.createdDate(question.getCreatedDate())
@@ -78,7 +80,8 @@ public class QuestionRepositoryService implements QuestionService {
 	public QuestionRenderingModel getQuestionRenderingModelById(long questionId) {
 		Question question = questionRepository.findOne(questionId);
 		QuestionRenderingModel questionRenderingModel = QuestionRenderingModel.getBuilder()
-				.id(question.getId())
+				.userId(question.getUser().getId())
+				.questionId(question.getId())
 				.title(question.getTitle())
 				.content(question.getContent())
 				.createdDate(question.getCreatedDate())
