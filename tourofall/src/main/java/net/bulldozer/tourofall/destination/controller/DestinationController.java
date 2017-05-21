@@ -42,8 +42,8 @@ public class DestinationController {
 		
 		model.addAttribute("itemId", itemId);
 		model.addAttribute("itemTypeId", itemTypeId);
-		model.addAttribute("reviews", reviewService.getReviewsByItemId(itemId));
-		model.addAttribute("questionInfoes", questionService.getQuestionsByItemId(itemId));
+		model.addAttribute("reviewRenderingModels", reviewService.getReviewRenderingModelsByItemId(itemId));
+		model.addAttribute("questionRenderingModels", questionService.getQuestionRenderingModelsByItemId(itemId));
 		
 	}
 	@RequestMapping("/info/basic"+resPath)

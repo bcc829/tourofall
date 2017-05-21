@@ -9,15 +9,15 @@
 				<td><a href="<c:url value="/review/write/${itemTypeId}/${itemId}"/>">리뷰 작성하기</a></td>
 			</c:if>
 		</tr>
-		<c:forEach var="review" items="${reviews}">
+		<c:forEach var="reviewRenderingModel" items="${reviewRenderingModels}">
 			<tr>
 				<td>
-					<h3>제목 : ${review.title}</h3>
-					<p>작성자 : ${review.user.lastName} ${review.user.firstName}님</p>
+					<h3>제목 : ${reviewRenderingModel.title}</h3>
+					<p>작성자 : ${reviewRenderingModel.lastName} ${reviewRenderingModel.firstName}님</p>
 					<p>작성일자 :
-						${review.createdDate.year+1900}년${review.createdDate.month+1}월${review.createdDate.date}일</p>
-					<p>평점 : ${review.evaluation.score}</p>
-					<p>내용 : ${review.content}</p>
+						${reviewRenderingModel.createdDate.year+1900}년${reviewRenderingModel.createdDate.month+1}월${reviewRenderingModel.createdDate.date}일</p>
+					<p>평점 : ${reviewRenderingModel.score}</p>
+					<p>내용 : ${reviewRenderingModel.content}</p>
 				</td>
 			</tr>
 		</c:forEach>
@@ -26,12 +26,12 @@
 			<td><a href="<c:url value="/qna/question/write/${itemTypeId}/${itemId}"/>">질문 작성하기</a></td>
 		</tr>
 		<tr>
-			<c:forEach var="questionInfo" items="${questionInfoes}">
+			<c:forEach var="questionRenderingModel" items="${questionRenderingModels}">
 				<tr>
 					<td>${questionInfo.id}</td>
-					<td><a href="<c:url value="/qna/question/${questionInfo.id}"/>">${questionInfo.title}</a></td>
-					<td>${questionInfo.lastName} ${questionInfo.firstName}님</td>
-					<td>${questionInfo.visitor}</td>
+					<td><a href="<c:url value="/qna/question/${questionRenderingModel.id}"/>">${questionRenderingModel.title}</a></td>
+					<td>${questionRenderingModel.lastName} ${questionRenderingModel.firstName}님</td>
+					<td>${questionRenderingModel.visitor}</td>
 				</tr>
 			</c:forEach>
 		</tr>

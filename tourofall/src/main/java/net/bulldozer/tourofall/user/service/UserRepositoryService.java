@@ -121,14 +121,15 @@ public class UserRepositoryService implements UserService{
 		Collection<Question> questions = user.getQuestions();
 		Collection<QuestionRenderingModel> questionRenderingModels = new ArrayList<QuestionRenderingModel>(); 
 		for(Question question : questions){
-			QuestionRenderingModel questionRenderingModel = new QuestionRenderingModel();
-			questionRenderingModel.setId(question.getId());
-			questionRenderingModel.setTitle(question.getTitle());
-			questionRenderingModel.setContent(question.getContent());
-			questionRenderingModel.setCreatedDate(question.getCreatedDate());
-			questionRenderingModel.setLastName(user.getLastName());
-			questionRenderingModel.setFirstName(user.getFirstName());
-			questionRenderingModel.setVisitor(question.getVisitor());
+			QuestionRenderingModel questionRenderingModel = QuestionRenderingModel.getBuilder()
+															.id(question.getId())
+															.title(question.getTitle())
+															.content(question.getContent())
+															.createdDate(question.getCreatedDate())
+															.lastName(question.getUser().getLastName())
+															.firstName(question.getUser().getFirstName())
+															.visitor(question.getVisitor())
+															.build();
 			questionRenderingModels.add(questionRenderingModel);
 		}
 		return questionRenderingModels;
@@ -141,12 +142,17 @@ public class UserRepositoryService implements UserService{
 		Collection<Answer> answers = user.getAnswers();
 		Collection<AnswerRenderingModel> answerRenderingModels = new ArrayList<AnswerRenderingModel>();
 		for(Answer answer : answers){
-			AnswerRenderingModel answerRenderingModel = new AnswerRenderingModel();
-			answerRenderingModel.setId(answer.getId());
-			answerRenderingModel.setQuestionTitle(answer.getQuestion().getTitle());
-			answerRenderingModel.setContent(answer.getContent());
+			AnswerRenderingModel answerRenderingModel = AnswerRenderingModel.getBuilder()
+														.lastName(answer.getUser().getLastName())
+														.firstName(answer.getUser().getFirstName())
+														.createdDate(answer.getCreatedDate())
+														.questionTitle(answer.getQuestion().getTitle())
+														.content(answer.getContent())
+														.build();
+			
 			answerRenderingModels.add(answerRenderingModel);
 		}
+		
 		return answerRenderingModels;
 	}
 
@@ -158,12 +164,13 @@ public class UserRepositoryService implements UserService{
 		Collection<ReviewRenderingModel> reviewRenderingModels = new ArrayList<ReviewRenderingModel>();
 		
 		for(Review review : reviews){
-			ReviewRenderingModel reviewRenderingModel = new ReviewRenderingModel();
-			reviewRenderingModel.setTitle(review.getTitle());
-			reviewRenderingModel.setContent(review.getContent());
-			// º¸·ù ¤Ó: reviewRenderingModel.setItemTitle(review.get);
-			reviewRenderingModel.setCreatedDate(review.getCreatedDate());
-			reviewRenderingModel.setScore(review.getEvaluation().getScore());
+			ReviewRenderingModel reviewRenderingModel = ReviewRenderingModel.getBuilder()
+														.title(review.getTitle())
+														.content(review.getContent())
+														.createdDate(review.getCreatedDate())
+														.itemTitle(review.getItemTitle())
+														.score(review.getEvaluation().getScore())
+														.build();
 			reviewRenderingModels.add(reviewRenderingModel);
 		}
 		return reviewRenderingModels;

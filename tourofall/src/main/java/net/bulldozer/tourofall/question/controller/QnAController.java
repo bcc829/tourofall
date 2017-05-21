@@ -42,7 +42,8 @@ public class QnAController {
 		if(!model.containsAttribute("redirect")){
 			questionService.incrementVisitor(questionId);
 		}
-		model.addAttribute("question", questionService.getQuestionById(questionId));
+		model.addAttribute("questionRenderingModel", questionService.getQuestionRenderingModelById(questionId));
+		model.addAttribute("answerRenderingModels", questionService.getAnswerRenderingModelsByQuestionId(questionId));
 		return "question";
 	}
 

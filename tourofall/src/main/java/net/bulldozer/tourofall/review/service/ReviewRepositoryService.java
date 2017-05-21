@@ -1,5 +1,7 @@
 package net.bulldozer.tourofall.review.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.repository.EvaluationRepository;
 import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.dto.ReviewRegistrationForm;
+import net.bulldozer.tourofall.review.dto.ReviewRenderingModel;
 import net.bulldozer.tourofall.review.repository.ReviewRepository;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.dto.User;
@@ -28,9 +31,26 @@ public class ReviewRepositoryService implements ReviewService{
 	private UserRepository userRepository;
 	
 	@Transactional(readOnly=true)
-	public List<Review> getReviewsByItemId(int itemId){
-		List<Review> reviewList = reviewRepository.findByItemId(itemId);
-		return reviewList;
+	public List<ReviewRenderingModel> getReviewRenderingModelsByItemId(int itemId){
+		List<ReviewRenderingModel> reviewRenderingModels = new ArrayList<ReviewRenderingModel>();
+		
+		
+		List<Review> reviews = reviewRepository.findByItemId(itemId);
+		Iterator<Review> reviewIter = reviews.iterator();
+		while(reviewIter.hasNext()){
+			Review review = reviewIter.next();
+			ReviewRenderingModel reviewRenderingModel = ReviewRenderingModel.getBuilder()
+														.title(review.getTitle())
+														.content(review.getContent())
+														.createdDate(review.getCreatedDate())
+														.lastName(review.getUser().getLastName())
+														.firstName(review.getUser().getFirstName())
+														.score(review.getEvaluation().getScore())
+														.itemTitle(review.getItemTitle())
+														.build();
+			reviewRenderingModels.add(reviewRenderingModel);
+		}
+		return reviewRenderingModels;
 	}
 	@Transactional
 	public void registerNewReview(ReviewRegistrationForm reviewRegistrationForm) {
