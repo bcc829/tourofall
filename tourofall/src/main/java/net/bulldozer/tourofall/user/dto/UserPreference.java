@@ -10,20 +10,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 @Entity
-@Table(name="userPreferences")
+@Table(name="user_preferences")
 public class UserPreference {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="user_preference_id")
 	private long id;
 	
 	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@Column(name="item_type_id")
-	private int itemTypeId;
+	@Column(name="item_category_code")
+	private String itemCategoryCode;
 
 	
 	public static Builder getBuilder(){
@@ -45,17 +49,34 @@ public class UserPreference {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public int getItemTypeId() {
-		return itemTypeId;
+	
+	public String getItemCategoryCode() {
+		return itemCategoryCode;
 	}
 
-	public void setItemTypeId(int itemTypeId) {
-		this.itemTypeId = itemTypeId;
+	public void setItemCategoryCode(String itemCategoryCode) {
+		this.itemCategoryCode = itemCategoryCode;
+	}
+
+	@Override
+	public int hashCode() {
+		HashCodeBuilder builder = new HashCodeBuilder();
+        builder.append(getId());
+        return builder.hashCode();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof UserPreference)) {
+            return false;
+        }
+		UserPreference otherUserPreference  = (UserPreference) obj;
+        EqualsBuilder builder = new EqualsBuilder();
+        builder.append(this.id, otherUserPreference.getId());
+        return builder.isEquals();
 	}
 	
 	public static class Builder{
-		UserPreference  userPreference;
+		private UserPreference  userPreference;
 		
 		public Builder(){
 			userPreference = new UserPreference();
@@ -65,8 +86,8 @@ public class UserPreference {
 			userPreference.user = user;
 			return this;
 		}
-		public Builder itemTypeId(int itemTypeId){
-			userPreference.itemTypeId = itemTypeId;
+		public Builder itemCategoryCode(String itemCategoryCode){
+			userPreference.itemCategoryCode = itemCategoryCode;
 			return this;
 		}
 		public UserPreference build(){

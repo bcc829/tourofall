@@ -42,6 +42,18 @@ public class UserRegistrationForm {
 	private String month;
 	private String date;
 	
+	@NotEmpty(message="여행지 타입을 선택해주세요")
+	private String[] userPreferences;
+	
+	
+	
+	public String[] getUserPreferences() {
+		return userPreferences;
+	}
+	public void setUserPreferences(String[] userPreferences) {
+		this.userPreferences = userPreferences;
+	}
+	
 	public String getUsername() {
 		return username;
 	}

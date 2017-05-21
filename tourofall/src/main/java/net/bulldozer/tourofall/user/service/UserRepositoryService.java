@@ -3,6 +3,8 @@ package net.bulldozer.tourofall.user.service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +21,9 @@ import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.dto.ReviewRenderingModel;
 import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.dto.UserModificationForm;
+import net.bulldozer.tourofall.user.dto.UserPreference;
 import net.bulldozer.tourofall.user.dto.UserRegistrationForm;
+import net.bulldozer.tourofall.user.repository.UserPreferenceRepository;
 import net.bulldozer.tourofall.user.repository.UserRepository;
 
 
@@ -27,6 +31,9 @@ import net.bulldozer.tourofall.user.repository.UserRepository;
 public class UserRepositoryService implements UserService{
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserPreferenceRepository userPreferenceRepository;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -37,6 +44,14 @@ public class UserRepositoryService implements UserService{
 		if(checkUsernameDuplicate(registrationUserForm.getUsername())){
 			 throw new DuplicateUsernameException("The Username: " + registrationUserForm.getUsername() + " is already in use.");
 		}
+		String[] preferences = registrationUserForm.getUserPreferences(); 
+		List<UserPreference> userPreferences = new ArrayList<UserPreference>();
+		for(String preference : preferences){
+			UserPreference userPreference = UserPreference.getBuilder()
+											.itemCategoryCode(preference)
+											.build();
+			userPreferences.add(userPreference);
+		}
 		
 		User newUser = User.getBuilder()
 				.username(registrationUserForm.getUsername())
@@ -46,6 +61,7 @@ public class UserRepositoryService implements UserService{
 				.birth(registrationUserForm.getBirth())
 				.gender(registrationUserForm.getGender())
 				.signInProvider(registrationUserForm.getSignInProvider())
+				.userPreferences(userPreferences)
 				.build();
 		// user의 role은 따로 건네주지 않음 : 기본적으로 ROLE_USER 권한을 부여받음
 		System.out.println(newUser);
@@ -175,19 +191,28 @@ public class UserRepositoryService implements UserService{
 	public UserModificationForm getUserModificationFormByUserId(long id){
 		User user = userRepository.findOne(id);
 		
-		UserModificationForm userModificationForm = new UserModificationForm();
+		List<UserPreference> userPreferences = userPreferenceRepository.findByUserId(id);
+		String[] preferences = new String[userPreferences.size()];
 		
-		userModificationForm.setId(user.getId());
-		userModificationForm.setUsername(user.getUsername());
-		userModificationForm.setGender(user.getGender());
-		userModificationForm.setLastName(user.getLastName());
-		userModificationForm.setFirstName(user.getFirstName());
-		userModificationForm.setSignInProvider(user.getSignInProvider());
+		for(int i =0; i < preferences.length; i++){
+			preferences[i] = userPreferences.get(i).getItemCategoryCode();
+		}
+		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(user.getBirth());
-		userModificationForm.setYear(Integer.toString(cal.get(Calendar.YEAR)));
-		userModificationForm.setMonth(Integer.toString(cal.get(Calendar.MONTH)+1));
-		userModificationForm.setDate(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
+		
+		UserModificationForm userModificationForm = UserModificationForm.getBuilder()
+													.id(user.getId())
+													.username(user.getUsername())
+													.gender(user.getGender())
+													.lastName(user.getLastName())
+													.firstName(user.getFirstName())
+													.signInProvider(user.getSignInProvider())
+													.userPreferences(preferences)
+													.year(Integer.toString(cal.get(Calendar.YEAR)))
+													.month(Integer.toString(cal.get(Calendar.MONTH)+1))
+													.date(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)))
+													.build();
 		
 		return userModificationForm;
 	}

@@ -25,13 +25,13 @@ create table userConnection(
 	expireTime bigint,
 	primary key (userId, providerId, providerUserId)
 );
-create table userPreferences(
-	userPreference_id bigint(20) auto_increment,
+create table user_preferences(
+	user_preference_id bigint(20) auto_increment,
 	user_id bigint(20) not null,
-	item_type_id int(11) not null,
-	constraint pk_userPreferences primary key(userPreference_id),
-	constraint unique_userPreferences unique(user_id,item_type_id),
-	constraint fk_userPreferences foreign key(user_id) references users(user_id)
+	item_category_code varchar(45) not null,
+	constraint pk_user_preferences primary key(user_preference_id),
+	constraint unique_user_preferences unique(user_id,item_category_code),
+	constraint fk_user_preferences foreign key(user_id) references users(user_id)
 );
 
 create table best_destinations(

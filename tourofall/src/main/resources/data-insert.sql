@@ -7,6 +7,8 @@ INSERT INTO evaluations(user_id,item_id,score) VALUES(1,131257,4);
 INSERT INTO evaluations(user_id,item_id,score) VALUES(2,131257,3);
 INSERT INTO evaluations(user_id,item_id,score) VALUES(3,131257,2);
 
+INSERT INTO user_preferences(user_id,item_category_code) VALUES(1,'A0101');
+INSERT INTO user_preferences(user_id,item_category_code) VALUES(1,'A0202');
 
 INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('경복궁 재미 없어요','집에 가고 싶어요',1,126508,1);
 INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('경마장 재미 없어요','집에 가고 싶어요',1,131257,2);

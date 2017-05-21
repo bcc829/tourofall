@@ -3,6 +3,8 @@ package net.bulldozer.tourofall.user.dto;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -73,7 +75,7 @@ public class User {
 
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="user", cascade= CascadeType.ALL)
+	@OneToMany(mappedBy="user", cascade= CascadeType.PERSIST)
 	private Collection<UserPreference> userPreferences = new ArrayList<UserPreference>();
 	
 	
@@ -258,6 +260,17 @@ public class User {
 		}
 		public Builder signInProvider(SocialService signInProvider){
 			user.signInProvider = signInProvider;
+			return this;
+		}
+		public Builder userPreferences(List<UserPreference> userPreferences){
+			Iterator<UserPreference> userPreferencesIter = userPreferences.iterator();
+			while(userPreferencesIter.hasNext()){
+				UserPreference userPreference = userPreferencesIter.next();
+				if(!userPreferences.contains(userPreference)){
+					userPreferences.add(userPreference);
+					userPreference.setUser(user);
+				}
+			}
 			return this;
 		}
 		public User build(){

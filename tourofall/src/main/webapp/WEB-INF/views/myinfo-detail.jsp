@@ -63,6 +63,21 @@
 			</div>
 			
 			<div class="form-group">
+				<label class="control-label col-sm-3" for="existingPassword">사용자 선호 여행지 유형</label>
+				<div class="col-sm-7">
+					<sf:checkbox path="userPreferences" value="A0101" id = "nature" /><label id = "nature" >자연</label>
+					<sf:checkbox path="userPreferences" value="A0201" id = "history" /><label id = "history" >역사</label>
+					<sf:checkbox path="userPreferences" value="A0202" id = "resort" /><label id = "resort" >휴양</label>
+					<sf:checkbox path="userPreferences" value="A0203" id = "experience" /><label id = "experience" >체험</label>
+					<sf:checkbox path="userPreferences" value="A0204" id = "industry" /><label id = "industry" >산업</label>
+					<sf:checkbox path="userPreferences" value="A0205" id = "sculpture" /><label id = "sculpture" >건축/조형물</label>
+					<sf:checkbox path="userPreferences" value="A0206" id = "culture" /><label id = "culture" >문화시설</label>
+					<sf:checkbox path="userPreferences" value="A0302" id = "leports-ground" /><label id = "leports-ground" >레포츠-육상</label>
+					<sf:checkbox path="userPreferences" value="A0303" id = "leports-water" /><label id = "leports-water" >레포츠-수상</label>
+					<sf:checkbox path="userPreferences" value="A0304" id = "leports-air" /><label id = "leports-air" >레포츠-항공</label>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="control-label col-sm-3" for="existingPassword">기존비밀번호</label>
 				<div class="col-sm-7">
 					<sf:password path="existingPassword" class="form-control" id="existingPassword"
