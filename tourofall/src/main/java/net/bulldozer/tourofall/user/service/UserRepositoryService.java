@@ -44,15 +44,16 @@ public class UserRepositoryService implements UserService{
 		if(checkUsernameDuplicate(registrationUserForm.getUsername())){
 			 throw new DuplicateUsernameException("The Username: " + registrationUserForm.getUsername() + " is already in use.");
 		}
-		String[] preferences = registrationUserForm.getUserPreferences(); 
+		
+		String[] preferences = registrationUserForm.getUserPreferences();
+		
 		List<UserPreference> userPreferences = new ArrayList<UserPreference>();
 		for(String preference : preferences){
 			UserPreference userPreference = UserPreference.getBuilder()
 											.itemCategoryCode(preference)
 											.build();
-			userPreferences.add(userPreference);
+			userPreferences.add(userPreference);	
 		}
-		
 		User newUser = User.getBuilder()
 				.username(registrationUserForm.getUsername())
 				.firstName(registrationUserForm.getFirstName())
@@ -64,7 +65,6 @@ public class UserRepositoryService implements UserService{
 				.userPreferences(userPreferences)
 				.build();
 		// user의 role은 따로 건네주지 않음 : 기본적으로 ROLE_USER 권한을 부여받음
-		System.out.println(newUser);
 		return userRepository.save(newUser);
 	}
 	

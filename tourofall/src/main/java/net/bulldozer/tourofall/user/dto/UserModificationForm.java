@@ -141,6 +141,7 @@ public class UserModificationForm {
 	public void setUserPreferences(String[] userPreferences) {
 		this.userPreferences = userPreferences;
 	}
+	
 	public static class Builder{
 		private UserModificationForm userModificationForm;
 		

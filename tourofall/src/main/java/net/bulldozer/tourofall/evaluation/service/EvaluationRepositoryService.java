@@ -18,7 +18,6 @@ public class EvaluationRepositoryService implements EvaluationService{
 	@Override
 	public void registerNewEvaluation(EvaluationRegistration evaluationRegistration, User user) {
 		Evaluation evaluation = Evaluation.getBuilder()
-										.user(user)
 										.itemId(evaluationRegistration.getItemId())
 										.score(evaluationRegistration.getScore())
 										.build();

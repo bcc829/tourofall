@@ -20,9 +20,8 @@ public class AnswerRepositoryService implements AnswerService {
 	public void registerNewAnswer(AnswerRegistrationForm registrationAnswerForm, Question question, User user) {
 		Answer answer = Answer.getBuilder()
 				.content(registrationAnswerForm.getContent())
-				.user(user)
-				.question(question)
 				.build();
+		
 		user.addAnswer(answer);
 		question.addAnswer(answer);
 		answerRepository.save(answer);

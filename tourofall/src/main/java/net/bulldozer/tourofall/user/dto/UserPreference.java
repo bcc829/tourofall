@@ -81,11 +81,6 @@ public class UserPreference {
 		public Builder(){
 			userPreference = new UserPreference();
 		}
-		
-		public Builder user(User user){
-			userPreference.user = user;
-			return this;
-		}
 		public Builder itemCategoryCode(String itemCategoryCode){
 			userPreference.itemCategoryCode = itemCategoryCode;
 			return this;

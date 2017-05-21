@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <div>
+	<div style="height:100px;">
+	</div>
 	<sf:form commandName="questionRegistrationForm" action="${pageContext.request.contextPath}/qna/question/write">
 		<h3>질문 작성하기</h3>
 		<table>

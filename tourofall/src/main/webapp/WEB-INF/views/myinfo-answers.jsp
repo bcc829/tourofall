@@ -6,7 +6,6 @@
 	<c:forEach var="answer" items="${answers}">
 		<div class="well">
 			<div class="row">
-				<span class="pull-right">댓글 번호: ${answer.id}</span>
 				<p>질문 : ${answer.questionTitle}</p>
 				<p>댓글: ${answer.content}</p>
 			</div>

@@ -33,8 +33,6 @@ public class ReviewRepositoryService implements ReviewService{
 	@Transactional(readOnly=true)
 	public List<ReviewRenderingModel> getReviewRenderingModelsByItemId(int itemId){
 		List<ReviewRenderingModel> reviewRenderingModels = new ArrayList<ReviewRenderingModel>();
-		
-		
 		List<Review> reviews = reviewRepository.findByItemId(itemId);
 		Iterator<Review> reviewIter = reviews.iterator();
 		while(reviewIter.hasNext()){
@@ -59,10 +57,11 @@ public class ReviewRepositoryService implements ReviewService{
 		
 		Evaluation getEvaluation = evaluationRepository.findByUserIdAndItemId(userAuthenticationDetails.getId(), reviewRegistrationForm.getItemId());
 		if(getEvaluation == null){
-			getEvaluation = new Evaluation();
-			getEvaluation.setUser(getUser);
-			getEvaluation.setItemId(reviewRegistrationForm.getItemId());;
+			getEvaluation = Evaluation.getBuilder()
+							.itemId(reviewRegistrationForm.getItemId())
+							.build();
 		}
+		
 		getEvaluation.setScore(reviewRegistrationForm.getScore());
 		
 		
@@ -70,9 +69,12 @@ public class ReviewRepositoryService implements ReviewService{
 				.title(reviewRegistrationForm.getTitle())
 				.content(reviewRegistrationForm.getContent())
 				.itemId(reviewRegistrationForm.getItemId())
-				.user(getUser)
 				.evaluation(getEvaluation)
 				.build();
+		
+		getUser.addReview(newReview);
+		getUser.addEvaluation(getEvaluation);
+		
 		reviewRepository.save(newReview);
 	}
 	@Transactional(readOnly=true)

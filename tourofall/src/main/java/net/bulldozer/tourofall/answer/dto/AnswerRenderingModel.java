@@ -13,7 +13,7 @@ public class AnswerRenderingModel{
 	private Date createdDate;
 	private String questionTitle;
 	private String content;
-	
+
 	
 	public static Builder getBuilder(){
 		return new Builder();

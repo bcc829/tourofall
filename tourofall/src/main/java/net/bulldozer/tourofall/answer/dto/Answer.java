@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import net.bulldozer.tourofall.common.util.CheckUserUtil;
+import net.bulldozer.tourofall.common.util.CheckSameUtil;
 import net.bulldozer.tourofall.question.dto.Question;
 import net.bulldozer.tourofall.user.dto.User;
 
@@ -51,33 +51,34 @@ public class Answer {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public String getContent() {
 		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
 	}
 
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
 
 	public User getUser() {
 		return user;
 	}
 	
+	public void setQuestion(Question newQuestion) {
+		if(CheckSameUtil.sameAsFormerQuestion(question, newQuestion))
+			return ;
+		Question oldQuestion = this.question;
+		this.question = newQuestion;
+		if(oldQuestion != null){
+			oldQuestion.removeAnswer(this);
+		}
+		if(question != null){
+			question.addAnswer(this);
+		}
+	}
 
 	public void setUser(User newUser) {
-		if(CheckUserUtil.sameAsFormer(user, newUser))
+		if(CheckSameUtil.sameAsFormerUser(user, newUser))
 			return ;
 		User oldUser = this.user;
 		this.user = newUser;
@@ -92,9 +93,6 @@ public class Answer {
 		return question;
 	}
 
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
 	
 	@Override
 	public int hashCode() {
@@ -120,14 +118,6 @@ public class Answer {
 		
 		public Builder content(String content){
 			answer.content = content;
-			return this;
-		}
-		public Builder user(User user){
-			answer.user = user;
-			return this;
-		}
-		public Builder question(Question question){
-			answer.question = question;
 			return this;
 		}
 		public Answer build(){

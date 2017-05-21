@@ -96,8 +96,8 @@ public class QuestionRepositoryService implements QuestionService {
 				.title(registrationQuestionForm.getTitle())
 				.content(registrationQuestionForm.getContent())
 				.itemId(registrationQuestionForm.getItemId())
-				.user(user)
 				.build();
+		user.addQuestion(question);
 		questionRepository.save(question);
 	}
 	

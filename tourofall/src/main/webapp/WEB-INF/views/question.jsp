@@ -30,7 +30,7 @@
 		</c:forEach>
 		<tr>
 			<td>
-			<sf:form commandName="answerRegistrationForm" action="${pageContext.request.contextPath}/qna/answer/write/${answerRenderingModel.id}">
+			<sf:form commandName="answerRegistrationForm" action="${pageContext.request.contextPath}/qna/answer/write/${questionRenderingModel.id}">
 				<sf:textarea path="content" row="3" col="20"/> <input type="submit" value="등록" /><br/>
 				<sf:errors path="content" />
 			</sf:form>

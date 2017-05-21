@@ -78,17 +78,42 @@ public class User {
 	@OneToMany(mappedBy="user", cascade= CascadeType.PERSIST)
 	private Collection<UserPreference> userPreferences = new ArrayList<UserPreference>();
 	
+	public static Builder getBuilder(){
+		return new Builder();
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
 	
 	public String getFirstName() {
 		return firstName;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public boolean getGender() {
+		return gender;
+	}
+	public Date getBirth() {
+		return birth;
+	}
+	public Role getRole() {
+		return role;
 	}
 	
-	public static Builder getBuilder(){
-		return new Builder();
+	public SocialService getSignInProvider(){
+		return signInProvider;
 	}
 	
 	public Collection<Review> getReviews() {
@@ -102,7 +127,7 @@ public class User {
 		review.setUser(this);
 	}
 	public void removeReview(Review review){
-		if(reviews.contains(review))
+		if(!reviews.contains(review))
 			return ;
 		reviews.remove(review);
 		review.setUser(null);
@@ -120,7 +145,7 @@ public class User {
 		question.setUser(this);
 	}
 	public void removeQuestion(Question question){
-		if(questions.contains(question))
+		if(!questions.contains(question))
 			return ;
 		questions.remove(question);
 		question.setUser(null);
@@ -138,7 +163,7 @@ public class User {
 		evaluation.setUser(this);
 	}
 	public void removeEvaluation(Evaluation evaluation){
-		if(evaluations.contains(evaluation))
+		if(!evaluations.contains(evaluation))
 			return ;
 		evaluations.remove(evaluation);
 		evaluation.setUser(null);
@@ -156,7 +181,7 @@ public class User {
 		answer.setUser(this);
 	}
 	public void removeAnswer(Answer answer){
-		if(answers.contains(answer))
+		if(!answers.contains(answer))
 			return ;
 		answers.remove(answer);
 		answer.setUser(null);
@@ -168,42 +193,14 @@ public class User {
 	}
 	
 
-	public void addUserPreference(UserPreference userPreference){
-		if(userPreferences.contains(userPreference))
-			return ;
-		userPreferences.add(userPreference);
-		userPreference.setUser(this);
-	}
-	public void removeUserPreference(UserPreference userPreference){
-		if(userPreferences.contains(userPreference))
-			return ;
-		userPreferences.remove(userPreference);
-		userPreference.setUser(null);
-	}
-	
-	
-	public long getId() {
-		return id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public boolean getGender() {
-		return gender;
-	}
-	public Date getBirth() {
-		return birth;
-	}
-	public Role getRole() {
-		return role;
-	}
-	
-	public SocialService getSignInProvider(){
-		return signInProvider;
+	public void setUserPreferences(List<UserPreference> userPreferences){
+		this.userPreferences.clear();
+		Iterator<UserPreference> userPreferenceIter = userPreferences.iterator();
+		while(userPreferenceIter.hasNext()){
+			UserPreference userPreference = userPreferenceIter.next();
+			this.userPreferences.add(userPreference);
+			userPreference.setUser(this);
+		}
 	}
 	
 	@Override
@@ -263,14 +260,7 @@ public class User {
 			return this;
 		}
 		public Builder userPreferences(List<UserPreference> userPreferences){
-			Iterator<UserPreference> userPreferencesIter = userPreferences.iterator();
-			while(userPreferencesIter.hasNext()){
-				UserPreference userPreference = userPreferencesIter.next();
-				if(!userPreferences.contains(userPreference)){
-					userPreferences.add(userPreference);
-					userPreference.setUser(user);
-				}
-			}
+			user.setUserPreferences(userPreferences);
 			return this;
 		}
 		public User build(){
@@ -283,6 +273,9 @@ public class User {
 		return "User [id=" + id + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", password=" + password + ", gender=" + gender + ", birth=" + birth + ", role=" + role
 				+ ", signInProvider=" + signInProvider + ", reviews=" + reviews + ", questions=" + questions
-				+ ", answers=" + answers + ", evaluations=" + evaluations + "]";
+				+ ", answers=" + answers + ", evaluations=" + evaluations + ", userPreferences=" + userPreferences
+				+ "]";
 	}
+
+	
 }

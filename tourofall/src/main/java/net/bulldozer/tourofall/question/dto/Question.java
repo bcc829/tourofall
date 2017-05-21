@@ -21,7 +21,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import net.bulldozer.tourofall.answer.dto.Answer;
-import net.bulldozer.tourofall.common.util.CheckUserUtil;
+import net.bulldozer.tourofall.common.util.CheckSameUtil;
 import net.bulldozer.tourofall.user.dto.User;
 
 @Entity
@@ -56,50 +56,39 @@ public class Question {
 	public static Builder getBuilder(){
 		return new Builder();
 	}
-	public void incrementVisitor(){
-		visitor++;
-	}
+	
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
-		this.id = id;
-	}
+	
 	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	
 	public String getContent() {
 		return content;
 	}
-	public void setContent(String content) {
-		this.content = content;
-	}
+
+	
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+	
+	
 	public int getVisitor() {
 		return visitor;
 	}
-	public void setVisitor(int visitor) {
-		this.visitor = visitor;
-	}
+	
 	public int getItemId() {
 		return itemId;
 	}
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
+	
 	public User getUser() {
 		return user;
 	}
+	
 	public void setUser(User newUser) {
-		if(CheckUserUtil.sameAsFormer(user, newUser))
+		if(CheckSameUtil.sameAsFormerUser(user, newUser))
 			return ;
 		User oldUser = this.user;
 		this.user = newUser;
@@ -108,21 +97,29 @@ public class Question {
 		if(user != null)
 			user.addQuestion(this);
 	}
+	
 	public Collection<Answer> getAnswers() {
 		return new ArrayList<Answer>(answers);
 	}
+	
 	public void addAnswer(Answer answer){
 		if(answers.contains(answer))
 			return ;
 		answers.add(answer);
 		answer.setQuestion(this);
 	}
+	
 	public void removeAnswer(Answer answer){
 		if(answers.contains(answer))
 			return ;
 		answers.remove(answer);
 		answer.setQuestion(null);
 	}
+	
+	public void incrementVisitor(){
+		visitor++;
+	}
+	
 	@Override
 	public int hashCode() {
 		HashCodeBuilder builder = new HashCodeBuilder();
@@ -155,11 +152,6 @@ public class Question {
 		}
 		public Builder itemId(int itemId){
 			question.itemId = itemId;
-			return this;
-		}
-		
-		public Builder user(User user){
-			question.user = user;
 			return this;
 		}
 		public Question build(){
