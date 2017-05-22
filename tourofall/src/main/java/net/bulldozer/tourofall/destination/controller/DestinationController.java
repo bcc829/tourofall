@@ -46,14 +46,18 @@ public class DestinationController {
 		model.addAttribute("questionRenderingModels", questionService.getQuestionRenderingModelsByItemId(itemId));
 		
 	}
-	@RequestMapping("/info/basic"+resPath)
-	public String showBasicInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
-		JSONObject body = tourApiService.getBasicInfo(itemId, itemTypeId);
+	@RequestMapping("/info/basic/{itemId}")
+	public String showBasicInfo(@PathVariable int itemId, Model model) throws Exception {
+		JSONObject body = tourApiService.getBasicInfo(itemId);
+		int itemTypeId = 0;
 		if (body != null) {
 			JSONObject items = (JSONObject) body.get("items");
 			JSONObject item = (JSONObject) items.get("item");
+			long contentTypeId = (long)item.get("contenttypeid");
+			itemTypeId = (int)contentTypeId;
 			model.addAttribute("basicInfo", item);
 		}
+		
 		addAttributeToModel(itemId,itemTypeId,model);
 		
 		return "dest-basicinfo";

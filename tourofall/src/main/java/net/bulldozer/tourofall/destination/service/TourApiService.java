@@ -186,21 +186,40 @@ public class TourApiService {
 		
 		return sendAndReceiveDataFromApiServer("searchKeyword",parameter);
 	}
-	public String getItemTitle(int contentId) throws Exception{
+	public String getItemImage(int contentId) throws Exception{
 		Map<String,String> parameter = new HashMap<String,String>();
 		parameter.put("contentId", Integer.toString(contentId));
-		parameter.put("defaultYN","Y");
+		parameter.put("imageYN","Y");
 
+		String imageUrl = null;
 		
-		JSONObject items = (JSONObject)(sendAndReceiveDataFromApiServer("detailCommon",parameter).get("items"));
-		JSONObject item = (JSONObject)items.get("item");
+		JSONObject body = (JSONObject)(sendAndReceiveDataFromApiServer("detailImage",parameter));
+		if(body == null){
+			return imageUrl;
+		}
 		
-		return (String)item.get("title");
+		JSONObject items = (JSONObject)(body.get("items"));
+		
+		if((long)body.get("totalCount") == 1){
+			JSONObject item = (JSONObject)items.get("item");
+			imageUrl = (String)item.get("originimgurl");
+		}else{
+			JSONArray item = (JSONArray)items.get("item");
+			for(Object obj : item){
+				JSONObject jObj = (JSONObject)obj;
+				if(jObj.get("originimgurl") != null){
+					imageUrl = (String)jObj.get("originimgurl");
+					break;
+				}
+				
+			}
+		}
+		return imageUrl;
 	}
-	public JSONObject getBasicInfo(int contentId, int contentTypeId) throws Exception{
+
+	public JSONObject getBasicInfo(int contentId) throws Exception{
 		Map<String,String> parameter = new HashMap<String,String>();
 		parameter.put("contentId", Integer.toString(contentId));
-		parameter.put("contentTypeId", Integer.toString(contentTypeId));
 		parameter.put("defaultYN", "Y");
 		parameter.put("firstImageYN", "Y");
 		parameter.put("areaCodeYN","Y");

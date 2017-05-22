@@ -34,15 +34,15 @@ create table user_preferences(
 	constraint fk_user_preferences foreign key(user_id) references users(user_id)
 );
 
-create table best_destinations(
-	best_destination_id bigint(20) auto_increment,
+create table today_destinations(
+	today_destination_id bigint(20) auto_increment,
 	title varchar(45) not null,
 	address varchar(128) not null,
 	destination_type varchar(45) not null,
 	image_url varchar(128) not null,
 	item_id int(11) not null,
-	constraint pk_best_destinations primary key(best_destination_id),
-	constraint unique_best_destinations unique(item_id)
+	constraint pk_today_destinations primary key(today_destination_id),
+	constraint unique_today_destinations unique(item_id)
 );
 
 create table evaluations(

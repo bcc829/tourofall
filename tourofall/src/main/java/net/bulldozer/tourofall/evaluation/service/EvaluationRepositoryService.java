@@ -1,5 +1,7 @@
 package net.bulldozer.tourofall.evaluation.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +33,11 @@ public class EvaluationRepositoryService implements EvaluationService{
 		return evaluationRepository.findByUserIdAndItemId(id,itemId);
 	}
 
-	
+	@Transactional(readOnly=true)
+	@Override
+	public List<Evaluation> findByUserId(long userId){
+		return evaluationRepository.findByUserId(userId);
+	}
 	
 	
 }

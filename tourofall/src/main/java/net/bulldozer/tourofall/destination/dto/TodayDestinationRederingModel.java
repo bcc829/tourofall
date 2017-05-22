@@ -1,7 +1,8 @@
 package net.bulldozer.tourofall.destination.dto;
 
-public class BestDestinationRederingModel {
-	private String title;	
+public class TodayDestinationRederingModel {
+	private String title;
+	private int itemId;
 	private String address;
 	private String imageUrl;
 	private String destinationType;
@@ -15,39 +16,34 @@ public class BestDestinationRederingModel {
 	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	
 	public String getAddress() {
 		return address;
 	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+
 	public String getImageUrl() {
 		return imageUrl;
 	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
+
 	public String getDestinationType() {
 		return destinationType;
 	}
-	public void setDestinationType(String destinationType) {
-		this.destinationType = destinationType;
-	}
+
 	public double getMeanScore() {
 		return meanScore;
 	}
-	public void setMeanScore(double meanScore) {
-		this.meanScore = meanScore;
+
+
+	public int getItemId() {
+		return itemId;
 	}
 
+
 	public static class Builder{
-		private BestDestinationRederingModel bestDestinationRederingModel;
+		private TodayDestinationRederingModel bestDestinationRederingModel;
 		
 		public Builder(){
-			bestDestinationRederingModel = new BestDestinationRederingModel();
+			bestDestinationRederingModel = new TodayDestinationRederingModel();
 		}
 		public Builder title(String title){
 			bestDestinationRederingModel.title = title;
@@ -55,6 +51,10 @@ public class BestDestinationRederingModel {
 		}
 		public Builder address(String address){
 			bestDestinationRederingModel.address = address;
+			return this;
+		}
+		public Builder itemId(int itemId){
+			bestDestinationRederingModel.itemId = itemId;
 			return this;
 		}
 		public Builder imageUrl(String imageUrl){
@@ -69,7 +69,7 @@ public class BestDestinationRederingModel {
 			bestDestinationRederingModel.meanScore = meanScore;
 			return this;
 		}
-		public BestDestinationRederingModel build(){
+		public TodayDestinationRederingModel build(){
 			return bestDestinationRederingModel;
 		}
 	}

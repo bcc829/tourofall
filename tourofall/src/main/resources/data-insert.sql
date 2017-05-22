@@ -18,6 +18,6 @@ INSERT INTO questions(title,content,user_id,item_id) VALUES('경복궁은 어떻게 가�
 INSERT INTO answers(content,user_id,question_id) VALUES('알려줘요',1,1);
 INSERT INTO answers(content,user_id,question_id) VALUES('부톽해여.',1,1);
 
-INSERT INTO best_destinations(title,address,destination_type,image_url,item_id) VALUES('제부도','경기도 화성시 서신면 제부말길 96(서신면)','자연관광지','http://tong.visitkorea.or.kr/cms/resource/34/2482734_image2_1.jpg','125503');
-INSERT INTO best_destinations(title,address,destination_type,image_url,item_id) VALUES('북촌한옥마을','서울특별시 종로구 계동길 37(계동)','역사관광지','http://tong.visitkorea.or.kr/cms/resource/72/2363672_image2_1.jpg','126537');
-INSERT INTO best_destinations(title,address,destination_type,image_url,item_id) VALUES('휴애리자연생활공원','제주특별자치도 서귀포시 남원읍 신례동로 256(남원읍)','휴양관광지','http://tong.visitkorea.or.kr/cms/resource/02/2038802_image2_1.jpg','322836');
+INSERT INTO today_destinations(title,address,destination_type,image_url,item_id) VALUES('제부도','경기도 화성시 서신면 제부말길 96(서신면)','자연관광지','http://tong.visitkorea.or.kr/cms/resource/34/2482734_image2_1.jpg','125503');
+INSERT INTO today_destinations(title,address,destination_type,image_url,item_id) VALUES('북촌한옥마을','서울특별시 종로구 계동길 37(계동)','역사관광지','http://tong.visitkorea.or.kr/cms/resource/72/2363672_image2_1.jpg','126537');
+INSERT INTO today_destinations(title,address,destination_type,image_url,item_id) VALUES('휴애리자연생활공원','제주특별자치도 서귀포시 남원읍 신례동로 256(남원읍)','휴양관광지','http://tong.visitkorea.or.kr/cms/resource/02/2038802_image2_1.jpg','322836');

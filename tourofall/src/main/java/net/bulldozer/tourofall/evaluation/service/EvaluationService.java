@@ -1,5 +1,7 @@
 package net.bulldozer.tourofall.evaluation.service;
 
+import java.util.List;
+
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRegistration;
 import net.bulldozer.tourofall.user.dto.User;
@@ -7,4 +9,5 @@ import net.bulldozer.tourofall.user.dto.User;
 public interface EvaluationService {
 	public void registerNewEvaluation(EvaluationRegistration destinationEval, User user);
 	public Evaluation findByUserIdAndItemId(long id,int itemId);
+	public List<Evaluation> findByUserId(long userId);
 }

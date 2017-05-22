@@ -1,5 +1,7 @@
 package net.bulldozer.tourofall.user.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -8,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.bulldozer.tourofall.destination.service.TourApiService;
+import net.bulldozer.tourofall.evaluation.dto.Evaluation;
+import net.bulldozer.tourofall.evaluation.service.EvaluationService;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
-import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.service.UserService;
 import net.bulldozer.tourofall.user.util.DateList;
 
@@ -19,13 +23,34 @@ public class UsersController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private EvaluationService evaluationService;
+	
+	@Autowired
+	private TourApiService tourApiService;
+	
+	
 	private void addModelToView(long userId, Model model){
-		User user = userService.getUserByUserId(userId);
+
 		model.addAttribute("userId", userId);
-		model.addAttribute("questionCount", userService.getQuestionsSizeByUserId(user.getId()));
-		model.addAttribute("answerCount", userService.getAnswersSizeByUserId(user.getId()));
-		model.addAttribute("reviewCount", userService.getReviewsSizeByUserId(user.getId()));
-		model.addAttribute("evaluationCount", userService.getEvaluationsSizeByUserId(user.getId()));
+		
+		
+		model.addAttribute("questionCount", userService.getQuestionsSizeByUserId(userId));
+		model.addAttribute("answerCount", userService.getAnswersSizeByUserId(userId));
+		model.addAttribute("reviewCount", userService.getReviewsSizeByUserId(userId));
+		model.addAttribute("evaluationCount", userService.getEvaluationsSizeByUserId(userId));
+		
+		
+		List<Evaluation> evaluations = evaluationService.findByUserId(userId);
+		int selected = (int)(Math.random()*evaluations.size());
+		Evaluation evaluation = evaluations.get(selected);
+		String imageUrl = null;
+		try {
+			imageUrl = tourApiService.getItemImage(evaluation.getItemId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		model.addAttribute("imageUrl", imageUrl);
 	}
 	private void addDateList(Model model){
 		model.addAttribute("years", DateList.getYearList());

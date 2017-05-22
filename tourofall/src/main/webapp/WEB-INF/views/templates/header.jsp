@@ -45,8 +45,9 @@
 	 					</li>
 	 				</c:if>
 	 				<c:if test="${pageContext.request.userPrincipal.name != null}">
+	 					<sec:authentication var="user" property="principal"/>
       					<li class="hidden-sm hidden-md hidden-lg">
-							<a class="page-scroll" href="<c:url value="/users"/>">내정보</a>
+							<a class="page-scroll" href="<c:url value="/users/${user.id}"/>">내정보</a>
 						</li>
 	 				</c:if>
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->

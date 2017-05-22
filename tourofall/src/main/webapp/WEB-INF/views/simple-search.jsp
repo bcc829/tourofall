@@ -13,7 +13,7 @@
 				<form class="search-form" action="<c:url value="/search/simple"/>" method="get">
 					<label class="search-label search-heading copy-h5" >여행지를 입력하세요</label>
 					<input class="search-query" name= "s" value="${query}"/>
-					<button class="search-submit icon-search"><i class="fa fa-search" style="font-size:3.6rem"></i></button>
+					<button class="search-submit icon-search"><i class="fa fa-search search-submit-icon"></i></button>
 				</form>
 				<h2 class="search-heading copy-h5">
 					총 결과(
