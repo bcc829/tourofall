@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -32,6 +33,8 @@ public class RootConfig {
 	public RestTemplate restTemplate(){
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(0,new StringHttpMessageConverter(Charset.forName("UTF-8")));
+		restTemplate.getMessageConverters().add(1,new MappingJackson2HttpMessageConverter());
+		
 		return restTemplate;
 	}
 	

@@ -35,7 +35,7 @@
 						<c:when test="${not empty items}">
 							<c:forEach var="item" items="${items}">	
 								<div class="card search-result copy-body">
-									<a class="link-wrapper" href="<c:url value="/dest/info/basic/${item.contenttypeid}/${item.contentid}"/>">
+									<a class="link-wrapper" href="<c:url value="/dest/info/basic/${item.contentid}"/>">
 										<div class="search-result-wrapper">
 											<div class="media-img search-result-figure">
 												<img class= "search-result-figure-image is-wider" alt="" src="${item.firstimage}">
@@ -72,7 +72,7 @@
 						</c:when>
 						<c:when test="${not empty item}">
 							<div class="card search-result copy-body">
-								<a class="link-wrapper" href="<c:url value="/dest/info/basic/${item.contenttypeid}/${item.contentid}"/>">
+								<a class="link-wrapper" href="<c:url value="/dest/info/basic/${item.contentid}"/>">
 									<div class="search-result-wrapper">
 										<div class="media-img search-result-figure">
 											<img class= "search-result-figure-image is-wider" alt="" src="${item.firstimage}">

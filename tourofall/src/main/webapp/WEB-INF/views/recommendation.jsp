@@ -5,30 +5,35 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/evaluation/evaluation.css"/>">
 <script type="text/javascript" src="<c:url value="/resources/js/header/small-header.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/evaluation/eval-reco-common.js"/>"></script>
 <div>
+	
+	<div class="js-result-section result-section result-section-hide">
+		<div class="result-section-text">
+		</div>
+	</div>
+	
 	
 	<div class="empty-header">
 	</div>
-	<!--  <h1>${result}</h1> -->
 	
 	<div class="container">
 		<div class="row">
-			<sf:form  action = "${pageContext.request.contextPath}/eval/evalmore" method = "post" commandName="recommendationRenderingModelForm">
-				<c:forEach var="recommendationRenderingModel" items="${recommendationRenderingModelForm.recommendationRenderingModels}" varStatus="status">
-					<div class="col-lg-3 col-md-4 col-sm-6">
-						<sf:hidden path="recommendationRenderingModels[${status.index}].itemId"/>
+			<c:forEach var = "recommendationRenderingModel" items="${recommendationRenderingModelForm.recommendationRenderingModels}" varStatus="status">
+				<div class="col-md-4 col-sm-6">
+					<form name = "request-eval" action="<c:url value="/eval/evalmore"/>">
+						<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
+						<input type="hidden" name="itemId" value="${recommendationRenderingModel.itemId}">
 						<div class="eval-unit">
 							<article class="eval-unit-card eval-unit-card-fixed eval-unit-card-has-img eval-unit-card-article">
 								<div class="eval-unit-card-mask">
 									<a href="#">
 										<figure class="eval-unit-card-figure">
-											<img alt="이미지 없음" src="${recommendationRenderingModel.imageUrl}" class="img-rounded" >
-											<sf:hidden path="recommendationRenderingModels[${status.index}].imageUrl"/>
+											<img alt="이미지 없음" src="${recommendationRenderingModel.imageUrl}" class="img-rounded"  onerror="this.style.display='none'">
 											<div class="eval-unit-card-score" style="color:red">
-												예상 점수   ${recommendationRenderingModel.recommendScore}
+												예상 점수   ${score[status.index]}
 											</div>
 										</figure>
-										
 									</a>
 									<div class="eval-unit-card-content">
 										<div class="eval-unit-card-content-title">
@@ -38,8 +43,8 @@
 											평점
 										</div>
 										<div class="rating">
-											<input type="radio" id="star5-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="5" /><label class = "full" for="star5-${status.index}" title="Awesome - 5 stars"></label>
-									    	<input type="radio" id="star4half-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="4.5" /><label class="half" for="star4half-${status.index}" title="Pretty good - 4.5 stars"></label>
+											<input type="radio" id="star5-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="5"/><label class = "full" for="star5-${status.index}" title="Awesome - 5 stars"></label>
+								    		<input type="radio" id="star4half-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="4.5" /><label class="half" for="star4half-${status.index}" title="Pretty good - 4.5 stars"></label>
     										<input type="radio" id="star4-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="4" /><label class = "full" for="star4-${status.index}" title="Pretty good - 4 stars"></label>
     										<input type="radio" id="star3half-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="3.5" /><label class="half" for="star3half-${status.index}" title="Meh - 3.5 stars"></label>
     										<input type="radio" id="star3-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="3" /><label class = "full" for="star3-${status.index}" title="Meh - 3 stars"></label>
@@ -49,17 +54,13 @@
     										<input type="radio" id="star1-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="1" /><label class = "full" for="star1-${status.index}" title="Sucks big time - 1 star"></label>
     										<input type="radio" id="starhalf-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="0.5" /><label class="half" for="starhalf-${status.index}" title="Sucks big time - 0.5 stars"></label>
     									</div>
-									</div>
-								</div>
-							</article>
-						</div>						
-					</div>
-				</c:forEach>
-				<div class="col-sm-12 center-container">
-					<input type="submit" value="제출하기" class="btn btn-primary">
-					<a href="<c:url value="/"/>" class="btn btn-default">그만하기</a>
+    								</div>
+    							</div>
+    						</article>
+    					</div>
+    				</form>
 				</div>
-			</sf:form>
+			</c:forEach>
 		</div>
 	</div>
 

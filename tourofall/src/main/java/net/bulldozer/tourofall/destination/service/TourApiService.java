@@ -22,8 +22,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import net.bulldozer.tourofall.destination.util.TourJSONUtilities;
 import net.bulldozer.tourofall.destination.util.TourUriUtilities;
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
-import net.bulldozer.tourofall.evaluation.dto.EvaluationRegistration;
-import net.bulldozer.tourofall.evaluation.dto.EvaluationRegistrationsForm;
+import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModel;
+import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModelsForm;
 import net.bulldozer.tourofall.evaluation.repository.EvaluationRepository;
 import net.bulldozer.tourofall.recommendation.dto.RecommendationRenderingModel;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
@@ -42,7 +42,7 @@ public class TourApiService {
 	private UserRepository userRepository;
 	
 	
-	public EvaluationRegistration getEvaluationRegistrationsInfo(String itemId) throws Exception{
+	public EvaluationRenderingModel getEvaluationRegistrationsInfo(String itemId) throws Exception{
 		Map<String,String> parameter = new HashMap<String,String>();
 		parameter.put("contentId", itemId);
 		parameter.put("defaultYN", "Y");
@@ -51,7 +51,7 @@ public class TourApiService {
 		JSONObject item = (JSONObject)items.get("item");
 		
 		
-		EvaluationRegistration dEval = new EvaluationRegistration(Integer.parseInt(itemId), (String)item.get("firstimage"), (String)item.get("title"), 0);
+		EvaluationRenderingModel dEval = new EvaluationRenderingModel(Integer.parseInt(itemId), (String)item.get("firstimage"), (String)item.get("title"), 0);
 		return dEval;
 	}
 	public RecommendationRenderingModel getRecommendationRenderingModel(String itemId) throws Exception{
@@ -83,7 +83,7 @@ public class TourApiService {
 	}
 	
 	
-	private boolean addEvaluationRegistrationToList(List<EvaluationRegistration> evalList,Object obj){
+	private boolean addEvaluationRegistrationToList(List<EvaluationRenderingModel> evalList,Object obj){
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		JSONObject item = (JSONObject) obj;
 		long itemId = (long)item.get("contentid");
@@ -92,7 +92,7 @@ public class TourApiService {
 		Evaluation evaluation = evaluationRepository.findByUserIdAndItemId(userId, (int)itemId);
 		
 		if(evaluation == null){
-			EvaluationRegistration evaluationRegistration = new EvaluationRegistration((int)itemId, (String)item.get("firstimage"), (String)item.get("title"), 0);
+			EvaluationRenderingModel evaluationRegistration = new EvaluationRenderingModel((int)itemId, (String)item.get("firstimage"), (String)item.get("title"), 0);
 			evalList.add(evaluationRegistration);
 			return true;
 		}
@@ -101,7 +101,7 @@ public class TourApiService {
 	
 	
 	@Transactional(readOnly=true)
-	private int addEvaluationsToList(JSONObject result, List<EvaluationRegistration> evalList,int requestCount){
+	private int addEvaluationsToList(JSONObject result, List<EvaluationRenderingModel> evalList,int requestCount){
 		int count = 0;
 		JSONObject items = (JSONObject)result.get("items");
 		
@@ -125,8 +125,36 @@ public class TourApiService {
 	}
 
 
-	public EvaluationRegistrationsForm getEvaluationRegistrationsForm(String itemCat1, String itemCat2, int pageNo) throws Exception {
-		List<EvaluationRegistration> evalList = new ArrayList<EvaluationRegistration>();
+	public List<EvaluationRenderingModel> getEvaluationRenderingModels(String itemCat1, String itemCat2, int pageNo) throws Exception {
+		List<EvaluationRenderingModel> evalList = new ArrayList<EvaluationRenderingModel>();
+		Map<String,String> parameter = new HashMap<String,String>();
+		
+		int requestCount = 12;
+		while(true){
+			System.out.println(requestCount);
+			parameter.put("cat1", itemCat1);
+			parameter.put("cat2", itemCat2);
+			parameter.put("listYN", "Y");
+			parameter.put("arrange", "B");
+			parameter.put("numOfRows"  , "12");
+			parameter.put("pageNo", Integer.toString(pageNo));
+		
+			JSONObject result = sendAndReceiveDataFromApiServer("areaBasedList",parameter);
+			
+			
+			requestCount -= addEvaluationsToList(result,evalList,requestCount);
+			pageNo++;
+			parameter.clear();
+			
+			if(requestCount == 0){
+				break;
+			}
+		}	
+		return evalList;
+	}
+	
+	public EvaluationRenderingModelsForm getEvaluationRenderingModelsForm(String itemCat1, String itemCat2, int pageNo) throws Exception {
+		List<EvaluationRenderingModel> evalList = new ArrayList<EvaluationRenderingModel>();
 		Map<String,String> parameter = new HashMap<String,String>();
 		long totalPage;
 		
@@ -159,7 +187,7 @@ public class TourApiService {
 				break;
 			}
 		}	
-		return new EvaluationRegistrationsForm(evalList,totalPage);
+		return new EvaluationRenderingModelsForm(evalList,totalPage);
 	}
 	
 	public JSONObject getSimpleSearchResult(String query, String pageNum) throws Exception {

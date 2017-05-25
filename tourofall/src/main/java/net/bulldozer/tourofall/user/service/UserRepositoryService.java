@@ -188,7 +188,6 @@ public class UserRepositoryService implements UserService{
 		
 		for(Evaluation evaluation : evaluations){
 			EvaluationRenderingModel evaluationRenderingModel = new EvaluationRenderingModel();
-			evaluationRenderingModel.setId(evaluation.getId());
 			evaluationRenderingModel.setItemId(evaluation.getItemId());
 			evaluationRenderingModel.setScore(evaluation.getScore());
 			evaluationRenderingModels.add(evaluationRenderingModel);

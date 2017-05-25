@@ -48,7 +48,7 @@
 }
 
 .segment-heading:after {
-    border-bottom: .2rem solid #0096ff;
+    border-bottom: .2rem solid #ffb400;
     bottom: 0;
     content: "";
     display: block;

@@ -249,9 +249,21 @@
 		font-size: 1.3rem;
 	}
 }
+.navbar-custom{
+	background-color: #0096ff;
+}
+
+
+
 @media (min-width: 768px){
 	.search-result-title{
 		font-size: 1.5rem;
+	}
+	.navbar-custom{
+		background: transparent;
+	}
+	.top-nav-collapse {
+	background-color: #0096ff;
 	}
 }
 @media (max-width: 768px){
@@ -260,6 +272,7 @@
 	}
 	
 }
+
 @media only screen and (min-width: 980px){
 	.row-inner {
     	width: 1000px;

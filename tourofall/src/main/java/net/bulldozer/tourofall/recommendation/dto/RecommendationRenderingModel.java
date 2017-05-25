@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.bulldozer.tourofall.evaluation.dto.EvaluationRegistration;
+import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModel;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecommendationRenderingModel extends EvaluationRegistration{
+public class RecommendationRenderingModel extends EvaluationRenderingModel{
 	private double recommendScore;
 	
 	

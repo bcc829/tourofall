@@ -140,6 +140,18 @@
 }
 
 
+.navbar-custom{
+	background-color: #ffb4ff;
+}
+@media(min-width:768px) {
+	.navbar-custom{
+		background: transparent;
+	}
+	.top-nav-collapse {
+	background-color: #ffb4ff;
+	}
+}
+
 @media(min-width:30em){
     .masthead-text-wrapper{
         margin-left: 3rem;

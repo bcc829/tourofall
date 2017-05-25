@@ -14,11 +14,11 @@
                 <a class="navbar-brand " href="<c:url value="/"/>">
                     <i class="fa fa-play-circle"></i>
                 </a>
-                <ul class="navbar-center">
-            		<li class="hidden-sm hidden-md hidden-lg">
-	 					<a class="page-scroll" href="<c:url value="/"/>">TourOfAll</a>
-	 			</li>
-            </ul>
+                <div class="mobile-center">
+                	<div class="hidden-sm hidden-md hidden-lg">
+                		<a class="page-scroll" href="<c:url value="/"/>">TourOfAll</a>
+                	</div>
+                </div>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
 			
