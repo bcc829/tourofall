@@ -13,4 +13,5 @@
 	<definition name="dest-imageinfo" extends="base">
 		<put-attribute name="body" value="imageinfo"/>
 	</definition>
+	
 </tiles-definitions>

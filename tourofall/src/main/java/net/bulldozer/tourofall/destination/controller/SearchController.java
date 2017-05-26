@@ -22,7 +22,7 @@ public class SearchController {
 	@Autowired
 	private TourApiService tourApiService;
 	
-	public void addPageContentToModel(JSONObject body, Model model){
+	private void addPageContentToModel(JSONObject body, Model model){
 		JSONObject items = (JSONObject) body.get("items");
 		
 		long numOfRows = (Long)body.get("numOfRows");
@@ -70,7 +70,7 @@ public class SearchController {
 			model.addAttribute("item", item);
 		}
 	}
-	@RequestMapping(value="/simple", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String simpleSearch(@RequestParam(value = "s", required = false) String query, @RequestParam(value="p",defaultValue="1") String pageNum, Model model) throws Exception {
 		if (query != null) {
 			JSONObject body = tourApiService.getSimpleSearchResult(query,pageNum);
@@ -79,23 +79,6 @@ public class SearchController {
 				addPageContentToModel(body,model);
 			}
 		}
-		return "simple_search";
-	}
-	@RequestMapping(value="/detail",method=RequestMethod.GET)
-	public String detailSearch(@RequestParam(value="s",defaultValue="") String query, @RequestParam(value="p",defaultValue="1") String pageNum, @RequestParam(value="ta", defaultValue="") String ta, @RequestParam(value="sc", defaultValue="") String sc, @RequestParam(value="a", defaultValue="") String a,Model model) throws Exception{
-		model.addAttribute("tourTypes", DetailInfoUtil.getTourType());
-		model.addAttribute("services", DetailInfoUtil.getServiceCategory());
-		model.addAttribute("areas", DetailInfoUtil.getProvince());
-		
-		if(!(query.equals("") && ta.equals("") && sc.equals("") && a.equals(""))){
-			System.out.println("detail search started : 타입 = " + ta +", 분류 = " + sc + ", 지역선택 = " + a);
-			JSONObject body = tourApiService.getDetailSearchResult(query, pageNum, ta, sc, a);
-			if (body != null) {
-				System.out.println("search result");
-				model.addAttribute("query", query);
-				addPageContentToModel(body,model);
-			}
-		}
-		return "detail_search";
+		return "search";
 	}
 }

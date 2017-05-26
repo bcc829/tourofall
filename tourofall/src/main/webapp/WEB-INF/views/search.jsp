@@ -10,7 +10,7 @@
 	<div class="row-content">
 		<div class="row-inner">
 			<div class="search-results">
-				<form class="search-form" action="<c:url value="/search/simple"/>" method="get">
+				<form class="search-form" action="<c:url value="/search"/>" method="get">
 					<label class="search-label search-heading copy-h5" >여행지를 입력하세요</label>
 					<input class="search-query" name= "s" value="${query}"/>
 					<button class="search-submit icon-search"><i class="fa fa-search search-submit-icon"></i></button>
@@ -35,7 +35,7 @@
 						<c:when test="${not empty items}">
 							<c:forEach var="item" items="${items}">	
 								<div class="card search-result copy-body">
-									<a class="link-wrapper" href="<c:url value="/dest/info/basic/${item.contentid}"/>">
+									<a class="link-wrapper" href="<c:url value="/dest/info/${item.contentid}"/>">
 										<div class="search-result-wrapper">
 											<div class="media-img search-result-figure">
 												<img class= "search-result-figure-image is-wider" alt="" src="${item.firstimage}">
@@ -52,27 +52,27 @@
 							<div class="text-center">
 							<ul class="pagination pagination-lg">
 								<c:if test="${pageNo-5 >= 1}">
-									<li><a href="<c:url value="/search/simple?s=${query}&p=${pageNo-5}"/>">&lt;&lt;</a></li>
+									<li><a href="<c:url value="/search?s=${query}&p=${pageNo-5}"/>">&lt;&lt;</a></li>
 								</c:if>
 								<c:if test="${pageNo-1 >= 1}">
-									<li><a href="<c:url value="/search/simple?s=${query}&p=${pageNo-1}"/>">&lt;</a></li>
+									<li><a href="<c:url value="/search?s=${query}&p=${pageNo-1}"/>">&lt;</a></li>
 								</c:if>
 								<c:forEach var="rowNum" items="${rowNumList}">
-									<li><a href="<c:url value="/search/simple?s=${query}&p=${rowNum}"/>">${rowNum}</a></li>
+									<li><a href="<c:url value="/search?s=${query}&p=${rowNum}"/>">${rowNum}</a></li>
 								</c:forEach>
   								
   								<c:if test="${pageNo + 1 <= totalPage}">
-									<li><a href="<c:url value="/search/simple?s=${query}&p=${pageNo+1}"/>">&gt;</a></li>
+									<li><a href="<c:url value="/search?s=${query}&p=${pageNo+1}"/>">&gt;</a></li>
 								</c:if>
 								<c:if test="${pageNo + 5 <= totalPage}">
-									<li><a href="<c:url value="/search/simple?s=${query}&p=${pageNo+5}"/>">&gt;&gt;</a></li>	
+									<li><a href="<c:url value="/search?s=${query}&p=${pageNo+5}"/>">&gt;&gt;</a></li>	
 								</c:if>
 							</ul>
 							</div>
 						</c:when>
 						<c:when test="${not empty item}">
 							<div class="card search-result copy-body">
-								<a class="link-wrapper" href="<c:url value="/dest/info/basic/${item.contentid}"/>">
+								<a class="link-wrapper" href="<c:url value="/dest/info/${item.contentid}"/>">
 									<div class="search-result-wrapper">
 										<div class="media-img search-result-figure">
 											<img class= "search-result-figure-image is-wider" alt="" src="${item.firstimage}">

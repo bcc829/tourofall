@@ -16,12 +16,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
-<!-- Plugin JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <title><tiles:insertAttribute name="title" /></title>
 </head>
-<body style="background:#F0F8FF;">
+<body>
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
@@ -31,6 +29,5 @@
 	<div>
 		<tiles:insertAttribute name="footer" />
 	</div>
-    
 </body>
 </html>

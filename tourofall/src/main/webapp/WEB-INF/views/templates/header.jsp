@@ -84,7 +84,7 @@
                 </div>
                 
              	<div class="navbar-center">
-             		<form class="navbar-form" action="<c:url value="/search/simple"/>" method="get">
+             		<form class="navbar-form" action="<c:url value="/search"/>" method="get">
       					<div class="input-group">
         					<input type="text" class="form-control" placeholder="Search" name="s" value="${query}">
         					<div class="input-group-btn">

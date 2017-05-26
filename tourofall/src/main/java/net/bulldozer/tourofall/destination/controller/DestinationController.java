@@ -46,6 +46,61 @@ public class DestinationController {
 		model.addAttribute("questionRenderingModels", questionService.getQuestionRenderingModelsByItemId(itemId));
 		
 	}
+	
+	@RequestMapping("/info/{itemId}")
+	public String showDestinationInfo(@PathVariable int itemId, Model model) throws Exception{
+		JSONObject body1 = tourApiService.getBasicInfo(itemId);
+		int itemTypeId = 0;
+		if (body1 != null) {
+			JSONObject items = (JSONObject) body1.get("items");
+			JSONObject item = (JSONObject) items.get("item");
+			long contentTypeId = (long)item.get("contenttypeid");
+			itemTypeId = (int)contentTypeId;
+			model.addAttribute("basicInfo", item);
+		}
+		
+		JSONObject body2 = tourApiService.getIntroInfo(itemId, itemTypeId);
+		if (body2 != null) {
+			JSONObject items = (JSONObject) body2.get("items");
+			JSONObject item = (JSONObject) items.get("item");
+			model.addAttribute("introInfo", item);
+		}
+		
+		JSONObject body3 = tourApiService.getDetailInfo(itemId, itemTypeId);
+		if (body3 != null) {
+			JSONObject items = (JSONObject) body3.get("items");
+
+			if (((Long) body3.get("totalCount")) != 1) {
+				JSONArray item = (JSONArray) items.get("item");
+				model.addAttribute("detailInfoes", item);
+				System.out.println("detailInfoes selected");
+			} else {
+				JSONObject item = (JSONObject) items.get("item");
+				model.addAttribute("detailInfo", item);
+				System.out.println("detailInfo selected");
+			}
+		}
+		
+		JSONObject body4 = tourApiService.getImageInfo(itemId, itemTypeId);
+		if (body4 != null) {
+			JSONObject items = (JSONObject) body4.get("items");
+
+			if (((Long) body4.get("totalCount")) != 1) {
+				JSONArray item = (JSONArray) items.get("item");
+				model.addAttribute("imageInfoes", item);
+				System.out.println("imageInfoes selected");
+			} else {
+				JSONObject item = (JSONObject) items.get("item");
+				model.addAttribute("imageInfo", item);
+				System.out.println("imageInfo selected");
+			}
+		}
+		
+		
+		
+		return "dest-info";
+	}
+	
 	@RequestMapping("/info/basic/{itemId}")
 	public String showBasicInfo(@PathVariable int itemId, Model model) throws Exception {
 		JSONObject body = tourApiService.getBasicInfo(itemId);
@@ -57,103 +112,8 @@ public class DestinationController {
 			itemTypeId = (int)contentTypeId;
 			model.addAttribute("basicInfo", item);
 		}
-		
 		addAttributeToModel(itemId,itemTypeId,model);
 		
 		return "dest-basicinfo";
-	}
-
-	@RequestMapping("/info/intro"+resPath)
-	public String showIntroInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
-		JSONObject body = tourApiService.getIntroInfo(itemId, itemTypeId);
-		if (body != null) {
-			JSONObject items = (JSONObject) body.get("items");
-			JSONObject item = (JSONObject) items.get("item");
-			model.addAttribute("introInfo", item);
-		}
-		addAttributeToModel(itemId,itemTypeId,model);
-		String type = "";
-
-		switch (itemTypeId) {
-		case 12: // 관광지
-			type = "tourist_attraction";
-			break;
-		case 14: // 문화시설
-			type = "cultural_facilities";
-			break;
-		case 15: // 이벤트
-			type = "event";
-			break;
-		case 25: // 여행코스
-			type = "tour_course";
-			break;
-		case 28: // 레포츠
-			type = "leports";
-			break;
-		case 32: // 숙박
-			type = "lodge";
-			break;
-		case 38: // 쇼핑
-			type = "shopping";
-			break;
-		case 39: // 음식점
-			type = "food";
-			break;
-		}
-		return "dest-introinfo-" + type;
-	}
-
-	@RequestMapping("/info/detail"+resPath)
-	public String showDetailInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
-		JSONObject body = tourApiService.getDetailInfo(itemId, itemTypeId);
-		if (body != null) {
-			JSONObject items = (JSONObject) body.get("items");
-
-			if (((Long) body.get("totalCount")) != 1) {
-				JSONArray item = (JSONArray) items.get("item");
-				model.addAttribute("detailInfoes", item);
-				System.out.println("detailInfoes selected");
-			} else {
-				JSONObject item = (JSONObject) items.get("item");
-				model.addAttribute("detailInfo", item);
-				System.out.println("detailInfo selected");
-			}
-		}
-		addAttributeToModel(itemId,itemTypeId,model);
-		String type = "";
-
-		switch (itemTypeId) {
-		case 25: // 여행코스
-			type = "tour_course";
-			break;
-		case 32: // 숙박
-			type = "lodge";
-			break;
-		default:
-			type="common";
-			break;
-		}
-
-		return "dest-detailinfo-"+type;
-	}
-
-	@RequestMapping("/info/image"+resPath)
-	public String showImageInfo(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) throws Exception {
-		JSONObject body = tourApiService.getImageInfo(itemId, itemTypeId);
-		if (body != null) {
-			JSONObject items = (JSONObject) body.get("items");
-
-			if (((Long) body.get("totalCount")) != 1) {
-				JSONArray item = (JSONArray) items.get("item");
-				model.addAttribute("imageInfoes", item);
-				System.out.println("imageInfoes selected");
-			} else {
-				JSONObject item = (JSONObject) items.get("item");
-				model.addAttribute("imageInfo", item);
-				System.out.println("imageInfo selected");
-			}
-		}
-		addAttributeToModel(itemId,itemTypeId,model);
-		return "dest-imageinfo";
 	}
 }

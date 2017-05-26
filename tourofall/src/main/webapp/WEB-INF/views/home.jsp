@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/common/page-structure.css"/>">
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/header/slide-intro.css"/>">
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/home/home.css"/>">
 <script type="text/javascript" src="<c:url value="/resources/js/header/big-header.js"/>"></script>
@@ -24,7 +25,7 @@
 									오늘의 ${todayDestinationRenderingModel.destinationType}
 								</div>
 								<div class="masthead-subtitle">
-									<a href="<c:url value="/dest/info/basic/${todayDestinationRenderingModel.itemId}"/>" >${todayDestinationRenderingModel.title}</a>
+									<a href="<c:url value="/dest/info/${todayDestinationRenderingModel.itemId}"/>" >${todayDestinationRenderingModel.title}</a>
 								</div>
 								<div class="dest-content">
 									주소 : ${todayDestinationRenderingModel.address}<br/>
@@ -46,7 +47,7 @@
 							<ul class="rank-list" style="margin-top: 0px;transform: translate3d(0px, 0px, 0px);">
 								<c:forEach var="bestDestinationRenderingModel" items="${bestDestinationRenderingModels}" varStatus="status">
 									<li class="rank-item">
-										<a href="<c:url value="/dest/info/basic/${bestDestinationRenderingModel.itemId}"/>" class="rank-item-imagecard">
+										<a href="<c:url value="/dest/info/${bestDestinationRenderingModel.itemId}"/>" class="rank-item-imagecard">
 											<div class="rank-item-imagecard-image" style="background-image: url('${bestDestinationRenderingModel.imageUrl}');">
 												<div class="rank-item-imagecard-content">
 													<div class="rank-item-imagecard-marker">${status.index + 1}</div>
