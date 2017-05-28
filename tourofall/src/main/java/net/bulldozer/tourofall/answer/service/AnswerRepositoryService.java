@@ -26,5 +26,4 @@ public class AnswerRepositoryService implements AnswerService {
 		question.addAnswer(answer);
 		answerRepository.save(answer);
 	}
-
 }

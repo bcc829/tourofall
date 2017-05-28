@@ -51,7 +51,6 @@ public class QnAController {
 	public String showQuestionForm(@PathVariable int itemId, @PathVariable int itemTypeId, Model model) {
 		QuestionRegistrationForm questionRegistrationForm = new QuestionRegistrationForm();
 		questionRegistrationForm.setItemId(itemId);
-		questionRegistrationForm.setItemTypeId(itemTypeId);
 
 		if (!model.containsAttribute("questionRegistrationForm"))
 			model.addAttribute("questionRegistrationForm", questionRegistrationForm);
@@ -64,15 +63,16 @@ public class QnAController {
 
 	@RequestMapping(value = "/question/write", method = RequestMethod.POST)
 	public String processRegisterQuestion(@Valid QuestionRegistrationForm questionRegistrationForm, BindingResult result, RedirectAttributes model) {
+		System.out.println("Entered");
 		if(result.hasErrors()){
 			model.addFlashAttribute("questionRegistrationForm", questionRegistrationForm);
 			model.addFlashAttribute("org.springframework.validation.BindingResult.questionRegistrationForm", result);
-			return "redirect:/qna/question/write/" + questionRegistrationForm.getItemTypeId() +"/"+questionRegistrationForm.getItemId();
+			return "redirect:/qna/question/write/"+questionRegistrationForm.getItemId();
 		}
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.getUserByUserId(userAuthenticationDetails.getId());
 		questionService.registerNewQuestion(questionRegistrationForm, user);
-		return "redirect:/dest/info/basic/" + questionRegistrationForm.getItemTypeId() + "/" + questionRegistrationForm.getItemId();
+		return "redirect:/dest/info/basic/" + questionRegistrationForm.getItemId();
 	}
 	
 	@RequestMapping(value = "/answer/write/{questionId}", method = RequestMethod.POST)

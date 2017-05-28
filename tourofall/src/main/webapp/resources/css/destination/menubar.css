@@ -14,11 +14,10 @@
 
 .menu-container{
 	background: rgb(255,255,255);
-	border-bottom: 1px solid #e6ecf0;
 }
 
 .menubar{
-
+	
 	max-width: 129rem;
     margin-left: auto;
     margin-right: auto;
@@ -33,6 +32,7 @@
 }
 
 .menu-item{
+	text-decoration: none;
 	-moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -68,7 +68,7 @@ div.menubar a.selected{
     position: fixed;
     right: 0;
     top:5.1rem;
-    z-index: 20;
+    z-index: 105;
 }
 .menu-container-fixed .menu-item{
 	height:40px;

@@ -71,7 +71,7 @@ $(window).scroll(function() {
 		parameter.cat1 = $("#scroll-form").find("input[name=request-cat1]").val();
 		parameter.cat2 = $("#scroll-form").find("input[name=request-cat2]").val();
 		
-		pData = $.param(parameter);
+		var pData = $.param(parameter);
 		
 		var csrf_token_name = $('input[type="hidden"]').attr('name');
 		var csrf_token_value = $('input[type="hidden"]').attr('value');
@@ -274,7 +274,7 @@ $(window).scroll(function() {
 				});
 			},
 			error:function(xhr){
-				alert("FAIL");
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
 			}
 		});
 		

@@ -14,7 +14,6 @@ public class QuestionRegistrationForm {
 	private String content;
 
 	private int itemId;	
-	private int itemTypeId;
 	
 	
 	
@@ -23,12 +22,6 @@ public class QuestionRegistrationForm {
 	}
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
-	}
-	public int getItemTypeId() {
-		return itemTypeId;
-	}
-	public void setItemTypeId(int itemTypeId) {
-		this.itemTypeId = itemTypeId;
 	}
 	public String getTitle() {
 		return title;

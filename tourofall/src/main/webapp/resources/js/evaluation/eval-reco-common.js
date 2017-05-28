@@ -45,5 +45,3 @@ function sendEvaluation(){
 	});
 }
 $(document).ready(sendEvaluation);
-
-

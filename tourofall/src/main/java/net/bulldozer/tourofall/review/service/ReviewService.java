@@ -1,15 +1,12 @@
 package net.bulldozer.tourofall.review.service;
 
-import java.util.List;
-
-import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.dto.ReviewRegistrationForm;
-import net.bulldozer.tourofall.review.dto.ReviewRenderingModel;
-import net.bulldozer.tourofall.user.dto.User;
+import net.bulldozer.tourofall.review.dto.ReviewRenderingModelsSet;
 
 public interface ReviewService {
-	public List<ReviewRenderingModel> getReviewRenderingModelsByItemId(int itemId);
 	public void registerNewReview(ReviewRegistrationForm registrationReviewForm);
 	public Review findByUserIdAndItemId(long id,int itemId);
+	public int getReviewCountByItemId(int itemId);
+	public ReviewRenderingModelsSet getReviewRenderingModelsSet(int itemId, int index);
 }

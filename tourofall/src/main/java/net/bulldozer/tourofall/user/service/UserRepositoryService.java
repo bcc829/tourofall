@@ -64,6 +64,8 @@ public class UserRepositoryService implements UserService{
 				.signInProvider(registrationUserForm.getSignInProvider())
 				.userPreferences(userPreferences)
 				.build();
+		
+		System.out.println(newUser);
 		// user의 role은 따로 건네주지 않음 : 기본적으로 ROLE_USER 권한을 부여받음
 		return userRepository.save(newUser);
 	}

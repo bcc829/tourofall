@@ -5,17 +5,21 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.bulldozer.tourofall.common.dto.Response;
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.service.EvaluationService;
 import net.bulldozer.tourofall.review.dto.ReviewRegistrationForm;
@@ -40,7 +44,6 @@ public class ReviewController {
 	public String showReviewForm(@PathVariable int itemId,@PathVariable int itemTypeId, Model model) {
 		ReviewRegistrationForm reviewRegistrationForm = new ReviewRegistrationForm(); 
 		reviewRegistrationForm.setItemId(itemId);
-		reviewRegistrationForm.setItemTypeId(itemTypeId);
 		
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
@@ -60,15 +63,14 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String processRegisterReview(@Valid ReviewRegistrationForm reviewRegistrationForm, BindingResult result, RedirectAttributes model) throws Exception {
+	public @ResponseBody ResponseEntity<?> processRegisterReview(@RequestBody ReviewRegistrationForm reviewRegistrationForm, BindingResult result, RedirectAttributes model) throws Exception {
+		System.out.println("Entered processRegisterReview");
 		if (result.hasErrors()) {
-			model.addFlashAttribute("reviewRegistrationForm", reviewRegistrationForm);
-			model.addFlashAttribute("org.springframework.validation.BindingResult.reviewRegistrationForm", result);
-			return "redirect:/review/write/" + reviewRegistrationForm.getItemTypeId() +"/"+reviewRegistrationForm.getItemId();
+			
 		}
 		
-		reviewService.registerNewReview(reviewRegistrationForm);
-		return "redirect:/dest/info/basic/" + reviewRegistrationForm.getItemTypeId() +"/"+reviewRegistrationForm.getItemId();
+
+		return new ResponseEntity<Response>(new Response(true,"asdfas","asdfasdf"),HttpStatus.OK);
 	}
 	
 	@ResponseStatus(value=HttpStatus.CONFLICT,reason="이미 있는 리뷰 내용입니다. ")

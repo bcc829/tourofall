@@ -18,8 +18,6 @@ public class ReviewRegistrationForm {
 	private double score;
 	
 	private int itemId;
-	
-	private int itemTypeId;
 
 	public ReviewRegistrationForm() {
 	}
@@ -49,11 +47,5 @@ public class ReviewRegistrationForm {
 	}
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
-	}
-	public int getItemTypeId() {
-		return itemTypeId;
-	}
-	public void setItemTypeId(int itemTypeId) {
-		this.itemTypeId = itemTypeId;
 	}
 }

@@ -6,6 +6,7 @@ import net.bulldozer.tourofall.answer.dto.AnswerRenderingModel;
 import net.bulldozer.tourofall.question.dto.Question;
 import net.bulldozer.tourofall.question.dto.QuestionRegistrationForm;
 import net.bulldozer.tourofall.question.dto.QuestionRenderingModel;
+import net.bulldozer.tourofall.question.dto.QuestionRenderingModelsSet;
 import net.bulldozer.tourofall.user.dto.User;
 
 public interface QuestionService {
@@ -14,6 +15,7 @@ public interface QuestionService {
 	public QuestionRenderingModel getQuestionRenderingModelById(long questionId);
 	public void registerNewQuestion(QuestionRegistrationForm registrationQuestionForm, User user);
 	public void incrementVisitor(long questionId);
-	
 	public Question getQuestionById(long questionId);
+	public int getQuestionCountByItemId(int itemId);
+	public QuestionRenderingModelsSet getQuestionRenderingModelsSet(int itemId, int index);
 }

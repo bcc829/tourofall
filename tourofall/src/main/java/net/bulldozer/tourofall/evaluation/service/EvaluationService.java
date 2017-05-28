@@ -10,4 +10,6 @@ public interface EvaluationService {
 	public Evaluation registerNewEvaluation(EvaluationRegistration evaluationRegistration);
 	public Evaluation findByUserIdAndItemId(long id,int itemId);
 	public List<Evaluation> findByUserId(long userId);
+	public int getEvaluationCountByItemId(int itemId);
+	public double getEvaluationMeanByItemId(int itemId);
 }

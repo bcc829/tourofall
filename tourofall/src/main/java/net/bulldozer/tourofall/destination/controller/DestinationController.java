@@ -3,17 +3,22 @@ package net.bulldozer.tourofall.destination.controller;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.bulldozer.tourofall.destination.service.TourApiService;
+import net.bulldozer.tourofall.evaluation.service.EvaluationService;
+import net.bulldozer.tourofall.question.dto.QuestionRenderingModelsSet;
 import net.bulldozer.tourofall.question.service.QuestionService;
-import net.bulldozer.tourofall.review.dto.Review;
+import net.bulldozer.tourofall.review.dto.ReviewRenderingModelsSet;
 import net.bulldozer.tourofall.review.service.ReviewService;
-import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 
 @Controller
 @RequestMapping("/dest")
@@ -28,25 +33,21 @@ public class DestinationController {
 	@Autowired
 	private QuestionService questionService;
 	
-	public void addAttributeToModel(int itemId, int itemTypeId,Model model){
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if(!principal.equals("anonymousUser")){
-			UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			Review review = reviewService.findByUserIdAndItemId(userAuthenticationDetails.getId(), itemId);
-			if(review == null){
-				model.addAttribute("reviewWrite", true);
-			}
-		}else{
-			model.addAttribute("reviewWrite", true);
-		}
-		
-		model.addAttribute("itemId", itemId);
-		model.addAttribute("itemTypeId", itemTypeId);
-		model.addAttribute("reviewRenderingModels", reviewService.getReviewRenderingModelsByItemId(itemId));
-		model.addAttribute("questionRenderingModels", questionService.getQuestionRenderingModelsByItemId(itemId));
-		
-	}
+	@Autowired
+	private EvaluationService evaluationService;
 	
+	
+	
+	@RequestMapping(value="/info/reviewmore", produces="application/json",method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> getReviewRenderingModels(@RequestParam(value="itemId") int itemId, @RequestParam(value="index") int index){
+		ReviewRenderingModelsSet reviewRenderingModelsSet = reviewService.getReviewRenderingModelsSet(itemId, index); 
+		return new ResponseEntity<ReviewRenderingModelsSet>(reviewRenderingModelsSet, HttpStatus.OK);
+	}
+	@RequestMapping(value="/info/questions", produces="application/json",method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> getQuestionRenderingModels(@RequestParam(value="itemId") int itemId, @RequestParam(value="pageNo") int pageNo){
+		QuestionRenderingModelsSet questionRenderingModelsSet = questionService.getQuestionRenderingModelsSet(itemId, pageNo);
+		return new ResponseEntity<QuestionRenderingModelsSet>(questionRenderingModelsSet,HttpStatus.OK);
+	}
 	@RequestMapping("/info/{itemId}")
 	public String showDestinationInfo(@PathVariable int itemId, Model model) throws Exception{
 		JSONObject body1 = tourApiService.getBasicInfo(itemId);
@@ -95,25 +96,13 @@ public class DestinationController {
 				System.out.println("imageInfo selected");
 			}
 		}
-		
-		
-		
+		model.addAttribute("itemId", itemId);
+		model.addAttribute("evaluationSize", evaluationService.getEvaluationCountByItemId(itemId));
+		model.addAttribute("reviewSize", reviewService.getReviewCountByItemId(itemId));
+		model.addAttribute("questionSize", questionService.getQuestionCountByItemId(itemId));
+		model.addAttribute("evaluationMean", evaluationService.getEvaluationMeanByItemId(itemId));
+		model.addAttribute("reviewRenderingModelsSet", reviewService.getReviewRenderingModelsSet(itemId, 0));
+		model.addAttribute("questionRenderingModelsSet", questionService.getQuestionRenderingModelsSet(itemId, 1));
 		return "dest-info";
-	}
-	
-	@RequestMapping("/info/basic/{itemId}")
-	public String showBasicInfo(@PathVariable int itemId, Model model) throws Exception {
-		JSONObject body = tourApiService.getBasicInfo(itemId);
-		int itemTypeId = 0;
-		if (body != null) {
-			JSONObject items = (JSONObject) body.get("items");
-			JSONObject item = (JSONObject) items.get("item");
-			long contentTypeId = (long)item.get("contenttypeid");
-			itemTypeId = (int)contentTypeId;
-			model.addAttribute("basicInfo", item);
-		}
-		addAttributeToModel(itemId,itemTypeId,model);
-		
-		return "dest-basicinfo";
 	}
 }

@@ -1,5 +1,6 @@
 package net.bulldozer.tourofall.evaluation.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import net.bulldozer.tourofall.evaluation.repository.EvaluationRepository;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.repository.UserRepository;
-import net.bulldozer.tourofall.user.service.UserService;
 
 @Service
 public class EvaluationRepositoryService implements EvaluationService{
@@ -54,5 +54,24 @@ public class EvaluationRepositoryService implements EvaluationService{
 		return evaluationRepository.findByUserId(userId);
 	}
 	
+	@Transactional(readOnly=true)
+	@Override
+	public int getEvaluationCountByItemId(int itemId){
+		List<Evaluation> evaluations = evaluationRepository.findByItemId(itemId);
+		return evaluations.size();
+	}
 	
+	@Transactional(readOnly=true)
+	@Override
+	public double getEvaluationMeanByItemId(int itemId){
+		double mean = 0;
+		List<Evaluation> evaluations = evaluationRepository.findByItemId(itemId);
+		Iterator<Evaluation> evaluationIter = evaluations.iterator();
+		while(evaluationIter.hasNext()){
+			Evaluation evaluation = evaluationIter.next();
+			mean += evaluation.getScore();
+		}
+		mean = mean / evaluations.size();
+		return mean;
+	}
 }

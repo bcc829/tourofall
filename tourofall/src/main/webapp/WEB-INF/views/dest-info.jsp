@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/common/page-structure.css"/>">
@@ -10,7 +11,12 @@
 	<div class="segment">
 	<div class="container">
 		<h2 class="segment-heading">${basicInfo.title}</h2>
-		
+		<div class="sub-info">
+			<span class="info">평균 평점 : ${evaluationMean}</span>
+			<span class="info"><i class="fa fa-star"></i>: ${evaluationSize}</span>
+			<span class="info"><i class="fa fa-commenting-o"></i>:${reviewSize}</span>
+			<span class="info"><i class="fa fa-question-circle"></i>:${questionSize}</span>
+		</div>
 		<div id="basicinfo" class="tabcontent">
 			<div class="row">
 				<div class="col-sm-6">
@@ -58,7 +64,7 @@
                         <div class="panel-heading">
 							지도
 							<!-- 
-							<div class="pull-right"><button onclick="resetMap()" class="btn btn-default btn-xs">새로고침</button></div>
+							<div class="pull-right"><button onclick="showMap()" class="btn btn-default btn-xs">새로고침</button></div>
 							 -->
                         </div>
                         <div class="panel-body">
@@ -349,7 +355,6 @@
 					</tbody>
 				</table>
 			</div>
-			<hr/>
 			
 		</div>
 		<div id= "detailinfo" class="tabcontent">
@@ -381,23 +386,244 @@
 			</div>
 		</div>
 		<div id= "imageinfo" class="tabcontent">
-			
-			<div class="fotorama" data-arrows="true" data-width="60%" data-ratio="700/467" data-allowfullscreen="true" data-nav="thumbs">
-				<c:choose>
-					<c:when test="${not empty imageInfoes}">
-						<c:forEach var="image" items="${imageInfoes}">
-							<a href="${image.originimgurl}"><img src="${image.smallimageurl}" data-caption="호수공원" /></a>
+			<div class="row">
+				<div class="fotorama" data-arrows="true" data-width="80%" data-ratio="700/467" data-allowfullscreen="true" data-nav="thumbs">
+					<c:choose>
+						<c:when test="${not empty imageInfoes}">
+							<c:forEach var="image" items="${imageInfoes}">
+								<a href="${image.originimgurl}"><img src="${image.smallimageurl}" data-caption="호수공원" /></a>
+							</c:forEach>
+						</c:when>
+						<c:when test="${not empty imageInfo}">
+							<a href="${imageInfo.originimgurl}"><img src="${imageInfo.smallimageurl}" data-caption="호수공원" /></a>
+						</c:when>
+					</c:choose>                  
+             	</div> 
+             </div>
+		</div>
+		<hr/>
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-commenting-o"></i> 리뷰
+					<div class="pull-right"><button type="button" data-toggle="modal" data-target="#review_write" class="btn btn-default btn-xs">리뷰작성하기</button></div>
+				</div>
+				<div class="panel-body">				
+					<ul id="reviewline" class="reviewline">
+						<c:forEach var="reviewRenderingModel" items="${reviewRenderingModelsSet.reviewRenderingModels}">
+							<li>
+								<div class="reviewline-userbadge magenta">
+									<i class="fa fa-user"></i>
+								</div>
+								<div class="reviewline-username">
+									${reviewRenderingModel.lastName}${reviewRenderingModel.firstName}
+								</div>
+								<div class="reviewline-panel">
+									<div class="review-rating">
+									<fmt:parseNumber var = "iScore" type = "number" value = "${reviewRenderingModel.score}" />
+										<c:forEach begin="1" end="${iScore}" step="1">
+											<i class="fa fa-star"></i>
+										</c:forEach>
+										<c:if test="${reviewRenderingModel.score - iScore > 0}">
+											<i class="fa fa-star-half-empty"></i>
+										</c:if>
+									</div>
+									<div class="reviewline-heading">
+										<h4 class="reviewline-title">${reviewRenderingModel.title}</h4>
+									</div>
+									<div class="reviewline-body">
+										<p>
+											${reviewRenderingModel.content}
+										</p>
+									</div>
+								</div>
+							</li>
 						</c:forEach>
-					</c:when>
-					<c:when test="${not empty imageInfo}">
-						<a href="${imageInfo.originimgurl}"><img src="${imageInfo.smallimageurl}" data-caption="호수공원" /></a>
-					</c:when>
-				</c:choose>                  
-             </div> 
+					</ul>
+					<c:if test="${reviewRenderingModelsSet.nextIndex}">
+						<button id="getReviewMore" class="btn btn-primary btn-block">더 보기 <i class="fa fa-arrow-circle-down"></i></button>
+						<form name="reviewmore" action="<c:url value="/dest/info/reviewmore"/>">
+								<input type="hidden" name="itemId" value="${itemId}"/>
+								<input type="hidden" name="index" value="1" />
+						</form>
+					</c:if>
+					
+				</div>
+			</div>
+		</div>
+		
+		<hr/>
+		<div class="row">
+			<div id="qna" class="panel panel-default">
+				<input type="hidden" name="currentPageNo" value="1" />
+  				<input type="hidden" name="itemId" value="${itemId}"/>
+				<div class="panel-heading">
+					<i class="fa fa-question-circle"></i>QnA
+					<div class="pull-right"><button type="button" data-toggle="modal" data-target="#question_write" class="btn btn-default btn-xs">질문작성하기</button></div>
+				</div>
+				<div class="panel-body">
+					<div class="table-responsive table-bordered">
+						<table class = "table">
+							<thead>
+								<tr>
+									<th>번호</th>
+									<th>제목</th>
+									<th>작성일자</th>
+									<th>작성자</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="questionRenderingModel" items="${questionRenderingModelsSet.questionRenderingModels}" varStatus="status">								
+									<tr>
+										<td>${status.index+1}</td>
+										
+										<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#question">${questionRenderingModel.title}</button></td>
+										<td>${questionRenderingModel.createdDate.year+1900}-${questionRenderingModel.createdDate.month+1}-${questionRenderingModel.createdDate.date}</td>
+										<td>${questionRenderingModel.lastName}${questionRenderingModel.firstName}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						<ul class="pagination">
+							<li>
+								<c:if test="${questionRenderingModelsSet.pageNo -  5>= 1}">
+  									<a href="#qna">&lt;&lt;</a>
+  								</c:if>
+							</li>
+							<li>
+								<c:if test="${questionRenderingModelsSet.pageNo -  1>= 1}">
+									<a href="#qna">&lt;</a>
+  								</c:if>
+							</li>
+  							<c:forEach var="num" items="${questionRenderingModelsSet.indexList}">
+  								<li>
+  									<a href="#qna">
+  										${num}
+
+  									</a>
+  								</li>
+  							</c:forEach>
+  							<li>
+  								<c:if test="${questionRenderingModelsSet.pageNo +  1 <= questionRenderingModelsSet.totalPage}">
+  									<a href="#qna">&gt;</a>
+  								</c:if>
+  							</li>
+  							<li>
+  								<c:if test="${questionRenderingModelsSet.pageNo +  5 <= questionRenderingModelsSet.totalPage}">
+  									<a href="#qna">&gt;&gt;</a>
+  								</c:if>
+  							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
 		</div>
 		
 	</div>
 	</div>
+	
+	<div id="review_write" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+  		  <!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">리뷰 작성하기</h4>
+				</div>
+				<div class="modal-body">
+					<form action = "<c:url value = "/review/write"/>" name="review-register">
+					<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
+      	 	 		<div class="form-group">
+						<label for="title">제목</label>
+						<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title">
+						<span class="error-msg">제목을 입력해 주세요</span>
+					</div>
+					<div class="form-group">
+						<label for="score" style="float:left;margin-top:5px;">평점</label>
+						<div class="rating">	
+							<input type="radio" id="star5" name="score" value="5"/><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+							<input type="radio" id="star4half" name="score" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+    						<input type="radio" id="star4" name="score" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+    						<input type="radio" id="star3half" name="score" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+    						<input type="radio" id="star3" name="score" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+    						<input type="radio" id="star2half" name="score" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+    						<input type="radio" id="star2" name="score" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+    						<input type="radio" id="star1half" name="score" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+    						<input type="radio" id="star1" name="score" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+    						<input type="radio" id="starhalf" name="score" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+    					</div>
+    					<div class="error-msg">평점을 매겨주세요</div>
+					</div>
+					<div class="form-group" style="clear:both">
+						<label for="content">내용</label>
+						<textarea id="content" name = "content" class="form-control" cols="5"></textarea>
+						<div class="error-msg">내용을 입력해 주세요</div>
+					</div>
+					</form>
+					
+					
+      			</div>
+				<div class="modal-footer">
+					<button id="register-review" type="button" class="btn btn-default">저장하기</button>
+				<!-- 
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				-->
+				</div>
+    		</div>
+		</div>
+	</div>
+	<div id="question" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+          <h4 class="modal-title">question title</h4>
+        </div>
+        <div class="modal-body">
+          <p>question content</p>
+          <hr/>
+          <p>question answer</p>
+        </div>
+        <div class="modal-footer">
+    	    <label for="title">댓글</label>
+			<textarea class="form-control" cols="5"></textarea>
+         	<button id="register-review" type="button" class="btn btn-default">작성완료</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="modal fade" id="question_write" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+         	<div class="form-group">
+				<label for="title">제목</label>
+				<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title">
+				<span class="error-msg">제목을 입력해 주세요</span>
+			</div>
+			<div class="form-group" style="clear:both">
+				<label for="title">내용</label>
+				<textarea class="form-control" cols="5"></textarea>
+				<div class="error-msg">내용을 입력해 주세요</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </div>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-UDsWJx5dkJpLf4HitN6Uy4-JWADLu14&sensor=true"></script>

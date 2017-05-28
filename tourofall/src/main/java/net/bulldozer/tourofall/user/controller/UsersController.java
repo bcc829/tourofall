@@ -31,7 +31,6 @@ public class UsersController {
 	
 	
 	private void addModelToView(long userId, Model model){
-
 		model.addAttribute("userId", userId);
 		
 		
