@@ -50,7 +50,7 @@ private static final String[] tmpList={"127749","127866","1968560","126612","170
 		model.addAttribute("currentItemCat1", itemCat1);
 		model.addAttribute("currentItemCat2", itemCat2);
 		model.addAttribute("currentPageNo",pageNo);
-		model.addAttribute("evaluationRenderingModelsForm", tourApiService.getEvaluationRenderingModelsForm(itemCat1, itemCat2, pageNo));
+		model.addAttribute("evaluationRenderingModels", tourApiService.getEvaluationRenderingModels(itemCat1, itemCat2, pageNo));
 		return "evalmore";
 	}
 	

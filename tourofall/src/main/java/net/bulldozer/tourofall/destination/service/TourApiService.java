@@ -23,11 +23,9 @@ import net.bulldozer.tourofall.destination.util.TourJSONUtilities;
 import net.bulldozer.tourofall.destination.util.TourUriUtilities;
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModel;
-import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModelsForm;
 import net.bulldozer.tourofall.evaluation.repository.EvaluationRepository;
 import net.bulldozer.tourofall.recommendation.dto.RecommendationRenderingModel;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
-import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.repository.UserRepository;
 
 @Service
@@ -100,8 +98,8 @@ public class TourApiService {
 	}
 	
 	
-	@Transactional(readOnly=true)
-	private int addEvaluationsToList(JSONObject result, List<EvaluationRenderingModel> evalList,int requestCount){
+	
+	private int addEvaluationsToList(JSONObject result, List<EvaluationRenderingModel> evalList){
 		int count = 0;
 		JSONObject items = (JSONObject)result.get("items");
 		
@@ -110,16 +108,15 @@ public class TourApiService {
 			JSONArray item = (JSONArray) items.get("item");
 			System.out.println(item.size());
 			for(Object temp : item){
-				if(count >= requestCount) break;
-				if(addEvaluationRegistrationToList(evalList, temp))	count++;
+				if(addEvaluationRegistrationToList(evalList, temp)) count++;
 			}
 		}else {
 			Object item = items.get("item");
 			System.out.println("totocalCount = 1");
-			if(requestCount != 0){
-				addEvaluationRegistrationToList(evalList, item);
-				count++;
-			}
+
+			addEvaluationRegistrationToList(evalList, item);
+			count++;
+
 		}
 		return count;
 	}
@@ -129,66 +126,22 @@ public class TourApiService {
 		List<EvaluationRenderingModel> evalList = new ArrayList<EvaluationRenderingModel>();
 		Map<String,String> parameter = new HashMap<String,String>();
 		
-		int requestCount = 12;
-		while(true){
-			System.out.println(requestCount);
-			parameter.put("cat1", itemCat1);
-			parameter.put("cat2", itemCat2);
-			parameter.put("listYN", "Y");
-			parameter.put("arrange", "B");
-			parameter.put("numOfRows"  , "12");
-			parameter.put("pageNo", Integer.toString(pageNo));
 		
-			JSONObject result = sendAndReceiveDataFromApiServer("areaBasedList",parameter);
+		parameter.put("cat1", itemCat1);
+		parameter.put("cat2", itemCat2);
+		parameter.put("listYN", "Y");
+		parameter.put("arrange", "B");
+		parameter.put("numOfRows"  , "30");
+		parameter.put("pageNo", Integer.toString(pageNo));
+		
+		JSONObject result = sendAndReceiveDataFromApiServer("areaBasedList",parameter);
 			
 			
-			requestCount -= addEvaluationsToList(result,evalList,requestCount);
-			pageNo++;
-			parameter.clear();
-			
-			if(requestCount == 0){
-				break;
-			}
-		}	
+		addEvaluationsToList(result,evalList);
+				
 		return evalList;
 	}
 	
-	public EvaluationRenderingModelsForm getEvaluationRenderingModelsForm(String itemCat1, String itemCat2, int pageNo) throws Exception {
-		List<EvaluationRenderingModel> evalList = new ArrayList<EvaluationRenderingModel>();
-		Map<String,String> parameter = new HashMap<String,String>();
-		long totalPage;
-		
-		int requestCount = 12;
-		while(true){
-			System.out.println(requestCount);
-			parameter.put("cat1", itemCat1);
-			parameter.put("cat2", itemCat2);
-			parameter.put("listYN", "Y");
-			parameter.put("arrange", "B");
-			parameter.put("numOfRows"  , "12");
-			parameter.put("pageNo", Integer.toString(pageNo));
-		
-			JSONObject result = sendAndReceiveDataFromApiServer("areaBasedList",parameter);
-			
-			
-			requestCount -= addEvaluationsToList(result,evalList,requestCount);
-			pageNo++;
-			parameter.clear();
-			
-			if(requestCount == 0){
-				long totalCount = (long)result.get("totalCount");
-				long numOfRows = (long)result.get("numOfRows");
-				
-				totalPage = totalCount/numOfRows;
-				if(totalCount%numOfRows != 0){
-					totalPage++;
-				}
-				
-				break;
-			}
-		}	
-		return new EvaluationRenderingModelsForm(evalList,totalPage);
-	}
 	
 	public JSONObject getSimpleSearchResult(String query, String pageNum) throws Exception {
 		Map<String,String> parameter = new HashMap<String,String>();

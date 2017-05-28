@@ -38,7 +38,7 @@
 					<p class="lead">다녀 온 여행지를 평가 해 주세요</p>
 				</div>
 				
-				<c:forEach var = "evaluationRenderingModel" items="${evaluationRenderingModelsForm.evaluationRenderingModels}" varStatus="status">
+				<c:forEach var = "evaluationRenderingModel" items="${evaluationRenderingModels}" varStatus="status">
 					<div class="col-md-4 col-sm-6">
 						<form name = "request-eval" action="<c:url value="/eval/evalmore"/>">
 							<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
