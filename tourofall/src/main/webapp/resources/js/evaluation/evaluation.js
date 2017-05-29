@@ -117,7 +117,7 @@ $(window).scroll(function() {
 		    									.append($('<img>')
 		    										.attr('src',value.imageUrl)
 		    										.attr('class','img-rounded')
-		    										.attr('onerror','this.style.display="none"')
+		    										.attr('onerror','this.style.display=none')
 		    									)
 		    								)
 		    							)

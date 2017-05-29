@@ -8,6 +8,11 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/destination/destination.css"/>">
 
 <div>
+	<div class="js-result-section result-section result-section-hide">
+		<div class="result-section-text">
+			등록이 완료되었습니다.
+		</div>
+	</div>
 	<div class="segment">
 	<div class="container">
 		<h2 class="segment-heading">${basicInfo.title}</h2>
@@ -403,7 +408,7 @@
 		</div>
 		<hr/>
 		<div class="row">
-			<div class="panel panel-default">
+			<div id="review" class="panel panel-default">
 				<div class="panel-heading">
 					<i class="fa fa-commenting-o"></i> 리뷰
 					<div class="pull-right"><button type="button" data-toggle="modal" data-target="#review_write" class="btn btn-default btn-xs">리뷰작성하기</button></div>
@@ -420,7 +425,8 @@
 								</div>
 								<div class="reviewline-panel">
 									<div class="review-rating">
-									<fmt:parseNumber var = "iScore" type = "number" value = "${reviewRenderingModel.score}" />
+									<fmt:parseNumber var = "iScore" type = "number" integerOnly="true" value = "${reviewRenderingModel.score}" />
+									
 										<c:forEach begin="1" end="${iScore}" step="1">
 											<i class="fa fa-star"></i>
 										</c:forEach>
@@ -476,8 +482,7 @@
 								<c:forEach var="questionRenderingModel" items="${questionRenderingModelsSet.questionRenderingModels}" varStatus="status">								
 									<tr>
 										<td>${status.index+1}</td>
-										
-										<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#question">${questionRenderingModel.title}</button></td>
+										<td><a id="${questionRenderingModel.questionId}" data-toggle="modal" data-target="#question">${questionRenderingModel.title}<span class="badge">${questionRenderingModel.answerCount}</span></a></td>
 										<td>${questionRenderingModel.createdDate.year+1900}-${questionRenderingModel.createdDate.month+1}-${questionRenderingModel.createdDate.date}</td>
 										<td>${questionRenderingModel.lastName}${questionRenderingModel.firstName}</td>
 									</tr>
@@ -533,39 +538,37 @@
 				</div>
 				<div class="modal-body">
 					<form action = "<c:url value = "/review/write"/>" name="review-register">
-					<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
-      	 	 		<div class="form-group">
-						<label for="title">제목</label>
-						<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title">
-						<span class="error-msg">제목을 입력해 주세요</span>
-					</div>
-					<div class="form-group">
-						<label for="score" style="float:left;margin-top:5px;">평점</label>
-						<div class="rating">	
-							<input type="radio" id="star5" name="score" value="5"/><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-							<input type="radio" id="star4half" name="score" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-    						<input type="radio" id="star4" name="score" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-    						<input type="radio" id="star3half" name="score" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-    						<input type="radio" id="star3" name="score" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-    						<input type="radio" id="star2half" name="score" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-    						<input type="radio" id="star2" name="score" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-    						<input type="radio" id="star1half" name="score" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-    						<input type="radio" id="star1" name="score" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-    						<input type="radio" id="starhalf" name="score" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-    					</div>
-    					<div class="error-msg">평점을 매겨주세요</div>
-					</div>
-					<div class="form-group" style="clear:both">
-						<label for="content">내용</label>
-						<textarea id="content" name = "content" class="form-control" cols="5"></textarea>
-						<div class="error-msg">내용을 입력해 주세요</div>
-					</div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
+      	 	 			<div class="form-group">
+							<label for="title">제목</label>
+							<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title">
+							<span id = "title-error" class="error-msg"></span>
+						</div>
+						<div class="form-group">
+							<label for="score" style="float:left;margin-top:5px;">평점</label>
+							<div class="rating">	
+								<input type="radio" id="star5" name="score" value="5"/><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+								<input type="radio" id="star4half" name="score" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+    							<input type="radio" id="star4" name="score" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+    							<input type="radio" id="star3half" name="score" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+    							<input type="radio" id="star3" name="score" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+    							<input type="radio" id="star2half" name="score" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+    							<input type="radio" id="star2" name="score" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+    							<input type="radio" id="star1half" name="score" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+    							<input type="radio" id="star1" name="score" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+    							<input type="radio" id="starhalf" name="score" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+    						</div>
+    						<div id="rating-error" class="error-msg"></div>
+						</div>
+						<div class="form-group" style="clear:both">
+							<label for="content">내용</label>
+							<textarea id="content" name = "content" class="form-control" cols="5"></textarea>
+							<div id="content-error" class="error-msg"></div>
+						</div>
 					</form>
-					
-					
       			</div>
 				<div class="modal-footer">
-					<button id="register-review" type="button" class="btn btn-default">저장하기</button>
+					<button id="register-review" type="button" class="btn btn-default">작성완료</button>
 				<!-- 
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				-->
@@ -573,6 +576,39 @@
     		</div>
 		</div>
 	</div>
+	
+	
+	<div class="modal fade" id="question_write" role="dialog">
+		<div class="modal-dialog">
+		<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+          			<h4 class="modal-title">질문 작성하기</h4>
+				</div>
+				<div class="modal-body">
+					<form name="question-register" action="<c:url value="/qna/question/write"/>">
+						<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
+        	 			<div class="form-group">
+							<label for="title">제목</label>
+							<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title">
+							<span id = "title-error" class="error-msg"></span>
+						</div>
+						<div class="form-group" style="clear:both">
+							<label for="content">내용</label>
+							<textarea id="content" name="content" class="form-control" cols="5"></textarea>
+							<div id="content-error" class="error-msg"></div>
+						</div>
+					</form>
+				</div>
+        		<div class="modal-footer">
+					<button id="register-question" type="button" class="btn btn-default">작성완료</button>
+        		</div>
+			</div>
+    	</div>
+  	</div>
+  	
+	
 	<div id="question" class="modal fade" role="dialog">
     <div class="modal-dialog">
     
@@ -580,50 +616,32 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" >&times;</button>
-          <h4 class="modal-title">question title</h4>
+          <h4 class="modal-title">QnA</h4>
         </div>
-        <div class="modal-body">
-          <p>question content</p>
-          <hr/>
-          <p>question answer</p>
-        </div>
-        <div class="modal-footer">
-    	    <label for="title">댓글</label>
-			<textarea class="form-control" cols="5"></textarea>
-         	<button id="register-review" type="button" class="btn btn-default">작성완료</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  <div class="modal fade" id="question_write" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+          <h4 class="modal-title js-question-title"></h4>
         </div>
-        <div class="modal-body">
-         	<div class="form-group">
-				<label for="title">제목</label>
-				<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title">
-				<span class="error-msg">제목을 입력해 주세요</span>
-			</div>
-			<div class="form-group" style="clear:both">
-				<label for="title">내용</label>
-				<textarea class="form-control" cols="5"></textarea>
-				<div class="error-msg">내용을 입력해 주세요</div>
-			</div>
+        <div class="modal-body" id="question-content">
+          	 
+        </div>
+         <div class="modal-body" id="modal-answers">
+         	
+    	    
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        	<form name="answer-register" action="<c:url value="/qna/answer/write"/>">
+        		<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
+        		<input type="hidden" name="questionId" name=""/>
+				<textarea  placeholder="로그인 후 입력하실 수 있습니다." id="answer-write" name="answer-write" class="form-control" cols="5"></textarea>
+				<div id="content-error" class="error-msg"></div>
+			</form>
+         	<button id="register-answer" type="button" class="btn btn-default">작성완료</button>
         </div>
       </div>
       
     </div>
   </div>
+  
 </div>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-UDsWJx5dkJpLf4HitN6Uy4-JWADLu14&sensor=true"></script>

@@ -32,7 +32,8 @@ public class ReviewRepositoryService implements ReviewService{
 	
 	
 	@Transactional
-	public void registerNewReview(ReviewRegistrationForm reviewRegistrationForm) {
+	@Override
+	public Review registerNewReview(ReviewRegistrationForm reviewRegistrationForm) {
 		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User getUser = userRepository.findOne(userAuthenticationDetails.getId());
 		
@@ -56,7 +57,7 @@ public class ReviewRepositoryService implements ReviewService{
 		getUser.addReview(newReview);
 		getUser.addEvaluation(getEvaluation);
 		
-		reviewRepository.save(newReview);
+		return reviewRepository.save(newReview);
 	}
 	@Transactional(readOnly=true)
 	@Override

@@ -217,6 +217,7 @@ div.sub-info .info {
 .error-msg{
 	clear:left;
 	margin-top:5px;
+	color:red;
 }
 
 
@@ -231,6 +232,27 @@ div.sub-info .info {
 
 .review-rating { 
 	border: none;
+}
+
+.result-section-hide{
+	display:none;	
+}
+.result-section{
+	position: fixed;
+	left: 50%;
+	top: 10%;
+	margin-left:-200px;
+	width: 400px;
+	height: 100px;
+	z-index: 110;
+	background-color:black;
+	text-align:center;
+	color:white;
+	opacity: .3;
+}
+.result-section-text{
+	margin-top:35px;
+	margin-bottom:35px;
 }
 
 @-webkit-keyframes fadeEffect {

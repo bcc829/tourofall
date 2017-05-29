@@ -282,12 +282,14 @@ function getQuestionRenderingModels(){
 };
 
 $(document).ready(getQuestionRenderingModels);
-function sendQuestionRegistration(){
+
+
+function sendReviewRegistration(){
 	$('#register-review').click(function(){
 		var form = $('form[name="review-register"]');
 		var title = form.find('input[name="title"]').val();
-		var score = form.find('input[name="score"]:checked').val();
 		var content = form.find('textarea[name="content"]').val();
+		var score = form.find('input[name="score"]:checked').val();
 		var itemId = $('#qna').find('input[name="itemId"]').val();
 		
 		var formUrl = form.attr("action");
@@ -316,9 +318,34 @@ function sendQuestionRegistration(){
 			data:jsonData,
 			dataType:"json",
 			success: function(result,status,xhr){
-				alert('OK');
+				window.location.href = "/tourofall/dest/info/"+itemId;
 			},
 			error: function(xhr){
+				switch(xhr.status){
+				case 200:
+					window.location.href = "/tourofall/signin";
+					break;
+				case 204:
+					var jsonResponse = JSON.parse(xhr.responseText);
+					alert(jsonResponse.message);
+					break;
+				case 409:
+					var jsonResponse = JSON.parse(xhr.responseText);
+					for(var i=0;i < jsonResponse.length;i++){
+						switch(jsonResponse[i].field){
+						case "title":
+							$('form[name="review-register"] #title-error').append(jsonResponse[i].defaultMessage);
+							break;
+						case "score":
+							$('form[name="review-register"] #rating-error').append(jsonResponse[i].defaultMessage);
+							break;
+						case "content":
+							$('form[name="review-register"] #content-error').append(jsonResponse[i].defaultMessage);
+							break;
+						}
+					}
+					break;
+				}
 				alert("An error occured: " + xhr.status + " " + xhr.statusText);
 			}
 		});
@@ -326,4 +353,248 @@ function sendQuestionRegistration(){
 	});
 }
 
+$(document).ready(sendReviewRegistration);
+
+
+function sendQuestionRegistration(){
+	$('#register-question').click(function(){
+		
+		var form = $('form[name="question-register"]');
+		var title = form.find('input[name="title"]').val();
+		var content = form.find('textarea[name="content"]').val();
+		var itemId = $('#qna').find('input[name="itemId"]').val();
+		
+		
+		
+		var formUrl = form.attr("action");
+
+		var formData = {"title":title,"content":content,"itemId":itemId};
+		
+		var jsonData = JSON.stringify(formData);
+		
+		var csrf_token = form.find(':first-child').val();
+		
+		$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+			if (!options.crossDomain) {
+			  return jqXHR.setRequestHeader('X-CSRF-Token', csrf_token);
+			}
+		});
+		
+		
+		
+		
+		alert(formUrl +", "+jsonData+", "+ csrf_token);
+		var request = $.ajax({
+			url:formUrl,
+			type:"POST",
+			contentType:"application/json",
+			data:jsonData,
+			dataType:"json",
+			success: function(result,status,xhr){
+				window.location.href = "/tourofall/dest/info/"+itemId;
+			},
+			error: function(xhr){
+				switch(xhr.status){
+				case 200:
+					window.location.href = "/tourofall/signin";
+					break;
+				case 204:
+					var jsonResponse = JSON.parse(xhr.responseText);
+					alert(jsonResponse.message);
+					break;
+				case 409:
+					var jsonResponse = JSON.parse(xhr.responseText);
+					for(var i=0;i < jsonResponse.length;i++){
+						switch(jsonResponse[i].field){
+						case "title":
+							$('form[name="question-register"] #title-error').append(jsonResponse[i].defaultMessage);
+							break;
+						case "content":
+							$('form[name="question-register"] #content-error').append(jsonResponse[i].defaultMessage);
+							break;
+						}
+					}
+					break;
+				}
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+			
+	});
+}
+
 $(document).ready(sendQuestionRegistration);
+
+
+var selected;
+
+function getQnARenderingModels(){
+	$('#qna table tbody tr td a').click(function(){
+		selected = $(this);
+		var questionId = $(this).attr('id');
+		
+		var formUrl = "/tourofall/qna/question/"+questionId;
+		
+		alert(formUrl);
+		
+		var request = $.ajax({
+			type:"GET",
+			url:formUrl,
+			contentType:"text/plain",
+			dataType:"json",
+			success: function(result,status,xhr){
+				var questionRenderingModel = result.questionRenderingModel;
+				
+				
+				
+				
+				$('#question .js-question-title').append("제목> "+questionRenderingModel.title);
+				
+				
+				
+				$('#question #question-content').append($('<p>')
+												.append("내용> "+questionRenderingModel.content)
+											);
+				
+				var answerRenderingModels = result.answerRenderingModels;
+				$('#modal-answers')
+				.append($('<hr>')
+				)
+				.append("댓글")
+				.append($('<span>')
+					.attr('class','badge')
+					.append(questionRenderingModel.answerCount)
+				);
+				$.each( answerRenderingModels , function(index, value){
+					var date = new Date(value.createdDate);
+					$('#modal-answers')
+								.append($('<hr>')
+								)
+								.append($('<div>')
+									.append(value.lastName+value.firstName+" ")
+									.append((date.getFullYear())+'-'+(date.getMonth()+1)+'-'+(date.getDate()))
+									.append($('<br />'))
+									.append(value.content)
+								)
+				});
+				$('form[name="answer-register"] input[name="questionId"]').attr('value',questionRenderingModel.questionId);
+				
+			},
+			error: function(xhr){
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+		
+	});
+	
+}
+
+
+
+$(document).ready(getQnARenderingModels);
+
+
+function sendAnswerRegistration(){
+	$('#register-answer').click(function(){
+		var form = $('form[name="answer-register"]');
+		
+		var questionId = form.find('input[name="questionId"]').val();
+		
+		var content = form.find('textarea[name="answer-write"]').val();
+		
+		var formUrl = form.attr('action');
+		
+		var formData = {"content":content,"questionId":questionId};
+		
+		var jsonData = JSON.stringify(formData);
+		var csrf_token = form.find('input[name="_csrf"]').val();
+		
+		alert(formUrl+", "+jsonData+", "+csrf_token);
+		
+		$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+			if (!options.crossDomain) {
+			  return jqXHR.setRequestHeader('X-CSRF-Token', csrf_token);
+			}
+		});
+		
+		
+		var request = $.ajax({
+			type:"POST",
+			url:formUrl,
+			data:jsonData,
+			contentType:"application/json",
+			dataType:"json",
+			success: function(result,status,xhr){
+				var date = new Date(result.createdDate);
+				$('#modal-answers')
+							.append($('<hr>')
+							)
+							.append($('<div>')
+								.append(result.lastName+result.firstName+" ")
+								.append((date.getFullYear())+'-'+(date.getMonth()+1)+'-'+(date.getDate()))
+								.append($('<br />'))
+								.append(result.content)
+							);
+							
+							answerCount = $('#question #modal-answers span.badge').text();
+							$('form[name="answer-register"]').find('textarea').val('').end();
+							
+							$('#question #modal-answers span.badge').text('');
+							$('#question #modal-answers span.badge').text(parseInt(answerCount)+1);
+							
+							selected.find('span.badge').text('');
+							selected.find('span.badge').text(parseInt(answerCount)+1);
+			},
+			error: function(xhr){
+				switch(xhr.status){
+				case 200: // 로그인 안한 경우
+					window.location.href = "/tourofall/signin";
+					break;
+				case 204: // NO CONTENT
+					var jsonResponse = JSON.parse(xhr.responseText);
+					alert(jsonResponse.message);
+					break;
+				case 409: // CONFLICT
+					var jsonResponse = JSON.parse(xhr.responseText);
+					for(var i=0;i < jsonResponse.length;i++){
+						switch(jsonResponse[i].field){
+						case "content":
+							$('form[name="answer-register"] #content-error').append(jsonResponse[i].defaultMessage);
+							break;
+						}
+					}
+					break;
+				}
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+	});
+	
+}
+$(document).ready(sendAnswerRegistration);
+
+$(document).ready(function(){
+	$('#review_write').on('hidden.bs.modal', function () {
+	    $(this).find('input[type="text"],textarea').val('').end();
+	    $(this).find('.error-msg').text("");
+	    $(this).find('input[type="radio"]').prop('checked', false);
+
+	});
+	
+	$('#register-question').on('hidden.bs.modal', function () {
+	    $(this).find('input[type="text"],textarea').val('').end();
+	    $(this).find('.error-msg').text("");
+	});
+	
+	$('#question').on('hidden.bs.modal', function () {
+	    $(this).find('.modal-header .modal-title').text('');
+		$(this).find('.modal-body').text('');
+		$("#modal-answers").text('');
+		$(this).find('input[type="hidden"],textarea').val('').end();
+	    $(this).find('.error-msg').text("");
+	    
+	});
+	
+	
+	
+});

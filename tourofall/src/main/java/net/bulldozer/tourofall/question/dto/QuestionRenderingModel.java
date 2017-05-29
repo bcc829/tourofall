@@ -4,7 +4,6 @@ import java.util.Date;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
 @Getter
@@ -12,6 +11,7 @@ import lombok.Setter;
 public class QuestionRenderingModel{
 	private long userId;
 	private long questionId;
+	private int answerCount;
 	private String title;
 	private String content;
 	private Date createdDate;
@@ -34,6 +34,10 @@ public class QuestionRenderingModel{
 		}
 		public Builder questionId(long questionId){
 			questionRenderingModel.questionId = questionId;
+			return this;
+		}
+		public Builder answerCount(int answerCount){
+			questionRenderingModel.answerCount = answerCount;
 			return this;
 		}
 		public Builder title(String title){

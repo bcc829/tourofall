@@ -6,17 +6,21 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.bulldozer.tourofall.answer.dto.Answer;
 import net.bulldozer.tourofall.answer.dto.AnswerRenderingModel;
+import net.bulldozer.tourofall.question.dto.QnARenderingModelsSet;
 import net.bulldozer.tourofall.question.dto.Question;
 import net.bulldozer.tourofall.question.dto.QuestionRegistrationForm;
 import net.bulldozer.tourofall.question.dto.QuestionRenderingModel;
 import net.bulldozer.tourofall.question.dto.QuestionRenderingModelsSet;
 import net.bulldozer.tourofall.question.repository.QuestionRepository;
+import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.dto.User;
+import net.bulldozer.tourofall.user.repository.UserRepository;
 
 @Service
 public class QuestionRepositoryService implements QuestionService {
@@ -24,6 +28,10 @@ public class QuestionRepositoryService implements QuestionService {
 	
 	@Autowired
 	private QuestionRepository questionRepository;
+
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Override
 	public Question getQuestionById(long questionId){
@@ -96,14 +104,19 @@ public class QuestionRepositoryService implements QuestionService {
 	}
 	@Transactional
 	@Override
-	public void registerNewQuestion(QuestionRegistrationForm registrationQuestionForm, User user) {
+	public Question registerNewQuestion(QuestionRegistrationForm registrationQuestionForm) {
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User getUser = userRepository.findOne(userAuthenticationDetails.getId());
+		
 		Question question = Question.getBuilder()
 				.title(registrationQuestionForm.getTitle())
 				.content(registrationQuestionForm.getContent())
 				.itemId(registrationQuestionForm.getItemId())
 				.build();
-		user.addQuestion(question);
-		questionRepository.save(question);
+		
+		getUser.addQuestion(question);
+		
+		return questionRepository.save(question);
 	}
 	
 	@Transactional
@@ -119,6 +132,54 @@ public class QuestionRepositoryService implements QuestionService {
 		List<Question> questions = questionRepository.findByItemId(itemId);
 		return questions.size();
 	}
+	@Transactional(readOnly=true)
+	@Override
+	public QnARenderingModelsSet getQnARenderingModelsSet(long questionId){
+		
+		Question question = questionRepository.findOne(questionId);
+		if(question == null){
+			return null;
+		}
+		Collection<Answer> answers = question.getAnswers();
+		
+		
+		List<AnswerRenderingModel> answerRenderingModels = new ArrayList<AnswerRenderingModel>();
+		QnARenderingModelsSet qnARenderingModelsSet = new QnARenderingModelsSet();  
+		
+		
+		QuestionRenderingModel questionRenderingModel = QuestionRenderingModel.getBuilder()
+				.userId(question.getUser().getId())
+				.questionId(question.getId())
+				.answerCount(answers.size())
+				.title(question.getTitle())
+				.content(question.getContent())
+				.createdDate(question.getCreatedDate())
+				.lastName(question.getUser().getLastName())
+				.firstName(question.getUser().getFirstName())
+				.visitor(question.getVisitor())
+				.build();
+		
+		
+		Iterator<Answer> answerIter = answers.iterator();
+		while(answerIter.hasNext()){
+			Answer answer = answerIter.next();
+			
+			AnswerRenderingModel answerRenderingModel = AnswerRenderingModel.getBuilder()
+					.userId(answer.getUser().getId())
+					.lastName(answer.getUser().getLastName())
+					.firstName(answer.getUser().getFirstName())
+					.createdDate(answer.getCreatedDate())
+					.content(answer.getContent())
+					.build();
+			
+			answerRenderingModels.add(answerRenderingModel);
+		}
+		qnARenderingModelsSet.setQuestionRenderingModel(questionRenderingModel);
+		qnARenderingModelsSet.setAnswerRenderingModels(answerRenderingModels);
+		
+		return qnARenderingModelsSet;
+	}
+	
 	@Transactional(readOnly=true)
 	@Override
 	public QuestionRenderingModelsSet getQuestionRenderingModelsSet(int itemId, int pageNo) {
@@ -161,6 +222,7 @@ public class QuestionRepositoryService implements QuestionService {
 			QuestionRenderingModel questionRenderingModel = QuestionRenderingModel.getBuilder()
 					.userId(question.getUser().getId())
 					.questionId(question.getId())
+					.answerCount(question.getAnswers().size())
 					.title(question.getTitle())
 					.content(question.getContent())
 					.createdDate(question.getCreatedDate())

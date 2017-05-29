@@ -9,6 +9,17 @@ public class AnswerRegistrationForm {
 	@Size(max = 255, message = "최대 255까지 입력 가능합니다.")
 	private String content;
 
+	private long questionId;
+	
+	
+	public long getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(long questionId) {
+		this.questionId = questionId;
+	}
+
 	public String getContent() {
 		return content;
 	}

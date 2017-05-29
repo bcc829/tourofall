@@ -101,22 +101,26 @@ public class TourApiService {
 	
 	private int addEvaluationsToList(JSONObject result, List<EvaluationRenderingModel> evalList){
 		int count = 0;
-		JSONObject items = (JSONObject)result.get("items");
 		
-		if (((long)result.get("totalCount")) != 1) {
+		if(result == null){
+			return count;
+		}
+		JSONObject items = (JSONObject)result.get("items");
+		// 0老 锭 贸府秦具茄促.
+		long totalCount = (long)result.get("totalCount");
+		if (totalCount > 1) {
 			System.out.println(result.get("totalCount"));
 			JSONArray item = (JSONArray) items.get("item");
 			System.out.println(item.size());
 			for(Object temp : item){
 				if(addEvaluationRegistrationToList(evalList, temp)) count++;
 			}
-		}else {
+		}else if(totalCount == 1) {
 			Object item = items.get("item");
 			System.out.println("totocalCount = 1");
 
 			addEvaluationRegistrationToList(evalList, item);
 			count++;
-
 		}
 		return count;
 	}

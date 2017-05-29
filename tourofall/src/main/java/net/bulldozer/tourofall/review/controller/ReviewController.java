@@ -1,5 +1,7 @@
 package net.bulldozer.tourofall.review.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +25,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import net.bulldozer.tourofall.common.dto.Response;
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.service.EvaluationService;
+import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.dto.ReviewRegistrationForm;
+import net.bulldozer.tourofall.review.dto.ReviewRenderingModel;
 import net.bulldozer.tourofall.review.service.ReviewService;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.service.UserService;
@@ -63,14 +68,19 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> processRegisterReview(@RequestBody ReviewRegistrationForm reviewRegistrationForm, BindingResult result, RedirectAttributes model) throws Exception {
+	public @ResponseBody ResponseEntity<?> processRegisterReview(@RequestBody @Valid ReviewRegistrationForm reviewRegistrationForm, BindingResult result) throws Exception {
 		System.out.println("Entered processRegisterReview");
 		if (result.hasErrors()) {
-			
+			List<ObjectError> errors =  result.getAllErrors();
+		
+			return new ResponseEntity<List<ObjectError>>(errors,HttpStatus.CONFLICT);
+		}
+		Review review = reviewService.registerNewReview(reviewRegistrationForm);
+		if(review == null){
+			return new ResponseEntity<Response>(new Response(false,"Review","등록이 실패되었습니다."),HttpStatus.NO_CONTENT);
 		}
 		
-
-		return new ResponseEntity<Response>(new Response(true,"asdfas","asdfasdf"),HttpStatus.OK);
+		return new ResponseEntity<Response>(new Response(true,"Review","등록을 성공하였습니다."),HttpStatus.OK); 
 	}
 	
 	@ResponseStatus(value=HttpStatus.CONFLICT,reason="이미 있는 리뷰 내용입니다. ")
