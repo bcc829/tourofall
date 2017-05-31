@@ -34,28 +34,38 @@
     right: 0;
     bottom: 0;
 }
+.eval-unit-card-mask{
+	z-index:100;
+}
 .eval-unit-card-figure{
 	/*380px*/
 	z-index:auto;
+	
+	background-image: url('http://www.novelupdates.com/img/noimagefound.jpg');
+	background-repeat:no-repeat;
+	background-size: 100% 250px;
 }
 .eval-unit-card-score{
 	top: 15px;
     left: 15px;
-    
-    height: 30px;
+    color:white;
+    height: 40px;
     width: 60px;
     background-position: 0 40%;
     position: absolute;
+    z-index:102;
+    text-align:center;
+    
+    border-radius: 4px;
+    
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, .2);
+	box-shadow: inset 0 0 100px rgba(0, 0, 0, .2);
+    
 }
 .eval-unit-card-figure img{
 	width:100%;
-	height:300px;
-	
-	background-color: rgba(0, 0, 0, 0.5);
-
-	-webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
-	box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
-	
+	height:300px;	
 }
 .eval-unit-card-figure-img{
 	height: 100%;
@@ -93,7 +103,6 @@
 }
 .eval-unit-card-content{
 	padding: 15px;
-
 	box-sizing: border-box;
     overflow: hidden;
     color: #3b444f;

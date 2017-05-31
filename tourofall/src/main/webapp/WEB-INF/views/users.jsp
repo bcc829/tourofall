@@ -90,7 +90,13 @@
 			</div>
 		</div>
 		<div id="user-review" class="tab-pane fade">
-			
+			<div class="segment">
+				<div class="container">
+					<div class="row">
+					
+					</div>
+				</div>
+			</div>
 		</div>
 		<c:if test="${user.id == userId}">
 			<div id="user-question" class="tab-pane fade">

@@ -43,11 +43,11 @@
 								<div class="card search-result copy-body">
 										<div class="search-result-wrapper">
 											<div class="link-wrapper">
-											<div class="media-img search-result-figure">
-												<a href="<c:url value="/dest/info/${searchResultRenderingModel.itemId}"/>">
+											<a href="<c:url value="/dest/info/${searchResultRenderingModel.itemId}"/>">
+												<div class="media-img search-result-figure">
 													<img class= "search-result-figure-image is-wider" alt="" src="${searchResultRenderingModel.imageUrl}">
-												</a>
-											</div>
+												</div>
+											</a>
 											<div class="search-result-meta search-result-meta-overflow media-body">
 												
 												<span class="search-result-type copy-caption">여행지</span>

@@ -138,6 +138,10 @@
 	position: relative;
     display: block;
     overflow: hidden;
+    
+    background-image: url('http://www.novelupdates.com/img/noimagefound.jpg');
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
 }
 .media-img{
 	float: left;
