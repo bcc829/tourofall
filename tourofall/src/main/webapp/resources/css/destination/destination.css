@@ -255,6 +255,11 @@ div.sub-info .info {
 	margin-bottom:35px;
 }
 
+a, a:hover a:visited {
+	text-decoration: none;
+	cursor: pointer;
+	color:black;
+}
 @-webkit-keyframes fadeEffect {
     from {opacity: 0;}
     to {opacity: 1;}

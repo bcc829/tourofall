@@ -10,4 +10,5 @@ import net.bulldozer.tourofall.review.dto.Review;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 	public List<Review> findByItemId(int itemId);
 	public Review findByUserIdAndItemId(long id,int itemId);
+	public long countByUserId(long userId);
 }

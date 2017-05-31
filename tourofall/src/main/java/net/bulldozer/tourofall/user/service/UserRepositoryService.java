@@ -3,7 +3,6 @@ package net.bulldozer.tourofall.user.service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import net.bulldozer.tourofall.answer.dto.Answer;
 import net.bulldozer.tourofall.answer.dto.AnswerRenderingModel;
+import net.bulldozer.tourofall.answer.repository.AnswerRepository;
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModel;
+import net.bulldozer.tourofall.evaluation.repository.EvaluationRepository;
 import net.bulldozer.tourofall.question.dto.Question;
 import net.bulldozer.tourofall.question.dto.QuestionRenderingModel;
+import net.bulldozer.tourofall.question.repository.QuestionRepository;
 import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.dto.ReviewRenderingModel;
+import net.bulldozer.tourofall.review.repository.ReviewRepository;
 import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.dto.UserModificationForm;
 import net.bulldozer.tourofall.user.dto.UserPreference;
@@ -29,11 +32,25 @@ import net.bulldozer.tourofall.user.repository.UserRepository;
 
 @Service
 public class UserRepositoryService implements UserService{
+	
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
+	private QuestionRepository questionRepository;
+	
+	@Autowired
 	private UserPreferenceRepository userPreferenceRepository;
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
+	
+	@Autowired
+	private AnswerRepository answerRepository;
+	
+	@Autowired
+	private EvaluationRepository evaluationRepository;
+	
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -70,6 +87,9 @@ public class UserRepositoryService implements UserService{
 		return userRepository.save(newUser);
 	}
 	
+	
+	
+	
 	@Transactional(readOnly=true)
 	public User getUserByUserId(long id){
 		return userRepository.findOne(id);
@@ -91,27 +111,23 @@ public class UserRepositoryService implements UserService{
 	
 	@Transactional(readOnly=true)
 	@Override
-	public int getQuestionsSizeByUserId(long id){
-		User user = userRepository.findOne(id);
-		return user.getQuestions().size();
+	public long getQuestionsSizeByUserId(long id){
+		return questionRepository.countByUserId(id);
 	}
 	@Transactional(readOnly=true)
 	@Override
-	public int getAnswersSizeByUserId(long id){
-		User user = userRepository.findOne(id);
-		return user.getAnswers().size();
+	public long getAnswersSizeByUserId(long id){
+		return answerRepository.countByUserId(id);
 	}
 	@Transactional(readOnly=true)
 	@Override
-	public int getReviewsSizeByUserId(long id){
-		User user = userRepository.findOne(id);
-		return user.getReviews().size();
+	public long getReviewsSizeByUserId(long id){
+		return reviewRepository.countByUserId(id);
 	}
 	@Transactional(readOnly=true)
 	@Override
-	public int getEvaluationsSizeByUserId(long id){
-		User user = userRepository.findOne(id);
-		return user.getEvaluations().size();
+	public long getEvaluationsSizeByUserId(long id){
+		return evaluationRepository.countByUserId(id);
 	}
 	
 	

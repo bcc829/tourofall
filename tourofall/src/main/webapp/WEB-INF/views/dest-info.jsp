@@ -418,10 +418,14 @@
 						<c:forEach var="reviewRenderingModel" items="${reviewRenderingModelsSet.reviewRenderingModels}">
 							<li>
 								<div class="reviewline-userbadge magenta">
+									<a href="<c:url value="/users/${reviewRenderingModel.userId}"/>">
 									<i class="fa fa-user"></i>
+									</a>
 								</div>
 								<div class="reviewline-username">
+									<a href="<c:url value="/users/${reviewRenderingModel.userId}"/>">
 									${reviewRenderingModel.lastName}${reviewRenderingModel.firstName}
+									</a>
 								</div>
 								<div class="reviewline-panel">
 									<div class="review-rating">
@@ -481,10 +485,10 @@
 							<tbody>
 								<c:forEach var="questionRenderingModel" items="${questionRenderingModelsSet.questionRenderingModels}" varStatus="status">								
 									<tr>
-										<td>${status.index+1}</td>
-										<td><a id="${questionRenderingModel.questionId}" data-toggle="modal" data-target="#question">${questionRenderingModel.title}<span class="badge">${questionRenderingModel.answerCount}</span></a></td>
+										<td>${(questionRenderingModelsSet.pageNo-1)*5 + status.index+1}</td>
+										<td><a class="js-question" id="${questionRenderingModel.questionId}" data-toggle="modal" data-target="#question">${questionRenderingModel.title}<span class="badge">${questionRenderingModel.answerCount}</span></a></td>
 										<td>${questionRenderingModel.createdDate.year+1900}-${questionRenderingModel.createdDate.month+1}-${questionRenderingModel.createdDate.date}</td>
-										<td>${questionRenderingModel.lastName}${questionRenderingModel.firstName}</td>
+										<td><a class="js-users" href="<c:url value="/users/${questionRenderingModel.userId}"/>">${questionRenderingModel.lastName}${questionRenderingModel.firstName}</a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -492,17 +496,17 @@
 						<ul class="pagination">
 							<li>
 								<c:if test="${questionRenderingModelsSet.pageNo -  5>= 1}">
-  									<a href="#qna">&lt;&lt;</a>
+  									<a class="js-pagination-double-left" href="#qna">&lt;&lt;</a>
   								</c:if>
 							</li>
 							<li>
 								<c:if test="${questionRenderingModelsSet.pageNo -  1>= 1}">
-									<a href="#qna">&lt;</a>
+									<a class="js-pagination-left" href="#qna">&lt;</a>
   								</c:if>
 							</li>
   							<c:forEach var="num" items="${questionRenderingModelsSet.indexList}">
   								<li>
-  									<a href="#qna">
+  									<a class="js-pagination-num" href="#qna">
   										${num}
 
   									</a>
@@ -510,12 +514,12 @@
   							</c:forEach>
   							<li>
   								<c:if test="${questionRenderingModelsSet.pageNo +  1 <= questionRenderingModelsSet.totalPage}">
-  									<a href="#qna">&gt;</a>
+  									<a class="js-pagination-right" href="#qna">&gt;</a>
   								</c:if>
   							</li>
   							<li>
   								<c:if test="${questionRenderingModelsSet.pageNo +  5 <= questionRenderingModelsSet.totalPage}">
-  									<a href="#qna">&gt;&gt;</a>
+  									<a class="js-pagination-double-right" href="#qna">&gt;&gt;</a>
   								</c:if>
   							</li>
 						</ul>

@@ -144,9 +144,9 @@ function getReviewRenderingModels(){
 	});
 }
 $(document).ready(getReviewRenderingModels);
-
-function getQuestionRenderingModels(){
-	$('ul.pagination li a').click(function(){
+$(document).ready(function(){
+	$('#qna ul.pagination li a').on('click',function(){
+		alert('entered');
 		var pageNo;
 		var pIndex = $('#qna').find('input[name="currentPageNo"]').attr('value');
 		switch($(this).text()){
@@ -201,40 +201,54 @@ function getQuestionRenderingModels(){
 									$(".table-responsive tbody")
 										.append($('<tr>')
 											.append($('<td>')
-												.append(index+1)
+												.append((result.pageNo-1)*5+index+1)
 											)
 											.append($('<td>')
 												.append($('<a>')
-													.attr('href','#')
+													.attr('id',value.questionId)
+													.attr('data-toggle','modal')
+													.attr('data-target','#question')
+													.attr('class','js-question')
+													.attr('onclick','getQnARenderingModels(event)')
 													.append(value.title)
+													.append($('<span>')
+															.attr('class','badge')
+															.append(value.answerCount)
+													)
 												)
 											)
 											.append($('<td>')
 												.append((date.getFullYear())+'-'+(date.getMonth()+1)+'-'+(date.getDate()))
 											)
 											.append($('<td>')
-												.append(value.lastName+value.firstName)
+													.append($('<a>')
+															.attr('class','js-users')
+															.attr('href','/tourofall/users/'+value.userId)
+																.append(value.lastName+value.firstName)
+													)
 											)
 										);
 				});
 				
 				var indexList = result.indexList;
-				
+				var v;
 				if(result.pageNo - 5 >= 1){
+					v = result.pageNo - 5;
 					$('.pagination')
 						.append($('<li>')
 							.append($('<a>')
-								.attr('onclick','getQuestionRenderingModels()')
+								.attr('onclick','getQuestionRenderingModels(+'+v+'+)')
 								.attr('href','#qna')
 								.append("<<")
 							)
 						);
 				} 
 				if(result.pageNo - 1 >= 1){
+					v= result.pageNo - 1;
 					$('.pagination')
 					.append($('<li>')
 						.append($('<a>')
-							.attr('onclick','getQuestionRenderingModels()')
+							.attr('onclick','getQuestionRenderingModels('+v+')')
 							.attr('href','#qna')
 							.append("<")
 						)
@@ -242,10 +256,11 @@ function getQuestionRenderingModels(){
 				} 
 				
 				$.each( indexList, function(index, value){
+					v = value;
 					$('.pagination')
 					.append($('<li>')
 						.append($('<a>')
-							.attr('onclick','getQuestionRenderingModels()')
+							.attr('onclick','getQuestionRenderingModels('+v+')')
 							.attr('href','#qna')
 							.append(value)
 						)
@@ -253,21 +268,23 @@ function getQuestionRenderingModels(){
 				});
 				
 				if(result.pageNo + 1 <= result.totalPage){
+					v = result.pageNo + 1;
 					$('.pagination')
 					.append($('<li>')
 						.append($('<a>')
-							.attr('onclick','getQuestionRenderingModels()')
+							.attr('onclick','getQuestionRenderingModels('+v+')')
 							.attr('href','#qna')
 							.append(">")
 						)
 					);
 				}
 				if(result.pageNo + 5 <= result.totalPage){
+					v = result.pageNo + 5;
 					$('.pagination')
 					.append($('<li>')
 						.append($('<a>')
 							.attr('href','#qna')
-							.attr('onclick','getQuestionRenderingModels()')
+							.attr('onclick','getQuestionRenderingModels('+v+')')
 							.append(">>")
 						)
 					);
@@ -279,9 +296,158 @@ function getQuestionRenderingModels(){
 			}
 		});
 	});
+});
+function getQuestionRenderingModels(v){
+		alert(v);
+		var pageNo;
+		var pIndex = $('#qna').find('input[name="currentPageNo"]').attr('value');
+		switch(v){
+		case '<':
+			pageNo = parseInt(pIndex,10)-1;
+			if(pageNo < 1)
+				pageNo = 1;
+			break;
+		case '<<':
+			pageNo = parseInt(pIndex,10)-5;
+			if(pageNo < 1)
+				pageNo = 1;
+			break;
+		case '>':
+			pageNo = parseInt(pIndex,10)+1;
+			break;
+		case '>>':
+			pageNo = parseInt(pIndex,10)+5;
+			break;
+		default:
+			pageNo = parseInt(v,10);
+			break;
+		}
+		$('#qna').find('input[name="currentPageNo"]').attr('value', pageNo);
+		
+		var itemId = $('#qna').find('input[name="itemId"]').val();
+		var formUrl = "/tourofall/dest/info/questions";
+		
+		var parameter = new Object();
+		
+		parameter.itemId = itemId;
+		parameter.pageNo = pageNo;
+		
+	
+		var pData = $.param(parameter);
+		
+		
+		var request = $.ajax({
+			type:"GET",
+			url:formUrl,
+			contentType:"text/plain",
+			data:pData,
+			dataType:"json",
+			success: function(result,status,xhr){
+				$('.table-responsive tbody').empty();
+				
+				$('.pagination').empty();
+				
+				var questionRenderingModels = result.questionRenderingModels;
+				$.each( questionRenderingModels , function(index, value){
+									var date = new Date(value.createdDate);
+									$(".table-responsive tbody")
+										.append($('<tr>')
+												.append($('<td>')
+														.append((result.pageNo-1)*5+index+1)
+													)
+													.append($('<td>')
+														.append($('<a>')
+															.attr('id',value.questionId)
+															.attr('data-toggle','modal')
+															.attr('data-target','#question')
+															.attr('class','js-question')
+															.attr('onclick','getQnARenderingModels(event)')
+															.append(value.title)
+															.append($('<span>')
+																	.attr('class','badge')
+																	.append(value.answerCount)
+															)
+														)
+													)
+													.append($('<td>')
+														.append((date.getFullYear())+'-'+(date.getMonth()+1)+'-'+(date.getDate()))
+													)
+													.append($('<td>')
+															.append($('<a>')
+																	.attr('class','js-users')
+																	.attr('href','/tourofall/users/'+value.userId)
+																		.append(value.lastName+value.firstName)
+															)
+													)
+										);
+				});
+				
+				var indexList = result.indexList;
+				var v;
+				if(result.pageNo - 5 >= 1){
+					v = result.pageNo - 5;
+					$('.pagination')
+						.append($('<li>')
+							.append($('<a>')
+								.attr('onclick','getQuestionRenderingModels('+v+')')
+								.attr('href','#qna')
+								.append("<<")
+							)
+						);
+				} 
+				if(result.pageNo - 1 >= 1){
+					v = result.pageNo - 1;
+					$('.pagination')
+					.append($('<li>')
+						.append($('<a>')
+							.attr('onclick','getQuestionRenderingModels('+v+')')
+							.attr('href','#qna')
+							.append("<")
+						)
+					);
+				} 
+				
+				$.each( indexList, function(index, value){
+					v = value;
+					$('.pagination')
+					.append($('<li>')
+						.append($('<a>')
+							.attr('onclick','getQuestionRenderingModels('+v+')')
+							.attr('href','#qna')
+							.append(value)
+						)
+					);
+				});
+				
+				if(result.pageNo + 1 <= result.totalPage){
+					v = result.pageNo + 1;
+					$('.pagination')
+					.append($('<li>')
+						.append($('<a>')
+							.attr('onclick','getQuestionRenderingModels('+v+')')
+							.attr('href','#qna')
+							.append(">")
+						)
+					);
+				}
+				if(result.pageNo + 5 <= result.totalPage){
+					v = result.pageNo + 5;
+					$('.pagination')
+					.append($('<li>')
+						.append($('<a>')
+							.attr('href','#qna')
+							.attr('onclick','getQuestionRenderingModels('+v+')')
+							.append(">>")
+						)
+					);
+				}
+				
+			},
+			error: function(xhr){
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
 };
-
-$(document).ready(getQuestionRenderingModels);
 
 
 function sendReviewRegistration(){
@@ -427,9 +593,8 @@ $(document).ready(sendQuestionRegistration);
 
 
 var selected;
-
-function getQnARenderingModels(){
-	$('#qna table tbody tr td a').click(function(){
+$(document).ready(function(){
+	$('#qna table tbody tr td a.js-question').click(function(){
 		selected = $(this);
 		var questionId = $(this).attr('id');
 		
@@ -471,8 +636,11 @@ function getQnARenderingModels(){
 								.append($('<hr>')
 								)
 								.append($('<div>')
-									.append(value.lastName+value.firstName+" ")
-									.append((date.getFullYear())+'-'+(date.getMonth()+1)+'-'+(date.getDate()))
+									.append($('<a>')
+										.attr('href','/tourofall/users/'+value.userId)
+										.append(value.lastName+value.firstName)
+									)
+									.append(" "+(date.getFullYear())+'-'+(date.getMonth()+1)+'-'+(date.getDate()))
 									.append($('<br />'))
 									.append(value.content)
 								)
@@ -486,12 +654,62 @@ function getQnARenderingModels(){
 		});
 		
 	});
+})
+function getQnARenderingModels(event){
+	selected = $(event.target);
+	var questionId = $(event.target).attr('id');
 	
+	var formUrl = "/tourofall/qna/question/"+questionId;
+	
+	alert(formUrl);
+	
+	var request = $.ajax({
+		type:"GET",
+		url:formUrl,
+		contentType:"text/plain",
+		dataType:"json",
+		success: function(result,status,xhr){
+			var questionRenderingModel = result.questionRenderingModel;
+			$('#question .js-question-title').append("제목> "+questionRenderingModel.title);
+			
+			
+			
+			$('#question #question-content').append($('<p>')
+											.append("내용> "+questionRenderingModel.content)
+										);
+			
+			var answerRenderingModels = result.answerRenderingModels;
+			$('#modal-answers')
+			.append($('<hr>')
+			)
+			.append("댓글")
+			.append($('<span>')
+				.attr('class','badge')
+				.append(questionRenderingModel.answerCount)
+			);
+			$.each( answerRenderingModels , function(index, value){
+				var date = new Date(value.createdDate);
+				$('#modal-answers')
+							.append($('<hr>')
+							)
+							.append($('<div>')
+								.append($('<a>')
+									.attr('href','/tourofall/users/'+value.userId)
+									.append(value.lastName+value.firstName)
+								)
+								.append(" "+(date.getFullYear())+'-'+(date.getMonth()+1)+'-'+(date.getDate()))
+								.append($('<br />'))
+								.append(value.content)
+							)
+			});
+			$('form[name="answer-register"] input[name="questionId"]').attr('value',questionRenderingModel.questionId);
+			
+		},
+		error: function(xhr){
+			alert("An error occured: " + xhr.status + " " + xhr.statusText);
+		}
+	});
 }
-
-
-
-$(document).ready(getQnARenderingModels);
 
 
 function sendAnswerRegistration(){

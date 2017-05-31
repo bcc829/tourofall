@@ -18,9 +18,9 @@ public interface UserService {
 	public Collection<AnswerRenderingModel> getAnswersByUserId(long id);
 	public Collection<ReviewRenderingModel> getReviewsByUserId(long id);
 	public Collection<EvaluationRenderingModel> getEvaluationsByUserId(long id);
-	public int getQuestionsSizeByUserId(long id);
-	public int getAnswersSizeByUserId(long id);
-	public int getReviewsSizeByUserId(long id);
-	public int getEvaluationsSizeByUserId(long id);
+	public long getQuestionsSizeByUserId(long id);
+	public long getAnswersSizeByUserId(long id);
+	public long getReviewsSizeByUserId(long id);
+	public long getEvaluationsSizeByUserId(long id);
 	public UserModificationForm getUserModificationFormByUserId(long id);
 }

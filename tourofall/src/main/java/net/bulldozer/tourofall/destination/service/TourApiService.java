@@ -13,12 +13,15 @@ import java.util.Set;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import net.bulldozer.tourofall.destination.dto.SearchResultRenderingModel;
+import net.bulldozer.tourofall.destination.dto.SearchResultRenderingModelsSet;
 import net.bulldozer.tourofall.destination.util.TourJSONUtilities;
 import net.bulldozer.tourofall.destination.util.TourUriUtilities;
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
@@ -30,6 +33,7 @@ import net.bulldozer.tourofall.user.repository.UserRepository;
 
 @Service
 public class TourApiService {
+	private static final int PAGE_COUNT = 5;
 	@Autowired
 	private RestTemplate restTemplate;
 	
@@ -146,8 +150,8 @@ public class TourApiService {
 		return evalList;
 	}
 	
-	
-	public JSONObject getSimpleSearchResult(String query, String pageNum) throws Exception {
+	@Transactional(readOnly=true)
+	public SearchResultRenderingModelsSet getSearchResult(String query, String pageNum) throws Exception {
 		Map<String,String> parameter = new HashMap<String,String>();
 		parameter.put("keyword", URLDecoder.decode(URLEncoder.encode(query, "UTF-8"), "UTF-8"));
 		parameter.put("pageNo", pageNum);
@@ -155,7 +159,123 @@ public class TourApiService {
 		parameter.put("numOfRows"  , "8");
 		parameter.put("listYN", "Y");
 		
-		return sendAndReceiveDataFromApiServer("searchKeyword",parameter);
+		List<SearchResultRenderingModel> searchResultRenderingModels = new ArrayList<SearchResultRenderingModel>();
+		SearchResultRenderingModelsSet searchResultRenderingModelsSet =  new SearchResultRenderingModelsSet();
+		List<Integer> numList = new ArrayList<Integer>();
+		
+		
+		JSONObject body = sendAndReceiveDataFromApiServer("searchKeyword",parameter);
+		
+		
+		if(body == null){
+			searchResultRenderingModelsSet.setSearchResultRenderingModels(searchResultRenderingModels);
+			searchResultRenderingModelsSet.setPageNo(1);
+			searchResultRenderingModelsSet.setTotalCount(0);
+			numList.add(1);
+			searchResultRenderingModelsSet.setNumList(numList);
+			searchResultRenderingModelsSet.setTotalPage(0);
+			return searchResultRenderingModelsSet;
+		}
+		
+		
+		long numOfRows = (Long)body.get("numOfRows");
+		long pageNo = (Long)body.get("pageNo");
+		long totalCount = (Long)body.get("totalCount");
+		
+		System.out.println("numOfRows: "+numOfRows +", pageNo: " + pageNo +", totalCount: " + totalCount);
+		long listIndex = (pageNo-1)/PAGE_COUNT;
+		long totalPage = totalCount/numOfRows;
+		if(totalCount%numOfRows != 0){
+			totalPage++;
+		}
+		
+		
+		long listTotal = totalPage/PAGE_COUNT;
+		
+
+		if(listIndex == listTotal && totalPage%PAGE_COUNT != 0){
+			for(long i = 1 + listIndex*5; i <= listIndex*5 + totalPage%PAGE_COUNT; i++){
+				numList.add((int)i);
+			}
+		}else{
+			for(long i = 1 + listIndex*5; i <= 5 + listIndex*5; i++){
+				numList.add((int)i);
+			}
+		}
+		
+		System.out.println(numList);
+			
+		System.out.println("listIndex: "+listIndex +", totalPage: " + totalPage +", listTotal: " + listTotal);
+		
+		
+		
+		JSONObject itemSet = (JSONObject) body.get("items");
+		
+		
+		Object principal  = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserAuthenticationDetails userAuthenticationDetails;
+		if(principal instanceof String){
+			userAuthenticationDetails = null;
+		}else{
+			userAuthenticationDetails = (UserAuthenticationDetails)principal; 
+		}
+		
+		if (((Long)body.get("totalCount")) != 1) {
+			JSONArray items = (JSONArray) itemSet.get("item");
+			for(Object obj : items){
+				JSONObject item = (JSONObject)obj;
+				long contentId = (long)item.get("contentid");
+				int itemId = (int)contentId;
+		
+				SearchResultRenderingModel searchResultRenderingModel = SearchResultRenderingModel.getBuilder()
+																		.itemId(itemId)
+																		.imageUrl((String)item.get("firstimage"))
+																		.title((String)item.get("title"))
+																		.address((String)item.get("addr1")+(String)item.get("addr2"))
+																		.build();
+																		
+				if(userAuthenticationDetails != null){
+					Evaluation evaluation = evaluationRepository.findByUserIdAndItemId(userAuthenticationDetails.getId(), itemId);
+					if(evaluation == null){
+						searchResultRenderingModel.setScore(0);
+					}else{
+						searchResultRenderingModel.setScore(evaluation.getScore());
+					}
+					
+				}
+				searchResultRenderingModels.add(searchResultRenderingModel);
+			}
+		} else {
+			JSONObject item = (JSONObject) itemSet.get("item");
+			long contentId = (long)item.get("contentid");
+			int itemId = (int)contentId;
+			SearchResultRenderingModel searchResultRenderingModel = SearchResultRenderingModel.getBuilder()
+																		.itemId(itemId)
+																		.imageUrl((String)item.get("firstimage"))
+																		.title((String)item.get("title"))
+																		.address((String)item.get("addr1")+(String)item.get("addr2"))
+																		.build();
+					
+			if(userAuthenticationDetails != null){
+				Evaluation evaluation = evaluationRepository.findByUserIdAndItemId(userAuthenticationDetails.getId(), itemId);
+				if(evaluation == null){
+					searchResultRenderingModel.setScore(0);
+				}else{
+					searchResultRenderingModel.setScore(evaluation.getScore());
+				}
+			}
+			searchResultRenderingModels.add(searchResultRenderingModel);
+		}
+		
+		
+		searchResultRenderingModelsSet.setSearchResultRenderingModels(searchResultRenderingModels);
+		searchResultRenderingModelsSet.setPageNo((int)pageNo);
+		searchResultRenderingModelsSet.setTotalCount((int)totalCount);
+		searchResultRenderingModelsSet.setNumList(numList);
+		searchResultRenderingModelsSet.setTotalPage((int)totalPage);
+		
+		return searchResultRenderingModelsSet; 
+		
 	}
 	public JSONObject getDetailSearchResult(String query, String pageNum,String ta, String sc, String a) throws Exception{
 		System.out.println(query+", "+pageNum+", "+ta+", "+sc+", "+a);

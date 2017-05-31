@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.bulldozer.tourofall.destination.dto.SearchResultRenderingModel;
+import net.bulldozer.tourofall.destination.dto.SearchResultRenderingModelsSet;
 import net.bulldozer.tourofall.destination.service.TourApiService;
 import net.bulldozer.tourofall.destination.util.DetailInfoUtil;
 
@@ -73,11 +75,17 @@ public class SearchController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String simpleSearch(@RequestParam(value = "s", required = false) String query, @RequestParam(value="p",defaultValue="1") String pageNum, Model model) throws Exception {
 		if (query != null) {
-			JSONObject body = tourApiService.getSimpleSearchResult(query,pageNum);
-			if (body != null) {
-				model.addAttribute("query", query);
-				addPageContentToModel(body,model);
+			SearchResultRenderingModelsSet searchResultRenderingModelsSet = tourApiService. getSearchResult(query,pageNum);
+			
+			model.addAttribute("query", query);
+			model.addAttribute("searchResultRenderingModelsSet", searchResultRenderingModelsSet);
+			
+			int count=0;
+			for(SearchResultRenderingModel searchResultRenderingModel : searchResultRenderingModelsSet.getSearchResultRenderingModels()){
+				model.addAttribute("searchResultRenderingModel"+count, searchResultRenderingModel);
+				count++;
 			}
+			
 		}
 		return "search";
 	}

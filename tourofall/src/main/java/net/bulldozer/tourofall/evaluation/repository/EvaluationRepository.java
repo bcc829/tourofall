@@ -10,4 +10,5 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Long>{
 	public Evaluation findByUserIdAndItemId(long id,int itemId);
 	public List<Evaluation> findByItemId(int itemId);
 	public List<Evaluation> findByUserId(long userId);
+	public long countByUserId(long userId);
 }

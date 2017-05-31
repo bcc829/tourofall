@@ -48,7 +48,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
 				.antMatchers("/review/write/**").authenticated()
 				.antMatchers("/qna/question/write/**").authenticated()
 				.antMatchers("/qna/answer/write/**").authenticated()
-				.antMatchers("/myinfo/**").authenticated()
+				.antMatchers("/users/**").authenticated()
 				.anyRequest().permitAll()
 			.and()
 				.formLogin()

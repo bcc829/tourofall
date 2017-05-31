@@ -21,7 +21,6 @@ function sendEvaluation(){
 			}
 		});
 		
-		
 		var request = $.ajax({
 			url:formUrl,
 			type:"POST",

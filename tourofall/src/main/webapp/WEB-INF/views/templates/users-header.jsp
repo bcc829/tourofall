@@ -4,22 +4,20 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/header/intro.css"/>">
 <script type="text/javascript" src="<c:url value="/resources/js/header/middle-header.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/users/users.js"/>"></script>
 <header class="myinfo-masthead masthead-normal">
 	<div class = "image-container" style="background-image: url('${imageUrl}');">
 	</div>
 </header>
-<nav class="navbar navbar-default">
-  <div class="container">
-    <ul class="nav navbar-nav">
-    	<li><a href="<c:url value="/users/${userId}/questions"/>">질문 (${questionCount})</a></li>
-    	<li><a href="<c:url value="/users/${userId}/answers"/>">댓글  (${answerCount})</a></li>
-    	<li><a href="<c:url value="/users/${userId}/reviews"/>">리뷰 (${reviewCount})</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-    	<sec:authentication var="user" property="principal"/>
+<nav class="container">
+	<ul class="nav nav-tabs">
+		<sec:authentication var="user" property="principal"/>
+		<li class="active"><a href="#user-evaluation">가본 곳<span class="badge">${evaluationCount}</span></a></li>
+    	<li><a href="#user-review">리뷰<span class="badge">${reviewCount}</span></a></li>
     	<c:if test="${user.id == userId}">
-    		<li><a href="<c:url value="/users/${userId}/setting"/>">내 정보설정</a></li>
+    		<li><a href="#user-question">질문<span class="badge">${questionCount}</span></a></li>
+    		<li><a href="#user-answer">댓글<span class="badge">${answerCount}</span></a></li>
+    		<li><a href="#mysetting">내 정보설정</a></li>
     	</c:if>
-    </ul>
-  </div>
+	</ul>
 </nav>

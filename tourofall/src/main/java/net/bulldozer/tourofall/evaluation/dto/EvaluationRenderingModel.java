@@ -13,6 +13,11 @@ public class EvaluationRenderingModel {
 		this.title = title;
 		this.score = score;
 	}
+	public EvaluationRenderingModel(int itemId,String imageUrl, String title) {
+		this.itemId = itemId;
+		this.imageUrl = imageUrl;
+		this.title = title;
+	}
 	public int getItemId() {
 		return itemId;
 	}

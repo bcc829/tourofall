@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-	<definition name="usershome" extends="users">
-		<put-attribute name="body" value="/WEB-INF/views/users-home.jsp"/>
+
+	<definition name="usersinfo" extends="users">
+		<put-attribute name="body" value="/WEB-INF/views/users.jsp"/>
 	</definition>
 	<definition name="usersdetail" extends="users">
 		<put-attribute name="body" value="/WEB-INF/views/users-detail.jsp"/>

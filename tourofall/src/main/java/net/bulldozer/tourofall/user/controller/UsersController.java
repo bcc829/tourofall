@@ -3,16 +3,23 @@ package net.bulldozer.tourofall.user.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.bulldozer.tourofall.destination.service.TourApiService;
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
+import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModel;
+import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModelsSet;
 import net.bulldozer.tourofall.evaluation.service.EvaluationService;
+import net.bulldozer.tourofall.question.dto.QuestionRenderingModelsSet;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.service.UserService;
 import net.bulldozer.tourofall.user.util.DateList;
@@ -34,12 +41,24 @@ public class UsersController {
 		model.addAttribute("userId", userId);
 		
 		
+		
+		
+		
+		
+	}
+	private void addDateList(Model model){
+		model.addAttribute("years", DateList.getYearList());
+		model.addAttribute("months", DateList.getMonthList());
+		model.addAttribute("dates", DateList.getDateList());
+	}
+	
+	private void setCountToHeader(long userId, Model model){
 		model.addAttribute("questionCount", userService.getQuestionsSizeByUserId(userId));
 		model.addAttribute("answerCount", userService.getAnswersSizeByUserId(userId));
 		model.addAttribute("reviewCount", userService.getReviewsSizeByUserId(userId));
 		model.addAttribute("evaluationCount", userService.getEvaluationsSizeByUserId(userId));
-		
-		
+	}
+	private void setImageUrlToHeader(long userId, Model model){
 		List<Evaluation> evaluations = evaluationService.findByUserId(userId);
 		int selected = (int)(Math.random()*evaluations.size());
 		Evaluation evaluation = evaluations.get(selected);
@@ -51,12 +70,35 @@ public class UsersController {
 		} 
 		model.addAttribute("imageUrl", imageUrl);
 	}
-	private void addDateList(Model model){
-		model.addAttribute("years", DateList.getYearList());
-		model.addAttribute("months", DateList.getMonthList());
-		model.addAttribute("dates", DateList.getDateList());
+	
+	private void setEvaluationRenderingModels(long userId, int pageNo, Model model) throws Exception{
+		EvaluationRenderingModelsSet evaluationRenderingModelsSet = evaluationService.getEvaluationRenderingModelsSet(userId, pageNo);
+		
+		model.addAttribute("evaluationRenderingModelsSet", evaluationRenderingModelsSet);
+		int count = 0;
+		for(EvaluationRenderingModel evaluationRenderingModel : evaluationRenderingModelsSet.getEvaluationRenderingModels()){
+			model.addAttribute("evaluationRenderingModel"+count, evaluationRenderingModel);
+			count++;
+		}
 	}
 	@RequestMapping(value="/{userId}", method=RequestMethod.GET)
+	public String showUserInfo(@PathVariable long userId, Model model) {
+		try{
+			setEvaluationRenderingModels(userId,1,model);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		model.addAttribute("userId", userId);
+		setCountToHeader(userId, model);
+		setImageUrlToHeader(userId,model);
+		return "userspage";
+	}
+	@RequestMapping(value="/{userId}/usereval", method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> getQuestionRenderingModels(@RequestParam(value="userId") int itemId, @RequestParam(value="pageNo") int pageNo) throws Exception{
+		EvaluationRenderingModelsSet evaluationRenderingModelsSet = evaluationService.getEvaluationRenderingModelsSet(itemId, pageNo);
+		return new ResponseEntity<EvaluationRenderingModelsSet>(evaluationRenderingModelsSet,HttpStatus.OK);
+	}
+	
 	public String showMyInfoHome(@PathVariable long userId, Model model){
 		addModelToView(userId,model);
 		return "users-home";

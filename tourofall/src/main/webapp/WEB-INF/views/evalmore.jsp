@@ -46,7 +46,7 @@
 							<div class="eval-unit">
 								<article class="eval-unit-card eval-unit-card-fixed eval-unit-card-has-img eval-unit-card-article">
 									<div class="eval-unit-card-mask">
-										<a href="#">
+										<a href="<c:url value="/dest/info/${evaluationRenderingModel.itemId}"/>">
 											<figure class="eval-unit-card-figure">
 												<img alt="이미지 없음" src="${evaluationRenderingModel.imageUrl}" class="img-rounded"  onerror="this.style.display='none'">
 											</figure>
@@ -59,16 +59,16 @@
 												평점
 											</div>
 											<div class="rating">
-												<input type="radio" id="star5-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="5"/><label class = "full" for="star5-${status.index}" title="Awesome - 5 stars"></label>
-									    		<input type="radio" id="star4half-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="4.5" /><label class="half" for="star4half-${status.index}" title="Pretty good - 4.5 stars"></label>
-    											<input type="radio" id="star4-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="4" /><label class = "full" for="star4-${status.index}" title="Pretty good - 4 stars"></label>
-    											<input type="radio" id="star3half-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="3.5" /><label class="half" for="star3half-${status.index}" title="Meh - 3.5 stars"></label>
-    											<input type="radio" id="star3-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="3" /><label class = "full" for="star3-${status.index}" title="Meh - 3 stars"></label>
-    											<input type="radio" id="star2half-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="2.5" /><label class="half" for="star2half-${status.index}" title="Kinda bad - 2.5 stars"></label>
-    											<input type="radio" id="star2-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="2" /><label class = "full" for="star2-${status.index}" title="Kinda bad - 2 stars"></label>
-    											<input type="radio" id="star1half-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="1.5" /><label class="half" for="star1half-${status.index}" title="Meh - 1.5 stars"></label>
-    											<input type="radio" id="star1-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="1" /><label class = "full" for="star1-${status.index}" title="Sucks big time - 1 star"></label>
-    											<input type="radio" id="starhalf-${status.index}" name="evaluationRenderingModels[${status.index}].score" value="0.5" /><label class="half" for="starhalf-${status.index}" title="Sucks big time - 0.5 stars"></label>
+												<input type="radio" id="star5-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="5"/><label class = "full" for="star5-${status.index}" title="Awesome - 5 stars"></label>
+								    		<input type="radio" id="star4half-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="4.5" /><label class="half" for="star4half-${status.index}" title="Pretty good - 4.5 stars"></label>
+    										<input type="radio" id="star4-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="4" /><label class = "full" for="star4-${status.index}" title="Pretty good - 4 stars"></label>
+    										<input type="radio" id="star3half-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="3.5" /><label class="half" for="star3half-${status.index}" title="Meh - 3.5 stars"></label>
+    										<input type="radio" id="star3-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="3" /><label class = "full" for="star3-${status.index}" title="Meh - 3 stars"></label>
+    										<input type="radio" id="star2half-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="2.5" /><label class="half" for="star2half-${status.index}" title="Kinda bad - 2.5 stars"></label>
+    										<input type="radio" id="star2-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="2" /><label class = "full" for="star2-${status.index}" title="Kinda bad - 2 stars"></label>
+    										<input type="radio" id="star1half-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="1.5" /><label class="half" for="star1half-${status.index}" title="Meh - 1.5 stars"></label>
+    										<input type="radio" id="star1-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="1" /><label class = "full" for="star1-${status.index}" title="Sucks big time - 1 star"></label>
+    										<input type="radio" id="starhalf-${status.index}" name="recommendationRenderingModels[${status.index}].score" value="0.5" /><label class="half" for="starhalf-${status.index}" title="Sucks big time - 0.5 stars"></label>
     										</div>
     									</div>
     								</div>

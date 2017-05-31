@@ -55,10 +55,10 @@ function selectCurrentListItem(){
 }
 
 $(document).ready(selectCurrentListItem);
-
-$(window).scroll(function() {
+var preValue = 0;
+function bottomScrollEvent(){
 	
-	if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+	if ($(window).scrollTop() > $(document).height() -20 - $(window).height() && preValue < $(document).height() -20 - $(window).height()) {
 		
 		var formUrl = $("#scroll-form").attr("action");
 		
@@ -111,7 +111,7 @@ $(window).scroll(function() {
 		    						.append($('<div>')
 		    							.attr('class','eval-unit-card-mask')
 		    							.append($('<a>')
-		    								.attr('href','#')
+		    								.attr('href','/tourofall/dest/info/'+value.itemId)
 		    								.append($('<figure>')
 		    									.attr('class','eval-unit-card-figure')
 		    									.append($('<img>')
@@ -266,8 +266,8 @@ $(window).scroll(function() {
 		    							)
 		    						)
 		    					)
-		    				)
-		    			)
+		    				)	
+		    			)//form
 		    		);
 					
 					
@@ -280,6 +280,10 @@ $(window).scroll(function() {
 		
 		
 	}
+	preValue = $(window).scrollTop();
+}
+$(window).scroll(bottomScrollEvent);
+$('body').bind('touchmove', function(e) { 
+	bottomScrollEvent();
 });
-
 
