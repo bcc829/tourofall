@@ -1,13 +1,13 @@
 INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('kmgeu123','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','형규','강','ROLE_USER',false,'1997-4-21');
 INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('mkyong','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','미경','김','ROLE_USER',true,'1980-4-28');
 INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('alex','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','키퍼','알렉스','ROLE_USER',false,'1990-9-6');
+INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('zaqzaq','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','주용','김','ROLE_USER',false,'1994-1-21');
+INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('xswxsw','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','무','권','ROLE_USER',false,'1990-7-10');
+INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('edcedc','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','윤건','김','ROLE_USER',false,'1992-6-11');
 INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('abcdefg123','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','준영','정','ROLE_USER',false,'1993-3-25');
 INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('shchoi123','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','성호','최','ROLE_USER',false,'1993-10-21');
 INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('worldst12','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','귀현','문','ROLE_USER',false,'1993-9-21');
 INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('saddajil','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','영호','허','ROLE_USER',false,'1994-2-21');
-INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('zaqzaq','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','주용','김','ROLE_USER',false,'1994-1-21');
-INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('xswxsw','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','무','권','ROLE_USER',false,'1990-7-10');
-INSERT INTO users(username,password,first_name,last_name,role,gender,birth) VALUES ('edcedc','7d44478749342b0007a4c78be0ee8cb7c050df9934aa88306ad8c85606a5ca5950e3044a5555a120','윤건','김','ROLE_USER',false,'1992-6-11');
 
 INSERT INTO user_preferences(user_id,item_category_code) VALUES(1,'A0101');
 INSERT INTO user_preferences(user_id,item_category_code) VALUES(1,'A0202');
@@ -274,6 +274,15 @@ insert into evaluations (user_id,item_id,score)  values (10,1957694,3);
 insert into evaluations (user_id,item_id,score)  values (10,126534,2);
 insert into evaluations (user_id,item_id,score)  values (10,1046349,2);
 insert into evaluations (user_id,item_id,score)  values (10,767084,2);
+
+INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('최고!','재미 있습니다.',1,126481,1);
+INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('최고!','재미 있습니다.',1,127220,2);
+INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('최고!','재미 있습니다.',1,809596,3);
+INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('최고!','재미 있습니다.',1,128767,4);
+INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('최고!','재미 있습니다.',1,2020690,5);
+INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('최고!','재미 있습니다.',1,127635,6);
+INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('최고!','재미 있습니다.',1,126510,7);
+INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('최고!','재미 있습니다.',1,126508,7);
 
 
 INSERT INTO reviews(title,content,user_id,item_id,evaluation_id) VALUES('최고!','재미 있습니다.',2,126508,26);

@@ -36,7 +36,7 @@ public class UserRegistrationForm {
 
 	private Date birth;
 
-	private SocialService signInProvider;
+	private SocialService signInProvider = SocialService.ordinary;
 	
 	private String year;
 	private String month;

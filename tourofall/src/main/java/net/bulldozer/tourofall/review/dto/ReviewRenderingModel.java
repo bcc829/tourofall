@@ -2,12 +2,13 @@ package net.bulldozer.tourofall.review.dto;
 
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReviewRenderingModel {
 	private long userId;
 	private String title;

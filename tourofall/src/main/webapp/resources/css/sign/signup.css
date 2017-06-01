@@ -6,7 +6,7 @@
 body {
 	background:url(https://st.depositphotos.com/1269993/2653/i/950/depositphotos_26535049-stock-photo-beige-paper-texture-light-background.jpg);
 	background-repeat: no-repeat;
-	background-size: 2200px 1000px;
+	background-size: 2200px 2500px;
 }
 
 .form-signin {
@@ -16,7 +16,6 @@ body {
 	margin-top: 60px;
 	background-color: rgba(0, 0, 0, 0.6);
 	box-shadow:5px 5px 5px 4px #555;
-	height: 810px;
 }
 
 .form-signin {
@@ -238,7 +237,6 @@ h3 {
 	margin-top: 60px;
 	background-color: rgba(0, 0, 0, 0.6);
 	box-shadow:5px 5px 5px 4px #555;
-	height: 790px;
 }
 
 .form-signin {
@@ -461,7 +459,6 @@ h3 {
 	margin-top: 60px;
 	background-color: rgba(0, 0, 0, 0.6);
 	box-shadow:5px 5px 5px 4px #555;
-	height:770px;
 }
 
 .form-signin {
@@ -692,7 +689,6 @@ h3 {
 	color:khaki;
 	font-family: 'Nanum Gothic';
 	font-weight:bolder;
-	height:800px;
 }
 .form-signin-heading {
 	font-family: 'Nanum Gothic';

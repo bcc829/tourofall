@@ -8,12 +8,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.bulldozer.tourofall.destination.dto.ItemBasicInfo;
+import net.bulldozer.tourofall.destination.service.TourApiService;
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.repository.EvaluationRepository;
 import net.bulldozer.tourofall.review.dto.Review;
 import net.bulldozer.tourofall.review.dto.ReviewRegistrationForm;
 import net.bulldozer.tourofall.review.dto.ReviewRenderingModel;
 import net.bulldozer.tourofall.review.dto.ReviewRenderingModelsSet;
+import net.bulldozer.tourofall.review.dto.UserReviewRenderingModel;
+import net.bulldozer.tourofall.review.dto.UserReviewRenderingModelsSet;
 import net.bulldozer.tourofall.review.repository.ReviewRepository;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.dto.User;
@@ -30,6 +34,8 @@ public class ReviewRepositoryService implements ReviewService{
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private TourApiService tourApiService;
 	
 	@Transactional
 	@Override
@@ -73,6 +79,54 @@ public class ReviewRepositoryService implements ReviewService{
 		
 	}
 	
+	
+	@Transactional(readOnly=true)
+	@Override
+	public UserReviewRenderingModelsSet getUserReviewRenderingModelsSet(long userId, int index) throws Exception{
+		List<UserReviewRenderingModel> userReviewRenderingModels = new ArrayList<UserReviewRenderingModel>(); 
+		List<Review> reviews = reviewRepository.findByUserId(userId);
+		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		UserReviewRenderingModelsSet userReviewRenderingModelsSet = new UserReviewRenderingModelsSet();
+		
+		for(int i = index*6; i < index*6+6; i++){
+			Review review = null;
+			try{
+				review = reviews.get(i);
+			}catch(IndexOutOfBoundsException iobe){
+				break;
+			}
+			
+			UserReviewRenderingModel userReviewRenderingModel = UserReviewRenderingModel.getExtendedBuilder()
+					.userId(review.getUser().getId())
+					.title(review.getTitle())
+					.content(review.getContent())
+					.createdDate(review.getCreatedDate())
+					.lastName(review.getUser().getLastName())
+					.firstName(review.getUser().getFirstName())
+					.score(review.getEvaluation().getScore())
+					.itemId(review.getItemId())
+					.build();
+			
+			Evaluation evaluation = evaluationRepository.findByUserIdAndItemId(userAuthenticationDetails.getId(), review.getItemId());
+			if(evaluation != null){
+				userReviewRenderingModel.setMyScore(evaluation.getScore());
+			}
+			ItemBasicInfo itemBasicInfo = tourApiService.getItemBasicInfo(review.getItemId());
+			userReviewRenderingModel.setItemTitle(itemBasicInfo.getTitle());
+			userReviewRenderingModel.setImageUrl(itemBasicInfo.getImageUrl());
+			userReviewRenderingModel.setAddress(itemBasicInfo.getAddress());
+			
+			
+			userReviewRenderingModels.add(userReviewRenderingModel);
+		}
+		boolean nextIndex = reviews.size() > (index+1)*6;  
+		userReviewRenderingModelsSet.setUserReviewRenderingModels(userReviewRenderingModels);
+		userReviewRenderingModelsSet.setNextIndex(nextIndex);
+		
+		
+		return userReviewRenderingModelsSet;
+	}
 	@Transactional(readOnly=true)
 	@Override
 	public ReviewRenderingModelsSet getReviewRenderingModelsSet(int itemId, int index){

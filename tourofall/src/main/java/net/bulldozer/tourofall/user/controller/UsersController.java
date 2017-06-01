@@ -20,6 +20,10 @@ import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModel;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModelsSet;
 import net.bulldozer.tourofall.evaluation.service.EvaluationService;
 import net.bulldozer.tourofall.question.dto.QuestionRenderingModelsSet;
+import net.bulldozer.tourofall.review.dto.ReviewRenderingModelsSet;
+import net.bulldozer.tourofall.review.dto.UserReviewRenderingModel;
+import net.bulldozer.tourofall.review.dto.UserReviewRenderingModelsSet;
+import net.bulldozer.tourofall.review.service.ReviewService;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.service.UserService;
 import net.bulldozer.tourofall.user.util.DateList;
@@ -36,16 +40,14 @@ public class UsersController {
 	@Autowired
 	private TourApiService tourApiService;
 	
+	@Autowired
+	private ReviewService reviewService;
+	
 	
 	private void addModelToView(long userId, Model model){
 		model.addAttribute("userId", userId);
-		
-		
-		
-		
-		
-		
 	}
+	
 	private void addDateList(Model model){
 		model.addAttribute("years", DateList.getYearList());
 		model.addAttribute("months", DateList.getMonthList());
@@ -61,13 +63,17 @@ public class UsersController {
 	private void setImageUrlToHeader(long userId, Model model){
 		List<Evaluation> evaluations = evaluationService.findByUserId(userId);
 		int selected = (int)(Math.random()*evaluations.size());
-		Evaluation evaluation = evaluations.get(selected);
 		String imageUrl = null;
-		try {
-			imageUrl = tourApiService.getItemImage(evaluation.getItemId());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+		
+		if(selected != 0){
+			Evaluation evaluation = evaluations.get(selected);
+		
+			try {
+				imageUrl = tourApiService.getItemImage(evaluation.getItemId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}
 		model.addAttribute("imageUrl", imageUrl);
 	}
 	
@@ -80,21 +86,49 @@ public class UsersController {
 			model.addAttribute("evaluationRenderingModel"+count, evaluationRenderingModel);
 			count++;
 		}
+		System.out.println("EvaluationRenderingModels"+count);
 	}
+	
+	
+	
+	private void setUserReviewRenderingModels(long userId, int index, Model model) throws Exception{
+		UserReviewRenderingModelsSet userReviewRenderingModelsSet = reviewService.getUserReviewRenderingModelsSet(userId, index);
+		
+		model.addAttribute("userReviewRenderingModelsSet", userReviewRenderingModelsSet);
+		int count = 0;
+		for(UserReviewRenderingModel userReviewRenderingModel : userReviewRenderingModelsSet.getUserReviewRenderingModels()){
+			model.addAttribute("userReviewRenderingModel"+count, userReviewRenderingModel);
+			count++;
+		}
+		System.out.println("userReviewRenderingModels : " + count);
+	}
+	
+	
+	
+	
 	@RequestMapping(value="/{userId}", method=RequestMethod.GET)
 	public String showUserInfo(@PathVariable long userId, Model model) {
 		try{
 			setEvaluationRenderingModels(userId,1,model);
+			setUserReviewRenderingModels(userId,0,model);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
 		model.addAttribute("userId", userId);
 		setCountToHeader(userId, model);
 		setImageUrlToHeader(userId,model);
+		
 		return "userspage";
 	}
+	@RequestMapping(value="/{userId}/reviewmore", produces="application/json",method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> getReviewRenderingModels(@PathVariable int userId, @RequestParam(value="index") int index) throws Exception{
+		UserReviewRenderingModelsSet userReviewRenderingModelsSet = reviewService.getUserReviewRenderingModelsSet(userId, index); 
+		return new ResponseEntity<UserReviewRenderingModelsSet>(userReviewRenderingModelsSet, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/{userId}/usereval", method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> getQuestionRenderingModels(@RequestParam(value="userId") int itemId, @RequestParam(value="pageNo") int pageNo) throws Exception{
+	public @ResponseBody ResponseEntity<?> getEvaluationRenderingModels(@RequestParam(value="userId") int itemId, @RequestParam(value="pageNo") int pageNo) throws Exception{
 		EvaluationRenderingModelsSet evaluationRenderingModelsSet = evaluationService.getEvaluationRenderingModelsSet(itemId, pageNo);
 		return new ResponseEntity<EvaluationRenderingModelsSet>(evaluationRenderingModelsSet,HttpStatus.OK);
 	}

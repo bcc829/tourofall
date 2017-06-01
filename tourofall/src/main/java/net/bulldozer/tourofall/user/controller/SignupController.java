@@ -64,7 +64,7 @@ public class SignupController {
 		
 		SecurityUtil.logInUser(createdUser);
 		connectionManager.signupForConnectionRepository(createdUser.getUsername(), request);
-		return "redirect:/";
+		return "redirect:/eval/evalmore";
 	}
 	private User createUser(UserRegistrationForm userRegistrationForm, BindingResult result){
 		User createdUser = null;

@@ -32,7 +32,7 @@
 										<figure class="eval-unit-card-figure">
 											<img alt="이미지 없음" src="${recommendationRenderingModel.imageUrl}" class="img-rounded"  onerror="this.style.display='none'">
 											<div class="eval-unit-card-score">
-												예상 점수   ${score[status.index]}
+												예상 점수   ${recommendationRenderingModel.recommendScore}
 											</div>
 										</figure>
 									</a>

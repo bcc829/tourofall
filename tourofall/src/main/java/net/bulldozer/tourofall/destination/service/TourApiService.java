@@ -13,13 +13,13 @@ import java.util.Set;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import net.bulldozer.tourofall.destination.dto.ItemBasicInfo;
 import net.bulldozer.tourofall.destination.dto.SearchResultRenderingModel;
 import net.bulldozer.tourofall.destination.dto.SearchResultRenderingModelsSet;
 import net.bulldozer.tourofall.destination.util.TourJSONUtilities;
@@ -321,7 +321,32 @@ public class TourApiService {
 		}
 		return imageUrl;
 	}
-
+	public ItemBasicInfo getItemBasicInfo(int contentId) throws Exception{
+		Map<String,String> parameter = new HashMap<String,String>();
+		parameter.put("contentId", Integer.toString(contentId));
+		parameter.put("defaultYN", "Y");
+		parameter.put("firstImageYN", "Y");
+		parameter.put("areaCodeYN","Y");
+		parameter.put("addrinfoYN","Y");
+		parameter.put("mapinfoYN","Y");
+		parameter.put("overviewYN","Y");
+		
+		
+		JSONObject body = sendAndReceiveDataFromApiServer("detailCommon",parameter);
+		if(body != null){
+			JSONObject items = (JSONObject) body.get("items");
+			JSONObject item = (JSONObject) items.get("item");
+			
+			ItemBasicInfo itemBasicInfo = ItemBasicInfo.getBuilder()
+											.title((String)item.get("title"))
+											.address((String)item.get("addr1")+(String)item.get("addr2"))
+											.imageUrl((String)item.get("firstimage"))
+											.build();
+			return itemBasicInfo;			
+		}
+		return null; 
+	}
+	
 	public JSONObject getBasicInfo(int contentId) throws Exception{
 		Map<String,String> parameter = new HashMap<String,String>();
 		parameter.put("contentId", Integer.toString(contentId));

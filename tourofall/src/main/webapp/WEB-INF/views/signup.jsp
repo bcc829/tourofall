@@ -18,20 +18,23 @@
 
 		<div class="form-group">
 			
-			<c:if test="${userRegistrationForm.signInProvider == null}">			
+			<c:if test="${userRegistrationForm.signInProvider == ordinary}">			
 				<sf:input id="userid" path="username" class="form-control idsize" placeholder="아이디" />
 				<label for="userid" title="ID"></label> 
-				<sf:errors path="username" class="idfont" style="color:red;" />
-						
+				<p class="idfont" style="color:red;">
+					<sf:errors path="username" />
+				</p>	
 				<sf:password path="password" id="password" class="form-control pwsize" placeholder="비밀번호" />
 				<label for="password" title="PASSWORD"></label>
-				<sf:errors path="password"></sf:errors>
-			
+				<p class="idfont" style="color:red;">
+					<sf:errors path="password"></sf:errors>
+				</p>
 			
 				<sf:password path="confirmPassword" id="confirmPassword" class="form-control pwsize" placeholder="비밀번호 재확인" />
 				<label for="confirmPassword" title="PASSWORD-CHECK"></label> 
-				<sf:errors path="confirmPassword"></sf:errors>
-				
+				<p class="idfont" style="color:red;">
+					<sf:errors path="confirmPassword"></sf:errors>
+				</p>
 				<table>
 					<tr>
 						<td>
@@ -44,9 +47,11 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<sf:errors path="lastName" /><br/>
-							<sf:errors path="firstName" />
+						<td>
+							<p class="idfont" style="color:red;margin-top:-30px;">
+								<sf:errors path="lastName"  /><br/>
+								<sf:errors path="firstName" />
+							</p>
 						</td>
 					</tr>
 				</table>
@@ -56,7 +61,7 @@
 				
 				<label id="rightt"><sf:radiobutton id="woman" path="gender" value="1"/> 여성</label>
 			</c:if>
-    		<c:if test="${userRegistrationForm.signInProvider != null}">
+    		<c:if test="${userRegistrationForm.signInProvider != ordinary}">
     			<sf:hidden path="username"/>
     			<sf:hidden path="password"/>
     			<sf:hidden path="confirmPassword"/>
@@ -105,8 +110,10 @@
 			<label class="labelmargin1030"><sf:checkbox path="userPreferences" value="A0206"/>문화시설</label>
 			<label class="labelmargin10"><sf:checkbox path="userPreferences" value="A0302"/>레포츠-육상</label>
 			<label class="labelmargin10"><sf:checkbox path="userPreferences" value="A0303"/>레포츠-수상</label>
-			<label class="labelmargin10"><sf:checkbox path="userPreferences" value="A0304"/>레포츠-항공</label>
-			<sf:errors path="userPreferences" />
+			<label class="labelmargin10"><sf:checkbox path="userPreferences" value="A0304"/>레포츠-항공</label><br/>
+			<p class="idfont" style="color:red;margin-left:30px;margin-top:5px;">
+				<sf:errors path="userPreferences" />
+			</p>
 			<hr>
 			<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
 			<button class="btn btn-lg btn-primary btn-block buttonsize" type="submit">작성완료</button>

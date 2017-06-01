@@ -38,6 +38,13 @@ public class PersistenceContext {
 				.addScript("classpath:data-schema.sql")
 				.addScript("classpath:data-insert.sql")
 				.build();
+		
+//		BasicDataSource dataSource = new BasicDataSource();
+//		dataSource.setDriverClassName(env.getRequiredProperty("mysql.driverClassName"));
+//		dataSource.setUrl(env.getRequiredProperty("mysql.url"));
+//		dataSource.setUsername(env.getRequiredProperty("mysql.username"));
+//		dataSource.setPassword(env.getRequiredProperty("mysql.password"));
+//		return dataSource;
 	}
 	
 	@Bean

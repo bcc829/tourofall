@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/common/page-structure.css"/>">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/evaluation/evaluation.css"/>">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/users/users.css"/>">
-<script type="text/javascript" src="<c:url value="/resources/js/evaluation/eval-reco-common.js"/>"></script>
 <div>
 	<sec:authentication var="user" property="principal"/>
 	<div class="js-result-section result-section result-section-hide">
@@ -94,39 +94,82 @@
 		</div>
 		<div id="user-review" class="tab-pane fade">
 			<div class="segment">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-6">
-						<div class="review-card card-body">
-            				<div class="review-card-wrapper">
-              					<div class="review-card-figure review-img">
-                					<img src="http://www.technocrazed.com/wp-content/uploads/2015/12/beautiful-wallpaper-download-13.jpg" class="review-card-img" width=210>
-              					</div>
-              					<div class="review-card-meta review-card-meta-overflow media-body">
-                					<div class="review-card-title">
-										여행지
-									</div>
-									<div class="review-card-address">
-										ㅁ나어람너이러마너이ㅏ리ㅣㅁㄴ얾니ㅏ
-									</div>
-									<div>
-										평점<br/>
-										<i class="review-rating-style fa fa-star"></i>
-										<i class="review-rating-style fa fa-star"></i>
-										<i class="review-rating-style fa fa-star"></i>
-										<i class="review-rating-style fa fa-star-half-empty"></i>
-									</div>
-                					<div class="review-card-content">
-                  						강민규강민규강민규강민규강민규강민규강민규강민규강민규kangmingyuasdfaㅁㄴㅇ로머ㅏㄴsdfasdfas
-                					</div>
-              					</div>
-              					<div class="review-card-date">
-                  					2017년 6월 1일
-                				</div>
-          					  </div>
-         				 </div>
-         				 </div>
+				<div class="container-fluid">
+					<div id="userreviewline" class="row">
+						<c:forEach var = "userReviewRenderingModel" items="${userReviewRenderingModelsSet.userReviewRenderingModels}" varStatus="status">
+							<div class="col-sm-6 row-gap">
+								<sf:form name = "request-eval" action="${pageContext.request.contextPath}/eval/evalmore" commandName="userReviewRenderingModel${status.index}">
+									<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
+									<input type="hidden" name="itemId" value="${userReviewRenderingModel.itemId}">
+									<div class="review-card card-body">
+										<div class="review-card-wrapper">
+              								<div class="review-card-figure review-img">
+                								<img src="${userReviewRenderingModel.imageUrl}" width=210 height=348>
+                								<c:if test="${user.id != userId}">
+                								<div class="review-eval-content">
+                								
+                  									<div class="review-eval-content-rating">
+                  										<div class="review-eval-content-context">
+                    										평점
+                  										</div>
+                  										<div class="rating">
+															<sf:radiobutton path="myScore" id="Rstar5-${status.index}" value="5"/><label class = "full" for="Rstar5-${status.index}" title="Awesome - 5 stars"></label>
+															<sf:radiobutton path="myScore" id="Rstar4half-${status.index}" value="4.5"/><label class="half" for="Rstar4half-${status.index}" title="Pretty good - 4.5 stars"></label>
+															<sf:radiobutton path="myScore" id="Rstar4-${status.index}" value="4"/><label class = "full" for="Rstar4-${status.index}" title="Pretty good - 4 stars"></label>
+															<sf:radiobutton path="myScore" id="Rstar3half-${status.index}" value="3.5"/><label class="half" for="Rstar3half-${status.index}" title="Meh - 3.5 stars"></label>
+															<sf:radiobutton path="myScore" id="Rstar3-${status.index}" value="3"/><label class = "full" for="Rstar3-${status.index}" title="Meh - 3 stars"></label>
+															<sf:radiobutton path="myScore" id="Rstar2half-${status.index}" value="2.5"/><label class="half" for="Rstar2half-${status.index}" title="Kinda bad - 2.5 stars"></label>
+															<sf:radiobutton path="myScore" id="Rstar2-${status.index}" value="2"/><label class = "full" for="Rstar2-${status.index}" title="Kinda bad - 2 stars"></label>
+															<sf:radiobutton path="myScore" id="Rstar1half-${status.index}" value="1.5"/><label class="half" for="Rstar1half-${status.index}" title="Meh - 1.5 stars"></label>
+															<sf:radiobutton path="myScore" id="Rstar1-${status.index}" value="1"/><label class = "full" for="Rstar1-${status.index}" title="Sucks big time - 1 star"></label>
+															<sf:radiobutton path="myScore"  id="Rstarhalf-${status.index}" value="0.5"/><label class="half" for="Rstarhalf-${status.index}" title="Sucks big time - 0.5 stars"></label>
+														</div>
+				   									</div>
+                								</div>
+                								</c:if>
+              								</div>
+            								<div class="review-card-meta review-card-meta-overflow media-body">
+                								<div class="review-card-title">
+              	    								${userReviewRenderingModel.itemTitle}
+                								</div>
+                								<div class="review-card-address">
+                  									${userReviewRenderingModel.address}<br/>
+                								</div>						
+                								<div>
+                  									평점<br/>
+                  									<fmt:parseNumber var = "iScore" type = "number" integerOnly="true" value = "${userReviewRenderingModel.score}" />
+                  									<c:forEach begin="1" end="${iScore}" step="1">
+														<i class="fa fa-star"></i>
+													</c:forEach>
+													<c:if test="${reviewRenderingModel.score - iScore > 0}">
+														<i class="fa fa-star-half-empty"></i>
+													</c:if>
+                								</div>
+                								<div class="review-card-content">
+                									<p>${userReviewRenderingModel.title}</p>
+                  									${userReviewRenderingModel.content}
+                								</div>
+             								</div>
+             								<div class="review-card-date">
+       	      									${userReviewRenderingModel.createdDate.year+1900}년${userReviewRenderingModel.createdDate.month+1}월${userReviewRenderingModel.createdDate.date}일
+			 								</div>
+            							</div>
+         							 </div>
+        						  </sf:form>
+        						  
+        						</div>
+        					</c:forEach>
 					</div>
+					<c:if test="${userReviewRenderingModelsSet.nextIndex}">
+        				<div class="col-sm-12">
+							<button id="getUserReviewMore" class="btn btn-primary btn-block">더 보기 <i class="fa fa-arrow-circle-down"></i></button>
+							<form name="userreviewmore" action="<c:url value="/users/${userId}/reviewmore"/>">
+								<input type="hidden" name="index" value="1" />
+								<input type="hidden" name="userId" value="${userId}" />
+								<input type="hidden" name="myId" value="${user.id}" />
+							</form>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -144,3 +187,4 @@
 		</c:if>
 	</div>
 </div>
+<script type="text/javascript" src="<c:url value="/resources/js/users/users.js"/>"></script>

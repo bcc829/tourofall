@@ -14,7 +14,7 @@
 	<div class="form-signin img-rounded">
 		<form action="<c:url value="/signin/authenticate"/>" method="post">
 			<c:if test="${not empty signoutMsg}">
-        		<p style="color:blue">${signoutMsg}</p>
+        		<p style="color:blue;text-align:center;font-size:3rem;">${signoutMsg}</p>
         	</c:if>
 			<h1 class="form-signin-heading" style="text-align: center;">Tour Of All</h1>
 			<img class="img-circle" src="https://lh3.googleusercontent.com/-N2dyACoEm4U/AAAAAAAAAAI/AAAAAAAAAAA/yFLJFGuSbZk/photo.jpg">
@@ -31,11 +31,6 @@
 				<c:if test="${not empty errorMsg}">
         			<p style="color:red">${errorMsg}</p>
         		</c:if>
-				<div class="checkbox">
-					<label class="labelsize"> <input type="checkbox" value="remember-me">
-						ID 저장하기
-					</label>
-				</div>
 
 				<input type="hidden" name="${_csrf.parameterName}" value="${ _csrf.token}" />
 				<button class="btn btn-lg btn-default btn-block buttonsize1" type="submit"><span>로그인</span>
@@ -49,8 +44,8 @@
 					<span>Facebook 계정으로 로그인</span>
 				</button>
 				<ul>
-					<li><a href="#">회원가입</a>
-					<li><a href="#">아이디/비밀번호 찾기</a>
+					<li><a href="<c:url value="/signup"/>">회원가입</a>
+					
 				</ul>
 		</form>
 	</div>

@@ -23,7 +23,7 @@ public class RecommenderService {
 		RecommendationRenderingModelForm recommendationRenderingModelForm = new RecommendationRenderingModelForm();
 		List<RecommendationRenderingModel> recommendationRenderingModels = new ArrayList<RecommendationRenderingModel>();
 		
-		String result = restTemplate.getForObject("http://113.198.84.67:8080/recommender/"+id, String.class);
+		String result = restTemplate.getForObject("http://113.198.84.69:8080/recommender/"+id, String.class);
 		JSONArray items = RecommendJSONUtilites.getRecommendItems(result);
 		for(Object tmp : items){
 			JSONObject item = (JSONObject)tmp;

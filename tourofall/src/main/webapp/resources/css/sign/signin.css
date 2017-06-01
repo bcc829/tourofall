@@ -5,6 +5,7 @@
 body {
 	background: background:#F0F8FF;
 	background-repeat: no-repeat;
+	background:url(https://st.depositphotos.com/1269993/2653/i/950/depositphotos_26535049-stock-photo-beige-paper-texture-light-background.jpg);
 }
 
 .form-signin {
@@ -15,15 +16,7 @@ body {
 	background-color: rgba(0, 0, 0, 0.6);
 	box-shadow:5px 5px 5px 4px #555;
 	z-index: 10;
-}
-
-.form-signin .checkbox {
-	margin-bottom: 10px; 
-	color: #80ffff;
-	font-family: 'Nanum Gothic';
-	font-weight:bolder;
-	font-size:15px;
-	
+	height:780px;
 }
 
 .form-signin-heading {
@@ -64,10 +57,9 @@ body {
 
 ul li {
 	display: inline-block;
-	margin-top:50px;
-	margin-right: 40px;
-	margin-left:15px;
-	font-size:17px;
+	margin-top:25px;
+	margin-left:110px;
+	font-size:20px;
 }
 
 a {
