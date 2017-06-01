@@ -6,7 +6,7 @@
 <div>
 <!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
@@ -34,7 +34,7 @@
                     	<a id="evalmore" class="page-scroll" href="<c:url value="/eval/evalmore"/>">추천더하기</a>
                     </li>
                     <li class="hidden-sm hidden-md hidden-lg">
-                    	<a class="page-scroll" href="<c:url value="/search/simple"/>">검색하기</a>
+                    	<a class="page-scroll" href="<c:url value="/search"/>">검색하기</a>
                     </li>
                     <c:if test="${pageContext.request.userPrincipal.name == null}">
                     	<li class="hidden-sm hidden-md hidden-lg">

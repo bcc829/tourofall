@@ -3,8 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/common/page-structure.css"/>">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/evaluation/evaluation.css"/>">
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/users/users.css"/>">
 <script type="text/javascript" src="<c:url value="/resources/js/evaluation/eval-reco-common.js"/>"></script>
 <div>
 	<sec:authentication var="user" property="principal"/>
@@ -93,7 +96,36 @@
 			<div class="segment">
 				<div class="container">
 					<div class="row">
-					
+						<div class="col-sm-6">
+						<div class="review-card card-body">
+            				<div class="review-card-wrapper">
+              					<div class="review-card-figure review-img">
+                					<img src="http://www.technocrazed.com/wp-content/uploads/2015/12/beautiful-wallpaper-download-13.jpg" class="review-card-img" width=210>
+              					</div>
+              					<div class="review-card-meta review-card-meta-overflow media-body">
+                					<div class="review-card-title">
+										여행지
+									</div>
+									<div class="review-card-address">
+										ㅁ나어람너이러마너이ㅏ리ㅣㅁㄴ얾니ㅏ
+									</div>
+									<div>
+										평점<br/>
+										<i class="review-rating-style fa fa-star"></i>
+										<i class="review-rating-style fa fa-star"></i>
+										<i class="review-rating-style fa fa-star"></i>
+										<i class="review-rating-style fa fa-star-half-empty"></i>
+									</div>
+                					<div class="review-card-content">
+                  						강민규강민규강민규강민규강민규강민규강민규강민규강민규kangmingyuasdfaㅁㄴㅇ로머ㅏㄴsdfasdfas
+                					</div>
+              					</div>
+              					<div class="review-card-date">
+                  					2017년 6월 1일
+                				</div>
+          					  </div>
+         				 </div>
+         				 </div>
 					</div>
 				</div>
 			</div>

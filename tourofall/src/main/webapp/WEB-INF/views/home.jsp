@@ -6,42 +6,62 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/home/home.css"/>">
 <script type="text/javascript" src="<c:url value="/resources/js/header/big-header.js"/>"></script>
 <div>
-	<header class="masthead masthead-normal">
-			<div class="slideshow slide-fade">	
-				<div class="slideshow-images">
-					<c:forEach var ="todayDestinationRenderingModel" items="${todayDestinationRenderingModels}" varStatus="status">
-						<div id="bg${status.index+1}" class="slideshow-slide" style="background-image: url('${todayDestinationRenderingModel.imageUrl}');">
-						</div>
-					</c:forEach>
-				</div>
-			</div>
-			<div class="masthead-text-wrapper">
-				<div class="masthead-text masthead-responsive-mask">
-					
-					<div class="masthead-straplines">
-						<c:forEach var ="todayDestinationRenderingModel" items="${todayDestinationRenderingModels}" varStatus="status">
-							<div id="ms${status.index+1}" class="masthead-strapline">
-								<div class="masthead-title">
-									오늘의 ${todayDestinationRenderingModel.destinationType}
-								</div>
-								<div class="masthead-subtitle">
-									<a href="<c:url value="/dest/info/${todayDestinationRenderingModel.itemId}"/>" >${todayDestinationRenderingModel.title}</a>
-								</div>
-								<div class="dest-content">
-									주소 : ${todayDestinationRenderingModel.address}<br/>
-									평균 평점 : ${todayDestinationRenderingModel.meanScore}
-								</div>
-							</div>
-						</c:forEach>
-					</div>	
-				</div>
-			</div>
-	</header>
+	<div id="todayCarousel" class="carousel slide" data-ride="carousel">
+	<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#todayCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#todayCarousel" data-slide-to="1"></li>
+			<li data-target="#todayCarousel" data-slide-to="2"></li>
+		</ol>
+
+    <!-- Wrapper for slides -->
+		<div class="carousel-inner carousel-custom-inner" role="listbox">
+			<c:forEach var="todayDestinationRenderingModel" items="${todayDestinationRenderingModels}" varStatus="status">
+				<c:if test="${status.index == 0}">
+					<div class="item active">
+						<img src="${todayDestinationRenderingModel.imageUrl}" alt="" width="460" height="345">
+       					<div class="carousel-custom-caption">
+       						<h3>오늘의 ${todayDestinationRenderingModel.destinationType}</h3>
+       						<p class="lead"><a href="<c:url value="/dest/info/${todayDestinationRenderingModel.itemId}"/>" >${todayDestinationRenderingModel.title}</a></p>
+       						<p>
+       							주소 : ${todayDestinationRenderingModel.address}<br/>
+								평균 평점 : ${todayDestinationRenderingModel.meanScore}
+							</p>
+       					</div>
+       				</div>
+				</c:if>
+				<c:if test="${status.index != 0}">
+					<div class="item">
+						<img src="${todayDestinationRenderingModel.imageUrl}" alt="" width="460" height="345">
+       					<div class="carousel-custom-caption">
+       						<h3>오늘의 ${todayDestinationRenderingModel.destinationType}</h3>
+       						<p class="lead"><a href="<c:url value="/dest/info/${todayDestinationRenderingModel.itemId}"/>" >${todayDestinationRenderingModel.title}</a></p>
+       						<p>
+       							주소 : ${todayDestinationRenderingModel.address}<br/>
+								평균 평점 : ${todayDestinationRenderingModel.meanScore}
+							</p>
+       					</div>
+       				</div>
+				</c:if>
+			</c:forEach>		
+		</div>
+
+    		<!-- Left and right controls -->
+    	<a class="left carousel-control" href="#todayCarousel" role="button" data-slide="prev">
+      		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+     		<span class="sr-only">Previous</span>
+    	</a>
+    	<a class="right carousel-control" href="#todayCarousel" role="button" data-slide="next">
+   			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+   			<span class="sr-only">Next</span>
+ 		</a>
+  	</div>
+	
 	<section class="page-container page-container-ready" >
 		<div class="segment">
-			<div class="container">
+			<div class="container-fluid">
 				<article class="intro">
-					<h2 class="segment-heading">인기 베스트 4</h2>
+					<h2 class="segment-heading">Best 여행지</h2>
 					<div class="rank-container">
 						<div class="rank-list-container">
 							<ul class="rank-list" style="margin-top: 0px;transform: translate3d(0px, 0px, 0px);">
