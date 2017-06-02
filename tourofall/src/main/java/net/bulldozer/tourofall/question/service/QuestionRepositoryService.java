@@ -17,6 +17,7 @@ import net.bulldozer.tourofall.question.dto.Question;
 import net.bulldozer.tourofall.question.dto.QuestionRegistrationForm;
 import net.bulldozer.tourofall.question.dto.QuestionRenderingModel;
 import net.bulldozer.tourofall.question.dto.QuestionRenderingModelsSet;
+import net.bulldozer.tourofall.question.dto.UserQuestionRenderingModelsSet;
 import net.bulldozer.tourofall.question.repository.QuestionRepository;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.dto.User;
@@ -132,6 +133,8 @@ public class QuestionRepositoryService implements QuestionService {
 		List<Question> questions = questionRepository.findByItemId(itemId);
 		return questions.size();
 	}
+	
+	
 	@Transactional(readOnly=true)
 	@Override
 	public QnARenderingModelsSet getQnARenderingModelsSet(long questionId){
@@ -180,6 +183,38 @@ public class QuestionRepositoryService implements QuestionService {
 		return qnARenderingModelsSet;
 	}
 	
+	@Transactional(readOnly=true)
+	@Override
+	public UserQuestionRenderingModelsSet getUserQuestionRenderingModelsSet(long userId, int index){
+		List<Question> questions = questionRepository.findByUserId(userId);
+		List<QuestionRenderingModel> questionRenderingModels = new ArrayList<QuestionRenderingModel>();
+		UserQuestionRenderingModelsSet userQuestionRenderingModelsSet = new UserQuestionRenderingModelsSet();
+		
+		for(int i=0; i < questions.size();i++){
+			Question question = null;
+			try{
+				question = questions.get(i);
+			}catch(IndexOutOfBoundsException iobe){
+				break;
+			}
+			QuestionRenderingModel questionRenderingModel = QuestionRenderingModel.getBuilder()
+					.userId(question.getUser().getId())
+					.questionId(question.getId())
+					.answerCount(question.getAnswers().size())
+					.title(question.getTitle())
+					.content(question.getContent())
+					.createdDate(question.getCreatedDate())
+					.lastName(question.getUser().getLastName())
+					.firstName(question.getUser().getFirstName())
+					.visitor(question.getVisitor())
+					.build();
+			questionRenderingModels.add(questionRenderingModel);
+		}
+		userQuestionRenderingModelsSet.setNextIndext(false);
+		userQuestionRenderingModelsSet.setQuestionRenderingModels(questionRenderingModels);
+		
+		return userQuestionRenderingModelsSet;
+	}
 	@Transactional(readOnly=true)
 	@Override
 	public QuestionRenderingModelsSet getQuestionRenderingModelsSet(int itemId, int pageNo) {

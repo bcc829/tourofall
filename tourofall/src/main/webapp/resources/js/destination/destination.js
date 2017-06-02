@@ -146,7 +146,7 @@ function getReviewRenderingModels(){
 $(document).ready(getReviewRenderingModels);
 $(document).ready(function(){
 	$('#qna ul.pagination li a').on('click',function(){
-		alert('entered');
+		//alert('entered');
 		var pageNo;
 		var pIndex = $('#qna').find('input[name="currentPageNo"]').attr('value');
 		switch($(this).text()){
@@ -298,7 +298,7 @@ $(document).ready(function(){
 	});
 });
 function getQuestionRenderingModels(v){
-		alert(v);
+		//alert(v);
 		var pageNo;
 		var pIndex = $('#qna').find('input[name="currentPageNo"]').attr('value');
 		switch(v){
@@ -468,7 +468,7 @@ function sendReviewRegistration(){
 		
 		var csrf_token = form.find(':first-child').val();
 		
-		alert(formUrl +", "+jsonData+", "+ csrf_token);
+		//alert(formUrl +", "+jsonData+", "+ csrf_token);
 		
 		
 		$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
@@ -493,7 +493,7 @@ function sendReviewRegistration(){
 					break;
 				case 204:
 					var jsonResponse = JSON.parse(xhr.responseText);
-					alert(jsonResponse.message);
+					//alert(jsonResponse.message);
 					break;
 				case 409:
 					var jsonResponse = JSON.parse(xhr.responseText);
@@ -549,7 +549,7 @@ function sendQuestionRegistration(){
 		
 		
 		
-		alert(formUrl +", "+jsonData+", "+ csrf_token);
+		//alert(formUrl +", "+jsonData+", "+ csrf_token);
 		var request = $.ajax({
 			url:formUrl,
 			type:"POST",
@@ -566,7 +566,7 @@ function sendQuestionRegistration(){
 					break;
 				case 204:
 					var jsonResponse = JSON.parse(xhr.responseText);
-					alert(jsonResponse.message);
+					//alert(jsonResponse.message);
 					break;
 				case 409:
 					var jsonResponse = JSON.parse(xhr.responseText);
@@ -600,7 +600,7 @@ $(document).ready(function(){
 		
 		var formUrl = "/tourofall/qna/question/"+questionId;
 		
-		alert(formUrl);
+		//alert(formUrl);
 		
 		var request = $.ajax({
 			type:"GET",
@@ -661,7 +661,7 @@ function getQnARenderingModels(event){
 	
 	var formUrl = "/tourofall/qna/question/"+questionId;
 	
-	alert(formUrl);
+	//alert(formUrl);
 	
 	var request = $.ajax({
 		type:"GET",
@@ -727,7 +727,7 @@ function sendAnswerRegistration(){
 		var jsonData = JSON.stringify(formData);
 		var csrf_token = form.find('input[name="_csrf"]').val();
 		
-		alert(formUrl+", "+jsonData+", "+csrf_token);
+		//alert(formUrl+", "+jsonData+", "+csrf_token);
 		
 		$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
 			if (!options.crossDomain) {
@@ -770,7 +770,7 @@ function sendAnswerRegistration(){
 					break;
 				case 204: // NO CONTENT
 					var jsonResponse = JSON.parse(xhr.responseText);
-					alert(jsonResponse.message);
+					//alert(jsonResponse.message);
 					break;
 				case 409: // CONFLICT
 					var jsonResponse = JSON.parse(xhr.responseText);

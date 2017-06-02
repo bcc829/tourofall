@@ -52,7 +52,9 @@
 												<span class="search-result-type copy-caption">여행지</span>
 												<a href="<c:url value="/dest/info/${searchResultRenderingModel.itemId}"/>">
 													<h3 class="search-result-title copy-h1">${searchResultRenderingModel.title}</h3>
-													<p>${searchResultRenderingModel.address}</p>
+													<p>
+														${searchResultRenderingModel.address}
+													</p>
 												</a>
 											</div>
 											<c:if test="${pageContext.request.userPrincipal.name != null}">

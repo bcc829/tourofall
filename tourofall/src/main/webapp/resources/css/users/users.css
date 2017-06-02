@@ -208,6 +208,42 @@
 .row-gap{
 	margin-bottom:20px;	
 }
+
+
+.answers-content {
+    padding-left:1.5rem;
+    padding-right:1.5rem;
+}
+.answers-section-wrapper{
+    margin-left:3rem;
+    margin-right:3rem;
+
+    
+    border-bottom: 1px solid gray;
+}
+.answers-section {
+    position:relative;
+    width:100%;
+    height:200px;
+    padding-top:10px;
+    padding-bottom:10px;
+
+}
+.answers-section-header{
+    margin-bottom : 20px;
+}
+.answers-section-footer{
+    position:absolute;
+    right:0;
+    bottom:10px;
+}
+
+a, a:hover a:visited {
+	text-decoration: none;
+	cursor: pointer;
+	color:black;
+}
+
 @media (min-width: 400px){
     .rating {
         width:80%;

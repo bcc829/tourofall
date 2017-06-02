@@ -309,21 +309,27 @@ insert into questions(title,content,created_date,visitor,user_id,item_id)  value
 
 insert into answers(content,created_date,user_id,question_id)  values ('답변하고 싶습니다.','2017-05-01',2,1);
 insert into answers(content,created_date,user_id,question_id)  values ('감사합니다..','2017-05-01',1,1);
+insert into answers(content,created_date,user_id,question_id)  values ('가나다라마바사','2017-06-01',1,1);
 
 insert into answers(content,created_date,user_id,question_id)  values ('답변하고 싶습니다.','2017-05-01',3,2);
 insert into answers(content,created_date,user_id,question_id)  values ('감사합니다..','2017-05-01',2,2);
+insert into answers(content,created_date,user_id,question_id)  values ('가나다라마바사','2017-06-01',1,2);
 
 insert into answers(content,created_date,user_id,question_id)  values ('답변하고 싶습니다.','2017-05-01',4,3);
 insert into answers(content,created_date,user_id,question_id)  values ('감사합니다..','2017-05-01',3,3);
+insert into answers(content,created_date,user_id,question_id)  values ('가나다라마바사','2017-06-01',1,3);
 
 insert into answers(content,created_date,user_id,question_id)  values ('답변하고 싶습니다.','2017-05-01',5,4);
 insert into answers(content,created_date,user_id,question_id)  values ('감사합니다..','2017-05-01',4,4);
+insert into answers(content,created_date,user_id,question_id)  values ('가나다라마바사','2017-06-01',1,4);
 
 insert into answers(content,created_date,user_id,question_id)  values ('답변하고 싶습니다.','2017-05-01',6,5);
 insert into answers(content,created_date,user_id,question_id)  values ('감사합니다..','2017-05-01',5,5);
+insert into answers(content,created_date,user_id,question_id)  values ('가나다라마바사','2017-06-01',1,5);
 
 insert into answers(content,created_date,user_id,question_id)  values ('답변하고 싶습니다.','2017-05-01',7,6);
 insert into answers(content,created_date,user_id,question_id)  values ('감사합니다..','2017-05-01',6,6);
+insert into answers(content,created_date,user_id,question_id)  values ('가나다라마바사','2017-06-01',1,6);
 
 insert into answers(content,created_date,user_id,question_id)  values ('답변하고 싶습니다.','2017-05-01',8,7);
 insert into answers(content,created_date,user_id,question_id)  values ('감사합니다..','2017-05-01',7,7);

@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.bulldozer.tourofall.answer.dto.AnswerRenderingModelsSet;
+import net.bulldozer.tourofall.answer.service.AnswerService;
+import net.bulldozer.tourofall.common.dto.Response;
 import net.bulldozer.tourofall.destination.service.TourApiService;
 import net.bulldozer.tourofall.evaluation.dto.Evaluation;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModel;
 import net.bulldozer.tourofall.evaluation.dto.EvaluationRenderingModelsSet;
 import net.bulldozer.tourofall.evaluation.service.EvaluationService;
-import net.bulldozer.tourofall.question.dto.QuestionRenderingModelsSet;
-import net.bulldozer.tourofall.review.dto.ReviewRenderingModelsSet;
+import net.bulldozer.tourofall.question.dto.UserQuestionRenderingModelsSet;
+import net.bulldozer.tourofall.question.service.QuestionService;
 import net.bulldozer.tourofall.review.dto.UserReviewRenderingModel;
 import net.bulldozer.tourofall.review.dto.UserReviewRenderingModelsSet;
 import net.bulldozer.tourofall.review.service.ReviewService;
@@ -43,6 +46,11 @@ public class UsersController {
 	@Autowired
 	private ReviewService reviewService;
 	
+	@Autowired
+	private AnswerService answerService;
+	
+	@Autowired
+	private QuestionService questionService;
 	
 	private void addModelToView(long userId, Model model){
 		model.addAttribute("userId", userId);
@@ -77,7 +85,7 @@ public class UsersController {
 		model.addAttribute("imageUrl", imageUrl);
 	}
 	
-	private void setEvaluationRenderingModels(long userId, int pageNo, Model model) throws Exception{
+	private void setEvaluationRenderingModelsSet(long userId, int pageNo, Model model) throws Exception{
 		EvaluationRenderingModelsSet evaluationRenderingModelsSet = evaluationService.getEvaluationRenderingModelsSet(userId, pageNo);
 		
 		model.addAttribute("evaluationRenderingModelsSet", evaluationRenderingModelsSet);
@@ -91,7 +99,7 @@ public class UsersController {
 	
 	
 	
-	private void setUserReviewRenderingModels(long userId, int index, Model model) throws Exception{
+	private void setUserReviewRenderingModelsSet(long userId, int index, Model model) throws Exception{
 		UserReviewRenderingModelsSet userReviewRenderingModelsSet = reviewService.getUserReviewRenderingModelsSet(userId, index);
 		
 		model.addAttribute("userReviewRenderingModelsSet", userReviewRenderingModelsSet);
@@ -103,14 +111,23 @@ public class UsersController {
 		System.out.println("userReviewRenderingModels : " + count);
 	}
 	
+	private void setAnswerRenderingModelsSet(long userId, int index, Model model) throws Exception{
+		AnswerRenderingModelsSet answerRenderingModelsSet = answerService.getAnswerRenderingModelsSet(userId, index);
+		model.addAttribute("answerRenderingModelsSet", answerRenderingModelsSet);
+	}
 	
-	
-	
+	private void setUserQuestionRenderingModelsSet(long userId, int index, Model model) throws Exception {
+		UserQuestionRenderingModelsSet userQuestionRenderingModelsSet = questionService.getUserQuestionRenderingModelsSet(userId, index);
+		model.addAttribute("userQuestionRenderingModelsSet", userQuestionRenderingModelsSet);
+	}
 	@RequestMapping(value="/{userId}", method=RequestMethod.GET)
 	public String showUserInfo(@PathVariable long userId, Model model) {
 		try{
-			setEvaluationRenderingModels(userId,1,model);
-			setUserReviewRenderingModels(userId,0,model);
+			setEvaluationRenderingModelsSet(userId,1,model);
+			setUserReviewRenderingModelsSet(userId,0,model);
+			setAnswerRenderingModelsSet(userId,0,model);
+			setUserQuestionRenderingModelsSet(userId, 0, model);
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -122,16 +139,34 @@ public class UsersController {
 		return "userspage";
 	}
 	@RequestMapping(value="/{userId}/reviewmore", produces="application/json",method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> getReviewRenderingModels(@PathVariable int userId, @RequestParam(value="index") int index) throws Exception{
+	public @ResponseBody ResponseEntity<?> getReviewRenderingModelsSet(@PathVariable int userId, @RequestParam(value="index") int index) throws Exception{
 		UserReviewRenderingModelsSet userReviewRenderingModelsSet = reviewService.getUserReviewRenderingModelsSet(userId, index); 
 		return new ResponseEntity<UserReviewRenderingModelsSet>(userReviewRenderingModelsSet, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{userId}/usereval", method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> getEvaluationRenderingModels(@RequestParam(value="userId") int itemId, @RequestParam(value="pageNo") int pageNo) throws Exception{
+	public @ResponseBody ResponseEntity<?> getEvaluationRenderingModelsSet(@RequestParam(value="userId") int itemId, @RequestParam(value="pageNo") int pageNo) throws Exception{
 		EvaluationRenderingModelsSet evaluationRenderingModelsSet = evaluationService.getEvaluationRenderingModelsSet(itemId, pageNo);
 		return new ResponseEntity<EvaluationRenderingModelsSet>(evaluationRenderingModelsSet,HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping(value="/{userId}/answermore", produces="application/json",method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> getAnswerRenderingModelsSet(@PathVariable long userId, @RequestParam(value="index") int index) throws Exception{
+		AnswerRenderingModelsSet answerRenderingModelsSet = answerService.getAnswerRenderingModelsSet(userId, index); 
+		return new ResponseEntity<AnswerRenderingModelsSet>(answerRenderingModelsSet, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/deleteanswer/{answerId}")
+	public @ResponseBody ResponseEntity<?> deleteAnswer(@PathVariable long answerId){
+		try{
+			answerService.deleteAnswer(answerId);
+		}catch(Exception e){
+			return new ResponseEntity<Response>(new Response(false,"Answer","답변이 삭제 실패하였습니다."),HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<Response>(new Response(true,"Answer","답변이 삭제 완료 되었습니다."),HttpStatus.OK);
+	}
+	
 	
 	public String showMyInfoHome(@PathVariable long userId, Model model){
 		addModelToView(userId,model);

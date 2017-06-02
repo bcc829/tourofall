@@ -88,7 +88,7 @@
 							<button class="rank-less" disabled>
 								<i class="rank-less-icon rank-icon-left">&lt</i>
 							</button>
-							<button class="rank-more">
+							<button class="rank-more" disabled>
 								<i class="rank-more-icon rank-icon-right">&gt</i>
 							</button>
 						</div>

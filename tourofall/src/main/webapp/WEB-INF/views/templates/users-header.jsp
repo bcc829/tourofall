@@ -16,7 +16,7 @@
     	<li><a href="#user-review">리뷰<span class="badge">${reviewCount}</span></a></li>
     	<c:if test="${user.id == userId}">
     		<li><a href="#user-question">질문<span class="badge">${questionCount}</span></a></li>
-    		<li><a href="#user-answer">댓글<span class="badge">${answerCount}</span></a></li>
+    		<li><a href="#user-answer">댓글<span id="answer-badge" class="badge">${answerCount}</span></a></li>
     		<li><a href="#mysetting">내 정보설정</a></li>
     	</c:if>
 	</ul>

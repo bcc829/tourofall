@@ -175,16 +175,105 @@
 		</div>
 		<c:if test="${user.id == userId}">
 			<div id="user-question" class="tab-pane fade">
-				<h3>Menu 2</h3>
-				<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-					accusantium doloremque laudantium, totam rem aperiam.</p>
+				<div id="qna" class="panel panel-default">
+					<input type="hidden" name="currentPageNo" value="1" />
+  					<input type="hidden" name="itemId" value="${itemId}"/>
+					<div class="panel-heading">
+						<i class="fa fa-question-circle"></i>QnA
+					</div>
+					<div class="panel-body">
+						<div class="table-responsive table-bordered">
+							<table class = "table">
+								<thead>
+									<tr>
+										<th>번호</th>
+										<th>제목</th>
+										<th>작성일자</th>
+										<th>작성자</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="questionRenderingModel" items="${userQuestionRenderingModelsSet.questionRenderingModels}" varStatus="status">								
+										<tr>
+											<td>${status.index+1}</td>
+											<td><a class="js-question" id="${questionRenderingModel.questionId}" data-toggle="modal" data-target="#question">${questionRenderingModel.title}<span class="badge">${questionRenderingModel.answerCount}</span></a></td>
+											<td>${questionRenderingModel.createdDate.year+1900}-${questionRenderingModel.createdDate.month+1}-${questionRenderingModel.createdDate.date}</td>
+											<td><a class="js-users" href="<c:url value="/users/${questionRenderingModel.userId}"/>">${questionRenderingModel.lastName}${questionRenderingModel.firstName}</a></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+							<c:if test="${answerRenderingModelsSet.nextIndex}">
+								<button id="getUserQuestionMore" class="btn btn-primary btn-block">더 보기 <i class="fa fa-arrow-circle-down"></i></button>
+								<form name="userquestionmore" action="<c:url value="/users/${userId}/questionmore"/>">
+									<input type="hidden" name="index" value="1" />
+									<input type="hidden" name="userId" value="${userId}" />
+								</form>
+							</c:if>
+							
+					</div>
+					
+				</div>
+			</div>
 			</div>
 			<div id="user-answer" class="tab-pane fade">
-				<h3>Menu 3</h3>
-				<p>Eaque ipsa quae ab illo inventore veritatis et quasi
-					architecto beatae vitae dicta sunt explicabo.</p>
+				<div class="container-fluid">
+					<div id="answer-line" class="row">
+				<c:forEach var="answerRenderingModel" items="${answerRenderingModelsSet.answerRenderingModels}" varStatus="status">
+					<div class="answers-content  js-answers-content${answerRenderingModel.answerId}">
+  						<div class="answers-section-wrapper">
+  							<div class="answers-section">
+  								<div class="answers-section-header">
+  									<b>${answerRenderingModel.questionTitle}</b> <p class="pull-right">| ${answerRenderingModel.questionCreatedDate.year+1900}년 ${answerRenderingModel.questionCreatedDate.month+1}월 ${answerRenderingModel.questionCreatedDate.date}일</p>
+  								</div>
+  								<div class="answers-section-body">
+  									${answerRenderingModel.content}
+  								</div>
+  								<div class="answers-section-footer">
+  									${answerRenderingModel.createdDate.year+1900}년 ${answerRenderingModel.createdDate.month+1}월 ${answerRenderingModel.createdDate.date}일<button id="delete-answer" class="js-delete btn btn-default">삭제<input type="hidden" name="answerId" value="${answerRenderingModel.answerId}" /></button>
+  									
+  								</div>
+			  				</div>
+  						</div>
+  					</div>
+				</c:forEach>
+				</div>
+				</div>
+				<c:if test="${answerRenderingModelsSet.nextIndex}">
+					<button id="getUserAnswerMore" class="btn btn-primary btn-block">더 보기 <i class="fa fa-arrow-circle-down"></i></button>
+						<form name="useranswermore" action="<c:url value="/users/${userId}/answermore"/>">
+							<input type="hidden" name="index" value="1" />
+							<input type="hidden" name="userId" value="${userId}" />
+						</form>
+				</c:if>
 			</div>
 		</c:if>
 	</div>
+	<div id="question" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+          <h4 class="modal-title">QnA</h4>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title js-question-title"></h4>
+        </div>
+        <div class="modal-body" id="question-content">
+          	 
+        </div>
+         <div class="modal-body" id="modal-answers">
+         	
+    	    
+        </div>
+        <div class="modal-footer">
+         	<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </div>
 <script type="text/javascript" src="<c:url value="/resources/js/users/users.js"/>"></script>

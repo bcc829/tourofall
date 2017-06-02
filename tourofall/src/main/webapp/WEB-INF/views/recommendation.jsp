@@ -28,7 +28,7 @@
 						<div class="eval-unit">
 							<article class="eval-unit-card eval-unit-card-fixed eval-unit-card-has-img eval-unit-card-article">
 								<div class="eval-unit-card-mask">
-									<a href="#">
+									<a href="<c:url value="/dest/info/${recommendationRenderingModel.itemId}"/>">
 										<figure class="eval-unit-card-figure">
 											<img alt="이미지 없음" src="${recommendationRenderingModel.imageUrl}" class="img-rounded"  onerror="this.style.display='none'">
 											<div class="eval-unit-card-score">

@@ -87,5 +87,6 @@
 		</form>
 	</div>
 </div>
+<a href="#"><div class="fix">↑</div></a>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>

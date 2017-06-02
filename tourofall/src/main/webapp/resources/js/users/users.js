@@ -57,7 +57,7 @@ $(document).ready(function(){
 		
 		var urlForMakingForm = $('form[name="request-eval"]').attr('action');
 		
-		alert(pageNo + ", " + formUrl + ", " + pData + ", " + csrf_token_name + ": " + csrf_token_value);
+		//alert(pageNo + ", " + formUrl + ", " + pData + ", " + csrf_token_name + ": " + csrf_token_value);
 		
 		
 		var request = $.ajax({
@@ -73,7 +73,7 @@ $(document).ready(function(){
 				
 				
 				var evaluationRenderingModels = result.evaluationRenderingModels;
-				alert(evaluationRenderingModels.length);
+				//alert(evaluationRenderingModels.length);
 				
 				$.each( evaluationRenderingModels, function(index, value){
 					
@@ -443,7 +443,7 @@ function getUserEvaluationRenderingModels(v){
 	
 	var urlForMakingForm = $('form[name="request-eval"]').attr('action');
 	
-	alert(pageNo + ", " + formUrl + ", " + pData + ", " + csrf_token_name + ": " + csrf_token_value);
+	//alert(pageNo + ", " + formUrl + ", " + pData + ", " + csrf_token_name + ": " + csrf_token_value);
 	
 	
 	var request = $.ajax({
@@ -459,7 +459,7 @@ function getUserEvaluationRenderingModels(v){
 			
 			
 			var evaluationRenderingModels = result.evaluationRenderingModels;
-			alert(evaluationRenderingModels.length);
+			//alert(evaluationRenderingModels.length);
 			
 			$.each( evaluationRenderingModels, function(index, value){
 				
@@ -850,8 +850,8 @@ function getUserReviewRenderingModels(){
 		var csrf_token_name = $('form[name="request-eval"] :first-child').attr('name');
 		var csrf_token_value = $('form[name="request-eval"] :first-child').attr('value');
 		
-		alert(csrf_token_name + ', ' + csrf_token_value);
-		alert(formUrl + " ? " + pData);
+		//alert(csrf_token_name + ', ' + csrf_token_value);
+		//alert(formUrl + " ? " + pData);
 		
 		
 		
@@ -1157,3 +1157,199 @@ function getUserReviewRenderingModels(){
 	
 }
 $(document).ready(getUserReviewRenderingModels);
+
+function getAnswerRenderingModels(){
+	$('#getUserAnswerMore').click(function(){
+		var clickedForm = $('form[name="useranswermore"]');
+		
+		var index = clickedForm.find('input[name="index"]').val();
+		
+		var formUrl = clickedForm.attr("action");
+		
+		var userId = clickedForm.find('input[name="userId"]').val();
+		
+		var parameter = new Object();
+		
+		parameter.index = index;
+		
+		clickedForm.find("input[name=index]").attr("value",parseInt(index,10)+1);
+	
+		var pData = $.param(parameter);
+		
+		//alert(formUrl + " ? " + pData);
+		
+		var request = $.ajax({
+			type:"GET",
+			url:formUrl,
+			contentType:"text/plain",
+			data:pData,
+			dataType:"json",
+			success: function(result,status,xhr){
+				var answerRenderingModels = result.answerRenderingModels;
+				if(result.nextIndex == false){
+					$('#getUserAnswerMore').css('display','none');
+				}
+				
+				$.each(answerRenderingModels , function(index, value){
+					
+					var answerdate = new Date(value.createdDate);
+					var questiondate = new Date(value.questionCreatedDate);
+					$("#answer-line")
+						.append($('<div>')
+							.attr('class','answers-content js-answers-content'+value.answerId)
+							.append($('<div>')
+								.attr('class','answers-section-wrapper')
+								.append($('<div>')
+									.attr('class','answers-section')
+									.append($('<div>')
+										.attr('class','answers-section-header')
+										.append($('<b>')
+											.append(value.questionTitle)
+										)
+										.append($('<p>')
+											.attr('class','pull-right')
+											.append(" | "+(answerdate.getFullYear())+'년'+(answerdate.getMonth()+1)+'월'+(answerdate.getDate())+'일')
+										)
+									)
+									.append($('<div>')
+										.attr('class','answers-section-body')
+										.append(value.content)
+									)
+									.append($('<div>')
+										.attr('class','answers-section-footer')
+										.append((questiondate.getFullYear())+'년'+(questiondate.getMonth()+1)+'월'+(questiondate.getDate())+'일')
+										.append($('<button>')
+											.attr('id','delete-answer')
+											.attr('class','js-delete btn btn-default')
+											.attr('onclick','deleteAnswer(event)')
+											.append('삭제')
+											.append($('<input>')
+												.attr('type','hidden')
+												.attr('name','answerId')
+												.attr('value',value.answerId)
+											)
+										)
+									)
+								)
+							)	
+						)
+				});
+			},
+			error: function(xhr){
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+		
+	});
+}
+$(document).ready(getAnswerRenderingModels);
+
+
+$(document).ready(function(){
+	$("button.js-delete").click(function(){
+		var answerId = $(this).find('input[name="answerId"]').attr('value');
+		
+		formUrl = "/tourofall/users/deleteanswer/"+answerId;
+		
+		
+		var request = $.ajax({
+			type:"GET",
+			url:formUrl,
+			contentType:"text/plain",
+			dataType:"json",
+			success: function(result,status,xhr){
+				$('.js-answers-content'+answerId).empty();
+				var count = $("#answer-badge").text();
+				count = parseInt(count,10)-1;
+				$("#answer-badge").text(count);
+				alert(result.message);
+			},
+			error: function(xhr){
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+				
+	});
+});
+function deleteAnswer(event){	
+	var answerId = $(event.target).find('input[name="answerId"]').attr('value');
+	formUrl = "/tourofall/users/deleteanswer/"+answerId;
+			
+	var request = $.ajax({
+			type:"GET",
+			url:formUrl,
+			contentType:"text/plain",
+			dataType:"json",
+			success: function(result,status,xhr){
+				$('.js-answers-content'+answerId).empty();
+				var count = $("#answer-badge").text();
+				count = parseInt(count,10)-1;
+				$("#answer-badge").text(count);
+				alert(result.message);
+			},
+			error: function(xhr){
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+}
+
+
+
+$(document).ready(function(){
+	$('#qna table tbody tr td a.js-question').click(function(){
+		selected = $(this);
+		var questionId = $(this).attr('id');
+		
+		var formUrl = "/tourofall/qna/question/"+questionId;
+		
+		//alert(formUrl);
+		
+		var request = $.ajax({
+			type:"GET",
+			url:formUrl,
+			contentType:"text/plain",
+			dataType:"json",
+			success: function(result,status,xhr){
+				var questionRenderingModel = result.questionRenderingModel;
+				
+				$('#question .js-question-title').append("제목> "+questionRenderingModel.title);
+				
+				
+				
+				$('#question #question-content').append($('<p>')
+												.append("내용> "+questionRenderingModel.content)
+											);
+				
+				var answerRenderingModels = result.answerRenderingModels;
+				
+				$('#modal-answers')
+				.append($('<hr>')
+				)
+				.append("댓글")
+				.append($('<span>')
+					.attr('class','badge')
+					.append(questionRenderingModel.answerCount)
+				);
+				$.each( answerRenderingModels , function(index, value){
+					var date = new Date(value.createdDate);
+					$('#modal-answers')
+								.append($('<hr>')
+								)
+								.append($('<div>')
+									.append($('<a>')
+										.attr('href','/tourofall/users/'+value.userId)
+										.append(value.lastName+value.firstName)
+									)
+									.append(" "+(date.getFullYear())+'-'+(date.getMonth()+1)+'-'+(date.getDate()))
+									.append($('<br />'))
+									.append(value.content)
+								)
+				});
+			},
+			error: function(xhr){
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+		
+	});
+})
