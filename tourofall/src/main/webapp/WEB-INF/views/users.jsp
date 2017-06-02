@@ -112,7 +112,7 @@
                   										<div class="review-eval-content-context">
                     										평점
                   										</div>
-                  										<div class="rating">
+                  										<div class="review-rating">
 															<sf:radiobutton path="myScore" id="Rstar5-${status.index}" value="5"/><label class = "full" for="Rstar5-${status.index}" title="Awesome - 5 stars"></label>
 															<sf:radiobutton path="myScore" id="Rstar4half-${status.index}" value="4.5"/><label class="half" for="Rstar4half-${status.index}" title="Pretty good - 4.5 stars"></label>
 															<sf:radiobutton path="myScore" id="Rstar4-${status.index}" value="4"/><label class = "full" for="Rstar4-${status.index}" title="Pretty good - 4 stars"></label>

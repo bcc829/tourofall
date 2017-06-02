@@ -82,7 +82,7 @@
     font-size: 16px;
     line-height: 1.5em;
 }
-.rating {
+.review-rating {
     width:90%;
     border: none;
     float: left;
@@ -205,6 +205,35 @@
 .rating > label:hover ~ input:checked ~ label, 
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
 
+/**/
+.review-rating > input { display: none; } 
+.review-rating > label:before { 
+  margin: 5px;
+  font-size: 1.1em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.review-rating > .half:before { 
+  content: "\f089";
+  position: absolute;
+}
+
+.review-rating > label { 
+  color: #ddd; 
+ float: right; 
+}
+
+.review-rating > input:checked ~ label, 
+.review-rating:not(:checked) > label:hover, 
+.review-rating:not(:checked) > label:hover ~ label { color: #FFD700;  } 
+
+.review-rating > input:checked + label:hover, 
+.review-rating > input:checked ~ label:hover,
+.review-rating > label:hover ~ input:checked ~ label, 
+.review-rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+
 .row-gap{
 	margin-bottom:20px;	
 }
@@ -245,7 +274,7 @@ a, a:hover a:visited {
 }
 
 @media (min-width: 400px){
-    .rating {
+    .review-rating {
         width:80%;
     }
 }
@@ -253,12 +282,12 @@ a, a:hover a:visited {
     .review-card-figure{
         width:45%;
     }
-    .rating > label:before { 
+    .review-rating > label:before { 
         margin: 2px;
     }
 }
 @media (min-width: 441px){
-    .rating{
+    .review-rating{
         width:85%;
     }
 }
@@ -282,7 +311,7 @@ a, a:hover a:visited {
         margin-right: 30;
         margin-left: 30;
     }
-    .rating {
+    .review-rating {
         width:90%;
     }
 }
@@ -290,7 +319,7 @@ a, a:hover a:visited {
     .review-card-figure{
         width:210px;
     }
-    .rating {
+    .review-rating {
         width:80%;
     }
 }

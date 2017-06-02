@@ -48,15 +48,32 @@
 }
 
 .masthead-title{
-    font-size: 5.6rem;
+    font-size: 3rem;
     font-weight: 600;
     letter-spacing: -.3rem;
     line-height: .9;
 }
-.masthead-subtitle{
-    font-size: 3rem;
+
+.masthead-capation{
+    font-size: 1.5rem;
     font-weight: 600;
     -webkit-margin-after: 1em;
+}
+.masthead-capation-left, .masthead-capation-right,
+.masthead-capation-bottom, .masthead-capation-top { 
+    position:absolute;
+}
+.masthead-capation-left{
+	left:10%;
+	top:70%;
+	
+}
+.masthead-capation-right{
+	right:10%;
+	top:70%;	
+}
+.masthead-capation-bottom{
+	bottom:10%;
 }
 
 .masthead-straplines:not(.has-empty) {

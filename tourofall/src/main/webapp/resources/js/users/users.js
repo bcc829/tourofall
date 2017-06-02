@@ -1006,7 +1006,7 @@ function getUserReviewRenderingModels(){
 												.append('평점')
 											)
 											.append($('<div>')
-												.attr('class','rating')
+												.attr('class','review-rating')
 													.append(radio5
 													)
 													.append($('<label>')

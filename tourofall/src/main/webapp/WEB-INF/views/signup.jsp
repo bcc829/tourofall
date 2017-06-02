@@ -18,7 +18,7 @@
 
 		<div class="form-group">
 			
-			<c:if test="${userRegistrationForm.signInProvider == ordinary}">			
+			<c:if test="${userRegistrationForm.signInProvider == 'ordinary'}">			
 				<sf:input id="userid" path="username" class="form-control idsize" placeholder="아이디" />
 				<label for="userid" title="ID"></label> 
 				<p class="idfont" style="color:red;">
@@ -61,7 +61,7 @@
 				
 				<label id="rightt"><sf:radiobutton id="woman" path="gender" value="1"/> 여성</label>
 			</c:if>
-    		<c:if test="${userRegistrationForm.signInProvider != ordinary}">
+    		<c:if test="${userRegistrationForm.signInProvider != 'ordinary'}">
     			<sf:hidden path="username"/>
     			<sf:hidden path="password"/>
     			<sf:hidden path="confirmPassword"/>
