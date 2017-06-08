@@ -7,9 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +25,6 @@ import net.bulldozer.tourofall.question.dto.QnARenderingModelsSet;
 import net.bulldozer.tourofall.question.dto.Question;
 import net.bulldozer.tourofall.question.dto.QuestionRegistrationForm;
 import net.bulldozer.tourofall.question.service.QuestionService;
-import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
-import net.bulldozer.tourofall.user.service.UserService;
 
 @Controller
 @RequestMapping("/qna")
@@ -36,9 +32,6 @@ public class QnAController {
 	
 	@Autowired
 	private QuestionService questionService;
-	
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private AnswerService answerService;
@@ -52,32 +45,6 @@ public class QnAController {
 		}
 		System.out.println("qnARenderingModelsSet is full");
 		return new ResponseEntity<QnARenderingModelsSet>(qnARenderingModelsSet,HttpStatus.OK);
-	}
-	
-	public String showQuestionPage(@PathVariable int questionId, Model model) {
-		if(!model.containsAttribute("answerRegistrationForm")){
-			model.addAttribute("answerRegistrationForm", new AnswerRegistrationForm());	
-		}
-		if(!model.containsAttribute("redirect")){
-			questionService.incrementVisitor(questionId);
-		}
-		model.addAttribute("questionRenderingModel", questionService.getQuestionRenderingModelById(questionId));
-		model.addAttribute("answerRenderingModels", questionService.getAnswerRenderingModelsByQuestionId(questionId));
-		return "question";
-	}
-
-	@RequestMapping(value = "/question/write/{itemTypeId}/{itemId}", method = RequestMethod.GET)
-	public String showQuestionForm(@PathVariable int itemId, @PathVariable int itemTypeId, Model model) {
-		QuestionRegistrationForm questionRegistrationForm = new QuestionRegistrationForm();
-		questionRegistrationForm.setItemId(itemId);
-
-		if (!model.containsAttribute("questionRegistrationForm"))
-			model.addAttribute("questionRegistrationForm", questionRegistrationForm);
-
-		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("username",userAuthenticationDetails.getUsername());
-
-		return "question_write";
 	}
 
 	@RequestMapping(value = "/question/write", method = RequestMethod.POST)

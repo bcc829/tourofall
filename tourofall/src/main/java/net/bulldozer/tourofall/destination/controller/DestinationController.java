@@ -23,7 +23,6 @@ import net.bulldozer.tourofall.review.service.ReviewService;
 @Controller
 @RequestMapping("/dest")
 public class DestinationController {
-	private static final String resPath="/{itemTypeId}/{itemId}";
 	@Autowired
 	private TourApiService tourApiService;
 	

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,10 +26,8 @@ import net.bulldozer.tourofall.question.service.QuestionService;
 import net.bulldozer.tourofall.review.dto.UserReviewRenderingModel;
 import net.bulldozer.tourofall.review.dto.UserReviewRenderingModelsSet;
 import net.bulldozer.tourofall.review.service.ReviewService;
-import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
 import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.service.UserService;
-import net.bulldozer.tourofall.user.util.DateList;
 
 @Controller
 @RequestMapping("/users")
@@ -52,16 +49,6 @@ public class UsersController {
 	
 	@Autowired
 	private QuestionService questionService;
-	
-	private void addModelToView(long userId, Model model){
-		model.addAttribute("userId", userId);
-	}
-	
-	private void addDateList(Model model){
-		model.addAttribute("years", DateList.getYearList());
-		model.addAttribute("months", DateList.getMonthList());
-		model.addAttribute("dates", DateList.getDateList());
-	}
 	
 	private void setCountToHeader(long userId, Model model){
 		model.addAttribute("questionCount", userService.getQuestionsSizeByUserId(userId));
@@ -170,46 +157,5 @@ public class UsersController {
 			return new ResponseEntity<Response>(new Response(false,"Answer","답변이 삭제 실패하였습니다."),HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<Response>(new Response(true,"Answer","답변이 삭제 완료 되었습니다."),HttpStatus.OK);
-	}
-	
-	
-	public String showMyInfoHome(@PathVariable long userId, Model model){
-		addModelToView(userId,model);
-		return "users-home";
-	}
-	@RequestMapping(value="/{userId}/setting", method=RequestMethod.GET)
-	public String showMyInfoDetail(@PathVariable long userId, Model model){
-		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		addModelToView(userId,model);
-		addDateList(model);
-		model.addAttribute("userAuthenticationDetails", userAuthenticationDetails);
-		model.addAttribute("userModificationForm", userService.getUserModificationFormByUserId(userAuthenticationDetails.getId()));
-		
-		return "users-detail";
-	}
-	@RequestMapping(value="/{userId}/reviews", method=RequestMethod.GET)
-	public String showMyInfoReviews(@PathVariable long userId,Model model){
-		addModelToView(userId,model);
-		model.addAttribute("reviews", userService.getReviewsByUserId(userId));
-		return "users-reviews";
-	}
-	@RequestMapping(value="/{userId}/questions", method=RequestMethod.GET)
-	public String showMyInfoQuestions(@PathVariable long userId,Model model){
-		addModelToView(userId,model);
-		model.addAttribute("questions", userService.getQuestionsByUserId(userId));
-		return "users-questions";
-	}
-	@RequestMapping(value="/{userId}/answers", method=RequestMethod.GET)
-	public String showMyInfoAnswers(@PathVariable long userId,Model model){
-		addModelToView(userId,model);
-		model.addAttribute("answers", userService.getAnswersByUserId(userId));
-		return "users-answers";
-	}
-	@RequestMapping(value="/{userId}/evaluations", method=RequestMethod.GET)
-	public String showMyInfoEvals(@PathVariable long userId,Model model){
-		UserAuthenticationDetails userAuthenticationDetails = (UserAuthenticationDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		addModelToView(userId,model);
-		model.addAttribute("evaluations", userService.getEvaluationsByUserId(userAuthenticationDetails.getId()));
-		return "users-evaluations";
 	}
 }
