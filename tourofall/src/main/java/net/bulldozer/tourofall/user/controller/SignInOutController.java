@@ -37,7 +37,7 @@ public class SignInOutController {
 		cookieClearingLogoutHandler.logout(request, response, null);
 		SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
 		securityContextLogoutHandler.logout(request, response, null);
-		return "redirect:/signin?signout";
+		return "redirect:/";
 	}
 
 }

@@ -13,7 +13,7 @@
 <body>
 	<sf:form class="form-signin img-rounded" method="post" commandName="userRegistrationForm">
 
-		<h1 class="form-signin-heading" style="text-align: center">JOIN</h1>
+		<h1 class="form-signin-heading" style="text-align: center"><a href="<c:url value="/"/>">Tour of all</a>에 가입하기</h1>
 		<br>
 
 		<div class="form-group">

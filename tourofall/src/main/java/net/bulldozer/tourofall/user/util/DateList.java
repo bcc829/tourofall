@@ -8,7 +8,7 @@ public class DateList {
 	private static List<Integer> monthList = new ArrayList<Integer>(); 
 	private static List<Integer> dateList = new ArrayList<Integer>();
 	static{
-		for(int i = 1900; i <= 2005; i++){
+		for(int i = 1975; i <= 2005; i++){
 			yearList.add(i);
 		}
 		

@@ -226,12 +226,16 @@ public class TourApiService {
 				JSONObject item = (JSONObject)obj;
 				long contentId = (long)item.get("contentid");
 				int itemId = (int)contentId;
-		
+				
+				String address = (String)item.get("addr1");
+				if(item.get("addr2") != null)
+					address += item.get("addr2");
+				 
 				SearchResultRenderingModel searchResultRenderingModel = SearchResultRenderingModel.getBuilder()
 																		.itemId(itemId)
 																		.imageUrl((String)item.get("firstimage"))
 																		.title((String)item.get("title"))
-																		.address((String)item.get("addr1")+(String)item.get("addr2"))
+																		.address(address)
 																		.build();
 																		
 				if(userAuthenticationDetails != null){

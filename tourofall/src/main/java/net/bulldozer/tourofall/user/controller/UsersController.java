@@ -28,6 +28,7 @@ import net.bulldozer.tourofall.review.dto.UserReviewRenderingModel;
 import net.bulldozer.tourofall.review.dto.UserReviewRenderingModelsSet;
 import net.bulldozer.tourofall.review.service.ReviewService;
 import net.bulldozer.tourofall.security.dto.UserAuthenticationDetails;
+import net.bulldozer.tourofall.user.dto.User;
 import net.bulldozer.tourofall.user.service.UserService;
 import net.bulldozer.tourofall.user.util.DateList;
 
@@ -84,7 +85,10 @@ public class UsersController {
 		}
 		model.addAttribute("imageUrl", imageUrl);
 	}
-	
+	private void setUserInfoToHeader(long userId, Model model){
+		User user = userService.getUserByUserId(userId);
+		model.addAttribute("username", user.getLastName()+user.getFirstName());
+	}
 	private void setEvaluationRenderingModelsSet(long userId, int pageNo, Model model) throws Exception{
 		EvaluationRenderingModelsSet evaluationRenderingModelsSet = evaluationService.getEvaluationRenderingModelsSet(userId, pageNo);
 		
@@ -133,6 +137,7 @@ public class UsersController {
 		}
 		
 		model.addAttribute("userId", userId);
+		setUserInfoToHeader(userId, model);
 		setCountToHeader(userId, model);
 		setImageUrlToHeader(userId,model);
 		

@@ -16,7 +16,7 @@
 			<c:if test="${not empty signoutMsg}">
         		<p style="color:blue;text-align:center;font-size:3rem;">${signoutMsg}</p>
         	</c:if>
-			<h1 class="form-signin-heading" style="text-align: center;">Tour Of All</h1>
+			<h1 class="form-signin-heading" style="text-align: center;"><a href="<c:url value="/"/>">Tour Of All</a></h1>
 			<img class="img-circle" src="https://lh3.googleusercontent.com/-N2dyACoEm4U/AAAAAAAAAAI/AAAAAAAAAAA/yFLJFGuSbZk/photo.jpg">
 
 			<div class="form-group has-feedback has-feedback-left">

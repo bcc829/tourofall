@@ -32,10 +32,12 @@ body {
 	color:coral;
 	text-shadow:2px -1px 5px #bbb,3px -3px 5px #666;
 	font-weight: bolder;
-	font-size:60px;
+	font-size:45px;
 	
 }
-
+a:hover a{
+	text-decoration: none;
+}
 .form-signin .form-control {
 	position: relative;
 	height: auto;
